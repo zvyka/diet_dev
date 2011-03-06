@@ -1,17 +1,20 @@
 DietApp::Application.routes.draw do
-  get "pages/home"
+  get "users/new"
 
-  get "pages/contact"
+  match '/signup',  :to => 'users#new'
+  match '/signin',  :to => 'sessions#new'
+  match '/signout', :to => 'sessions#destroy'
+  
+  match '/contact', :to => 'pages#contact'
+  match '/about',   :to => 'pages#about'
+  match '/help',    :to => 'pages#help'
+  
+  match '/analysis', :to => 'pages#analysis'
+  match '/terms',    :to => 'pages#terms'
+  match '/privacy',  :to => 'pages#privacy'
+  match '/faq',      :to => 'pages#faq'
 
-  get "pages/about"
-
-  get "pages/help"
-
-  get "pages/faq"
-
-  get "pages/privacy"
-
-  get "pages/terms"
+  root :to => 'pages#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
