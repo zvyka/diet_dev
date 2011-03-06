@@ -1,2 +1,23 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<% if signed_in? %>
+  <table class="front" summary="For signed-in users">
+    <tr>
+      <td class="main">
+        <h1 class="micropost">Add a micropost here:</h1>
+        <%= render 'shared/micropost_form' %>
+				<%= render 'shared/feed' %>
+      </td>
+      <td class="sidebar round">
+        <%= render 'shared/user_info' %>
+				<%= render 'shared/stats' %>
+      </td>
+    </tr>
+  </table>
+<% else %>
+  <h1>Team Diet Tracker</h1>
+
+  <p>
+    Welcome to the Diet Tracker. Please <%= link_to "sign in", signin_path %> or sign up below.
+  </p>
+
+  <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+<% end %>
