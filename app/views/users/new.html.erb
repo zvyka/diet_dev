@@ -1,2 +1,50 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<h1>Sign up</h1>
+<%= form_for(@user) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation, "Password Confirmation" %><br />
+    <%= f.password_field :password_confirmation %>
+  </div>
+	<div class="field">
+    <%= f.label :uid, "Your University ID Number" %><br />
+    <%= f.text_field :uid %>
+  </div>
+	<div class="field">
+    <%= f.label :birth_year, "Your birth year" %><br />
+    <%= f.select(:birth_year, %w{ 1987 1988 1989 1990 1991 1992 1993 1994 })%>
+  </div>
+	<div class="field">
+    <%= f.label :grad_year, "Graduation Year" %><br />
+    <%= f.select(:grad_year, %w{ 2011 2012 2013 2014 2015 2016 2017 })%>
+  </div>
+	<div class="field">
+    <%= f.label :is_male, "Sex" %><br />
+		<%= f.select(:sex, [["Male", true],["Female", false]])%>
+	</div>
+	<div class="field">
+    <%= f.label :height, "Your height (in cm, for now)" %><br />
+    <%= f.text_field :height %>
+  </div>
+	<div class="field">
+    <%= f.label :is_special, "Specialty Diet" %><br />
+   	<%= f.select(:is_special, [["Yes", true],["No", false]])%> Select "Yes" if you have a specialty diet.<br>
+<p>There are many students at the University of Maryland that have diets that would not necessarily be recommended by the USDA and other nutritional analysis studies, but may still be healthy for their needs. This includes extremely active students such as athletes and bodybuilders, and students who eat more than 2400 or less than 1200 calories daily, students with specialty diets not related to caloric intake (vegetarians are NOT included in this group), et cetera. Most people do not fall into this group. If you feel you do fall into this group, please check the box; otherwise, leave it blank.</p>
+<p>Due to the nature of our study, and the tools we will be using, it is possible that our analysis may not be accurate for those students who are in these special categories, however, they may still find it beneficial to use our service for tracking their diets.</p>
+  </div>
+	<p><h3> By signing up below you agree to our <%= link_to "Terms and Conditions", terms_path %>.</h3> </p>
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
