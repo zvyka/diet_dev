@@ -20,7 +20,7 @@ require 'digest'
 
 class User < ActiveRecord::Base
   attr_accessor :password
-  attr_accessible :name, :email, :password, :password_confirmation, :uid, :birth_year, :grad_year, :is_male, :height, :is_special 
+  attr_accessible :name, :email, :password, :password_confirmation, :UID, :birth_year, :grad_year, :is_male, :height, :is_special 
   
   # **later: has_many :meals, :dependent => :destroy
 
@@ -36,16 +36,15 @@ class User < ActiveRecord::Base
                        :confirmation => true,
                        :length       => { :within => 6..40 }
   
-  validates :uid, :presence => true, #UMD UID
-                  :length => {  :is => 9}
+  validates :UID, :presence => true, #UMD UID
+                  :length => { :minimum => 8},
+                  :uniqueness => true
   validates :birth_year, :presence => true, #Year of birth
                          :numericality => true,
-                         :inclusion => {:in 1985...1995}
+                         :inclusion => {:in => 1985..1995}
   validates :grad_year, :presence => true, #year of grad.
                         :numericality => true,
-                        :inclusion => {:in 2011...2017}
-  validates :is_male, :presence => true 
-  validates :is_special, :presence => true
+                        :inclusion => {:in => 2011..2017}
   validates :height, :presence => true,
                      :numericality => true
   
