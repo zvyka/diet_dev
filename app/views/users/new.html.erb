@@ -18,8 +18,8 @@
     <%= f.password_field :password_confirmation %>
   </div>
 	<div class="field">
-    <%= f.label :uid, "Your University ID Number" %><br />
-    <%= f.text_field :uid %>
+    <%= f.label :UID, "Your University ID Number" %><br />
+    <%= f.text_field(:UID, :size => 9) %>
   </div>
 	<div class="field">
     <%= f.label :birth_year, "Your birth year" %><br />
@@ -31,7 +31,7 @@
   </div>
 	<div class="field">
     <%= f.label :is_male, "Sex" %><br />
-		<%= f.select(:sex, [["Male", true],["Female", false]])%>
+		<%= f.select(:is_male, [["Male", true],["Female", false]])%>
 	</div>
 	<div class="field">
     <%= f.label :height, "Your height (in cm, for now)" %><br />

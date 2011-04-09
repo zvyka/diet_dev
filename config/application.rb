@@ -38,5 +38,10 @@ module DietApp
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    # Google Analytics
+   #if Rails.env == "development" ##change to production when ready.
+    #  config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-22558843-1")
+   #end
   end
 end

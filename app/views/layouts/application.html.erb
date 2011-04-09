@@ -5,6 +5,8 @@
     <%= csrf_meta_tag %>
     <%= render 'layouts/stylesheets' %>
     <%= javascript_include_tag :defaults %>
+    <%= render :partial => 'layouts/ga' #if Rails.env == ‘production’
+     %>
   </head>
   <body>
     <div class="container">
