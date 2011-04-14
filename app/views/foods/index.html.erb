@@ -1,0 +1,17 @@
+<h1>Foods</h1>
+
+<form action="<%= foods_path %>" method="get" >
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+</form>
+
+<ul>
+<% @foods.each do |food| %>
+    <li><%= food.name %>:  <%= food.portion_default %> <%= food.portion_display_name %>,  <%= food.calories %> cal, <%= food.saturated_fats %> g sat. fats.</td>
+<% end %>
+</ul>
+
+
+

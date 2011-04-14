@@ -1,6 +1,8 @@
 DietApp::Application.routes.draw do
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
+  resources :meals, :only=> [:create, :destroy]
+  resources :foods
   
   get "sessions/new"
 
@@ -18,6 +20,9 @@ DietApp::Application.routes.draw do
   match '/terms',    :to => 'pages#terms'
   match '/privacy',  :to => 'pages#privacy'
   match '/faq',      :to => 'pages#faq'
+  
+  match '/foods',    :to => 'foods#index'
+  
 
   root :to => 'pages#home'
 

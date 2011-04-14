@@ -4,10 +4,17 @@
       <h1>
         <%= @user.name %>
       </h1>
+      <% unless @user.meals.empty? %>
+        <table class="meals" summary="User meals">
+          <%= render @meals %>
+        </table>
+        <%= will_paginate @meals %>
+      <% end %>
     </td>
     <td class="sidebar round">
-      <strong>Name</strong> <%= @user.name %><br />
-      <strong>URL</strong>  <%= link_to user_path(@user), @user %>
+        <strong>Name</strong> <%= @user.name %><br />
+        <strong>URL</strong> <%= link_to user_path(@user), @user %><br />
+        <strong>Meals</strong> <%= @user.meals.count %>
     </td>
   </tr>
 </table>

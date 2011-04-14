@@ -10,7 +10,49 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110306175804) do
+ActiveRecord::Schema.define(:version => 20110414022507) do
+
+  create_table "foods", :force => true do |t|
+    t.decimal "added_sugars",          :precision => 10, :scale => 0
+    t.decimal "alcohol",               :precision => 10, :scale => 0
+    t.decimal "calories",              :precision => 10, :scale => 0
+    t.string  "name"
+    t.decimal "dark_green_vegetables", :precision => 10, :scale => 0
+    t.decimal "dry_beans_peas",        :precision => 10, :scale => 0
+    t.decimal "factor",                :precision => 10, :scale => 0
+    t.decimal "food_id",               :precision => 10, :scale => 0
+    t.decimal "fruits",                :precision => 10, :scale => 0
+    t.decimal "grains",                :precision => 10, :scale => 0
+    t.decimal "increment",             :precision => 10, :scale => 0
+    t.decimal "meats",                 :precision => 10, :scale => 0
+    t.decimal "milk",                  :precision => 10, :scale => 0
+    t.decimal "multiplier",            :precision => 10, :scale => 0
+    t.decimal "oils",                  :precision => 10, :scale => 0
+    t.decimal "orange_vegetables",     :precision => 10, :scale => 0
+    t.decimal "other_vegetables",      :precision => 10, :scale => 0
+    t.decimal "portion_amount",        :precision => 10, :scale => 0
+    t.decimal "portion_default",       :precision => 10, :scale => 0
+    t.string  "portion_display_name"
+    t.decimal "saturated_fats",        :precision => 10, :scale => 0
+    t.decimal "solid_fats",            :precision => 10, :scale => 0
+    t.decimal "soy",                   :precision => 10, :scale => 0
+    t.decimal "starchy_vegetables",    :precision => 10, :scale => 0
+    t.decimal "vegetables",            :precision => 10, :scale => 0
+    t.decimal "whole_grains",          :precision => 10, :scale => 0
+    t.integer "meal_id"
+  end
+
+  add_index "foods", ["meal_id"], :name => "index_foods_on_meal_id"
+
+  create_table "meals", :force => true do |t|
+    t.integer  "food_id"
+    t.integer  "serving_size"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "meals", ["user_id"], :name => "index_meals_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"
@@ -25,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20110306175804) do
     t.datetime "updated_at"
     t.string   "encrypted_password"
     t.string   "salt"
+    t.boolean  "admin",              :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
