@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmation, :UID, :birth_year, :grad_year, :is_male, :height, :is_special 
   
-  has_many :meals, :dependent => :destroy
+  has_many :meals #, :dependent => :destroy
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   

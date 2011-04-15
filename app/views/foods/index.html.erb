@@ -7,11 +7,10 @@
   </p>
 </form>
 
+<h3>Search results</h3>
 <ul>
 <% @foods.each do |food| %>
-    <li><%= food.name %>:  <%= food.portion_default %> <%= food.portion_display_name %>,  <%= food.calories %> cal, <%= food.saturated_fats %> g sat. fats.</td>
+    <li><%= food.name %>:  <%= food.portion_default %> <%= food.portion_display_name %>,  <%= food.calories %> cal, <%= food.saturated_fats %> g sat. fats. id: <%= food.food_id %></td>
+    <p>***: <%= Food.find(food.id).name %></p>
 <% end %>
 </ul>
-
-
-

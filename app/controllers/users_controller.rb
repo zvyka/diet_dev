@@ -5,13 +5,13 @@ class UsersController < ApplicationController
   
   def index
     @title = "All users"
-    @users = User.paginate(:page => params[:page])
-    
+    @users = User.paginate(:page => params[:page])   
   end
 
   def show
     @user = User.find(params[:id])
     @meals = @user.meals.paginate(:page => params[:page])
+    @foods = Food.search(params[:search])
     @title = @user.name
   end
 
@@ -37,6 +37,7 @@ class UsersController < ApplicationController
   def edit
     @title = "Edit user"
   end
+  
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])

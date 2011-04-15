@@ -5,9 +5,9 @@ class Meal < ActiveRecord::Base
   
   has_many :foods
   
-  validates :food_id, :presence => true
-  validates :serving_size, :presence => true
-  validates :user_id, :presence => true
+  #validates :food_id, :presence => true
+  #validates :serving_size, :presence => true
+  #validates :user_id, :presence => true
   
   default_scope :order => 'meals.created_at DESC'
 end

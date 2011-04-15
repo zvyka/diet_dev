@@ -1,7 +1,7 @@
 DietApp::Application.routes.draw do
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
-  resources :meals, :only=> [:create, :destroy]
+  resources :meals
   resources :foods
   
   get "sessions/new"

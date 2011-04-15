@@ -2,6 +2,8 @@ class PagesController < ApplicationController
 
   def home
     @title = "Home"
+    @meal = Meal.new if signed_in?
+    @foods = Food.search(params[:search])
   end
 
   def contact

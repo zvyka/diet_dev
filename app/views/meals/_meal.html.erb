@@ -1,8 +1,12 @@
 <tr>
   <td class="meal">
-    <span class="content"><%= meal.content %></span>
-    <span class="timestamp">
-      Posted <%= time_ago_in_words(meal.created_at) %> ago.
+    <span class="content">
+    <% @foods.each do |food| %>      
+        <% if food.id == meal.food_id %>    
+          <h4><%= time_ago_in_words(meal.created_at) %> ago, you ate:<br /></h4>      
+           <td><%= food.name %></td> <td>(price) </td> <td> (location) </td><td><%= food.portion_default %></td> <td><%= food.portion_display_name %></td>  <td><%= food.calories %></td> <td><%= food.saturated_fats %></td>
+         <% end %>  
+    <% end %>
     </span>
   </td>
 </tr>

@@ -190,6 +190,25 @@ ul.users {
   margin-top: 1em;
 }
 
+li {
+	list-style: none;
+}
+
+legend {
+	border:0px
+}
+
+label {
+	border:0px
+}
+
+ol {
+	list-style: none;
+	margin-left: 0;
+	padding-left: 1em;
+	text-indent: -1em;
+}
+
 .users li {
   list-style: none;
 }

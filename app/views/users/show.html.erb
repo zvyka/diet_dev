@@ -6,6 +6,7 @@
       </h1>
       <% unless @user.meals.empty? %>
         <table class="meals" summary="User meals">
+        <td>Food Name</td> <td>Price </td> <td> Location </td><td>Portion amount</td> <td>Portion type</td>  <td>Calories</td> <td>Sat Fats</td>        
           <%= render @meals %>
         </table>
         <%= will_paginate @meals %>

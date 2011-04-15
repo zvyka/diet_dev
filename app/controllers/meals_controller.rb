@@ -1,9 +1,22 @@
 class MealsController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, :only => [:create, :destroy]
+  
+  def home
+    @title = "Home"
+    @meal = Meal.new if signed_in?
+    @foods = Food.search(params[:search])
+  end
   
   def create
-    @meal.destroy
-    redirect_back_or root_pat
+    @foods = Food.search(params[:search])
+    @meal  = current_user.meals.build(params[:meal])
+    @meal.update_attributes(params[:meal])
+    if @meal.save
+      flash[:success] = "Meal saved!"
+      redirect_to root_path
+    else
+      render 'pages/home'
+    end
   end
 
   def destroy
