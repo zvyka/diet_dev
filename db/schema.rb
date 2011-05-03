@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414022507) do
+ActiveRecord::Schema.define(:version => 20110420214011) do
 
   create_table "foods", :force => true do |t|
     t.decimal "added_sugars",          :precision => 10, :scale => 0
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20110414022507) do
     t.decimal "food_id",               :precision => 10, :scale => 0
     t.decimal "fruits",                :precision => 10, :scale => 0
     t.decimal "grains",                :precision => 10, :scale => 0
-    t.decimal "increment",             :precision => 10, :scale => 0
+    t.decimal "inc",                   :precision => 10, :scale => 0
     t.decimal "meats",                 :precision => 10, :scale => 0
     t.decimal "milk",                  :precision => 10, :scale => 0
     t.decimal "multiplier",            :precision => 10, :scale => 0
@@ -50,6 +50,10 @@ ActiveRecord::Schema.define(:version => 20110414022507) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "price",        :precision => 8, :scale => 2
+    t.integer  "location"
+    t.date     "day"
+    t.integer  "time_of_day"
   end
 
   add_index "meals", ["user_id"], :name => "index_meals_on_user_id"

@@ -1,0 +1,36 @@
+<form action="<%= root_path %>" method="get" >
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+</form>
+<table class="pretty">
+<% keep = [] %>
+<% food_items = @foods %>
+<% food_items.each do |i|%>
+  <% dup_items = food_items.select {|d| d.name == i.name } %>
+  <% keep << dup_items.sort { |a,b| b.id <=> a.id }.first.id %>
+<% end %>
+<% keep.uniq! %>
+<% food_items.each do |i|%>
+  <% i.destroy unless keep.include? (i.id) %>
+<% end %>
+ <% unless params[:search].blank?  %>
+  <%= semantic_form_for @meal, :url => meals_path do |f| %>
+  	<% f.inputs do %>
+
+				<%= f.input :food_id, :as => :radio, :collection => food_items %>
+				<%= f.input :serving_size, :as => :string %>
+																			
+		<!-- <% for food in @foods %>
+						<%= food.portion_display_name %>
+						<%= food.calories %> calories
+						<%= food.saturated_fats %> g Sat. Fats
+				 <% end %> -->
+	<% end%>
+  <% f.buttons do %>
+  	<%= f.commit_button %>
+	<% end %>
+ <% end %>
+<% end %>
+</table>

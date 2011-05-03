@@ -6,16 +6,20 @@
       </h1>
       <% unless @user.meals.empty? %>
         <table class="meals" summary="User meals">
-        <td>Food Name</td> <td>Price </td> <td> Location </td><td>Portion amount</td> <td>Portion type</td>  <td>Calories</td> <td>Sat Fats</td>        
+					
           <%= render @meals %>
         </table>
         <%= will_paginate @meals %>
       <% end %>
     </td>
     <td class="sidebar round">
-        <strong>Name</strong> <%= @user.name %><br />
-        <strong>URL</strong> <%= link_to user_path(@user), @user %><br />
-        <strong>Meals</strong> <%= @user.meals.count %>
+	<% mealnum = "meals" %>
+	<% if @user.meals.count == 1 %>
+		<% mealnum = "meal" %>
+	<% end%>
+					<strong>You have </strong> <%= @user.meals.count %>  <strong> <%=mealnum%></strong><br /><br />
+					<%=  link_to 'Add a meal', foods_path %> <br />
+					<%=  link_to 'Search the database', '/foods/show' %>
     </td>
   </tr>
 </table>

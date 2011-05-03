@@ -1,8 +1,8 @@
 <% if signed_in? %>
   <table class="front" summary="For signed-in users">
     <tr>
-    <h3>Add food to meal</h3>
-      <%= render 'shared/meal_form' %>
+    <h3>Diet Tracker</h3>
+      <%= link_to "See your profile", user_path(current_user) %>
     </tr>
   </table>
 <% else %>

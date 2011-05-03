@@ -13,7 +13,7 @@ class MealsController < ApplicationController
     @meal.update_attributes(params[:meal])
     if @meal.save
       flash[:success] = "Meal saved!"
-      redirect_to root_path
+      redirect_to user_path(current_user)
     else
       render 'pages/home'
     end

@@ -1,0 +1,21 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<table class="pretty">
+  <tr>
+    <th><%= sortable "name" %></th>
+    <th><%= "Serving Size" %></th>
+    <th><%= "Serving Type" %></th>
+    <th><%= "Calories" %></th>
+    <th><%= "Sat. Fats" %></th>
+  </tr>
+  <% for food in @foods %>
+    <tr>
+      <td><%= food.name %></td>
+      <td><%= food.portion_default %></td>
+      <td><%= food.portion_display_name %></td>
+      <td><%= food.calories %></td>
+      <td><%= food.saturated_fats %> g</td>
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate @foods %>

@@ -1,0 +1,34 @@
+<form action="<%= root_path %>" method="get" >
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+</form>
+<table class="pretty">
+<% keep = [] %>
+<% food_items = @foods %>
+<% food_items.each do |i|%>
+  <% dup_items = food_items.select {|d| d.name == i.name } %>
+  <% keep << dup_items.sort { |a,b| b.id <=> a.id }.first.id %>
+<% end %>
+<% keep.uniq! %>
+<% food_items.each do |i|%>
+  <% i.destroy unless keep.include? (i.id) %>
+<% end %>
+<% unless params[:search].blank?  %>
+<tr>
+	<%= form_for(@meal) do |f| %>
+	  <div class="field">
+	    <%= f.label :food_id %><br />
+			<% for food in @foods %>
+	    	<td><%= radio_button_tag(:food_id, food.id) %>
+				<%= label_tag(:food_id, :food_id) %></td>
+    	</tr>
+			</div>
+			<% end %>
+			<div class="actions">
+		    <%= f.submit "Create" %>
+			</div>
+		<% end %>
+</table>
+<% end %>

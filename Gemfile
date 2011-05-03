@@ -5,6 +5,8 @@ gem 'mysql2'
 gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
 gem 'will_paginate', '3.0.pre2'
 gem 'formtastic', '~> 1.2.3'
+gem 'jquery-rails'
+gem 'chronic'
 
 
 group :development do

@@ -1,5 +1,5 @@
 .container {
-  width: 710px;
+  width: 1000px;
 }
 
 body {
@@ -125,12 +125,12 @@ table.profile {
 }
 
 td.main {
-  width: 70%;
+  width: 80%;
   padding: 1em;
 }
 
 td.sidebar {
-  width: 30%;
+  width: 20%;
   padding: 1em;
   vertical-align: top;
   background: #ffc;
@@ -190,25 +190,6 @@ ul.users {
   margin-top: 1em;
 }
 
-li {
-	list-style: none;
-}
-
-legend {
-	border:0px
-}
-
-label {
-	border:0px
-}
-
-ol {
-	list-style: none;
-	margin-left: 0;
-	padding-left: 1em;
-	text-indent: -1em;
-}
-
 .users li {
   list-style: none;
 }
@@ -223,4 +204,8 @@ div.user_info a {
 
 div.user_info span.user_name {
   position: absolute;
+}
+
+#back_link {
+	float: right;
 }

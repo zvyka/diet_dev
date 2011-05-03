@@ -3,11 +3,16 @@ class Food < ActiveRecord::Base
   
   belongs_to :meal
   
+  
+  def index
+    @meals = Meal.search(params[:search])
+  end
+  
   def self.search(search)
     if search
-      find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
+      where('name LIKE ?', "%#{search}%")
     else
-      find(:all)
+      scoped
     end
   end
   

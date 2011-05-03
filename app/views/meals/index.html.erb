@@ -1,0 +1,8 @@
+<h1>Add a meal:</h1><br />
+<%= form_tag meals_path, :method => 'get', :id => "meals_search" do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+	<div id="meals"><%= render 'meals' %></div>
+<% end %>
