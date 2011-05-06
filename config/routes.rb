@@ -15,12 +15,16 @@ DietApp::Application.routes.draw do
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
+  match '/tutorial', :to => 'pages#tutorial'   #maybe the route should be /help/tutorial at some point since the link is on the help page
+  match '/report-a-problem', :to => 'pages#report-a-problem'   #maybe the route should be /help/report-a-problem at some point since the link is on the help page
+
+  
   
   match '/analysis', :to => 'pages#analysis'
   match '/terms',    :to => 'pages#terms'
   match '/privacy',  :to => 'pages#privacy_statement'
   match '/faq',      :to => 'pages#faq'
-  
+    
   match '/foods',    :to => 'foods#index'
   
 
