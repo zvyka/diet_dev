@@ -40,6 +40,15 @@ table.tableizer-table {border: 1px solid #CCC; font-family: Arial, Helvetica, sa
 <image src="http://i217.photobucket.com/albums/cc249/cloystreng/testdataforwebsite_html_m59c7d00b.jpg">
 </div>
 
+</div>
+<div style="position: relative; z-index: 1;" center="">
+<img src = <%=Gchart.pie_3d(:title => 'Daily Intake', :size => '450x200',
+              :data => [10, 45, 45], :labels => ["Carbohydrates", "Fat", "Protein"] ) %> >
+</div>
+  <p>
+    This is a real chart that can be dynamic with the data it takes. 
+  </p> 
+
 <% else %>
  <h1>Team Diet Tracker</h1>
 
