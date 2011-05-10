@@ -10,6 +10,7 @@
 <% end %>
  <% unless params[:search].blank? || keep.size == 0 %>
 	<%= semantic_form_for @meal, :url => meals_path do |f| %>
+	<%= render 'shared/error_messages', :object => f.object %>
 		<% f.inputs do %>
 			<%= f.input :food_id, :as => :radio, :collection => food_items  %>		
 			<%= f.input :serving_size, :as => :string, :label => "Serving Size: ", :input_html => {  :rows => 4, :cols => 4, :maxlength => 4  } %>			

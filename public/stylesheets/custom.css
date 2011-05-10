@@ -108,7 +108,7 @@ a.signup_button {
 footer {
   text-align: center;
   margin-top: 10px;
-  width: 710px;
+  width: 1000px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -129,11 +129,15 @@ td.main {
   padding: 1em;
 }
 
+td.meal_list {
+  width: 80%;
+  padding: 1em;
+}
+
 td.sidebar {
   width: 20%;
   padding: 1em;
   vertical-align: top;
-  background: #ffc;
 }
 
 .profile img.gravatar {

@@ -3,6 +3,13 @@ class Food < ActiveRecord::Base
   
   belongs_to :meal
   
+  validates :serving_size, :presence => true,
+                           :numericality => true,
+                           :allow_blank => false
+  validates :day, :presence => true
+  validates :time_of_day, :presence => true
+  validates :location, :presence => true
+  validates :price, :presence => true
   
   def index
     @meals = Meal.search(params[:search])

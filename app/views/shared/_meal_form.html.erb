@@ -1,4 +1,5 @@
 <%= form_tag foods_path, :method => 'get', :id => "foods_search" do %>
+<%= render 'shared/error_messages', :object => f.object %>
   <p>
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag "Search", :name => nil %>

@@ -1,0 +1,9 @@
+<%=  link_to 'Back to adding a meal', foods_path, :id => "back_link" %>
+<h1>Search Food Database</h1><br />
+	<%= form_tag foods_path, :method => 'get', :id => "foods_search_blank" do %>
+	  <p>
+	    <%= text_field_tag :search, params[:search] %>
+	    <!-- <%= submit_tag "Search", :name => nil %> -->
+	  </p>
+		<div id="foods"><%= render 'foods' %></div>
+	<% end %>

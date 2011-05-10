@@ -3,10 +3,11 @@ class Meal < ActiveRecord::Base
   
   belongs_to :user
   
-  has_many :foods
+  has_one :foods
   
-  validates :food_id, :presence => true
-  validates :serving_size, :presence => true
+  validates :serving_size, :presence => true,
+                           :numericality => true,
+                           :allow_blank => false
   validates :day, :presence => true
   validates :time_of_day, :presence => true
   validates :location, :presence => true

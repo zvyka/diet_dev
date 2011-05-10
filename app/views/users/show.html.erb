@@ -1,25 +1,21 @@
 <table class="profile" summary="Profile information">
   <tr>
-    <td class="main">
+    <td class="meal_list">
       <h1>
         <%= @user.name %>
       </h1>
       <% unless @user.meals.empty? %>
-        <table class="meals" summary="User meals">
-					
           <%= render @meals %>
-        </table>
         <%= will_paginate @meals %>
       <% end %>
     </td>
     <td class="sidebar round">
-	<% mealnum = "meals" %>
-	<% if @user.meals.count == 1 %>
-		<% mealnum = "meal" %>
-	<% end%>
-					<strong>You have </strong> <%= @user.meals.count %>  <strong> <%=mealnum%></strong><br /><br />
-					<%=  link_to 'Add a meal', foods_path %> <br />
-					<%=  link_to 'Search the database', '/foods/show' %>
+			<% mealnum = "meals" %>
+			<% if @user.meals.count == 1 %>
+				<% mealnum = "meal" %>
+			<% end%>
+			<strong>You have </strong> <%= @user.meals.count %>  <strong> <%=mealnum%></strong><br /><br />
+			<%=  link_to 'Add a meal', foods_path %> <br />
     </td>
   </tr>
 </table>
