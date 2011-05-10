@@ -7,7 +7,7 @@ gem 'will_paginate', '3.0.pre2'
 gem 'formtastic', '~> 1.2.3'
 gem 'jquery-rails'
 gem 'chronic'
-
+gem 'googlecharts'  #gem to make nice graphs
 
 group :development do
   gem 'rspec-rails', '2.5.0'
