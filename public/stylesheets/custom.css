@@ -213,3 +213,11 @@ div.user_info span.user_name {
 #back_link {
 	float: right;
 }
+
+/* Help page*/
+
+#help ul li {
+	list-style: none;
+	margin-top: 1em;
+	margin-bottom: 1em; 
+}

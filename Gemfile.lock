@@ -39,6 +39,7 @@ GEM
       actionpack (>= 2.3.7)
       activesupport (>= 2.3.7)
       i18n (~> 0.4)
+    googlecharts (1.6.3)
     i18n (0.5.0)
     jquery-rails (0.2.7)
       rails (~> 3.0)
@@ -103,6 +104,7 @@ DEPENDENCIES
   annotate-models (= 1.0.4)
   chronic
   formtastic (~> 1.2.3)
+  googlecharts
   jquery-rails
   mysql2
   rack-google_analytics
