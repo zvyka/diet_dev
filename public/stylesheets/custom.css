@@ -216,8 +216,17 @@ div.user_info span.user_name {
 
 /* Help page*/
 
-#help ul li {
+#help dt {
 	list-style: none;
 	margin-top: 1em;
 	margin-bottom: 1em; 
+	background-color: #cff;
+}
+
+/* FAQ page */
+#faq dt {
+	list-style: none;
+	margin-top: 1em;
+	margin-bottom: 1em; 
+	background-color: #cff;
 }
