@@ -1,55 +1,229 @@
-<p>
-	<span class="content">
-	<% @foods.each do |food| %>
-	 <% if food.id == meal.food_id %></span>
-</p>
+
+	<p>
+		<span class="content round">
+		<% @foods.each do |food| %>
+	 		<% if food.id == meal.food_id %></span>
+		</p>
+<div id="nut_facts">
 <table>
 	<tr>
 		<% times = ["in the morning", "in the afternoon", "during the evening", "at night"] %>
 		On <%= meal.day.strftime("%A, %B %e, %Y") %> <%= times[meal.time_of_day.to_i - 1] %> you ate: 
 	</tr>
-	<tr>
-		<td style="width: 14%;">
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
 			Food Name
 		</td>
-		<td style="width: 14%;">
-			Price
-		</td>
-		<td style="width: 14%;">
-			Location
-		</td>
-		<td style="width: 14%;">
-			Portion
-		</td>
-		<td style="width: 14%;">
-			Calories
-		</td>
-		<td style="width: 14%;">
-			Sat Fat
-		</td>
-	</tr>
-	<tr>
 		<td>
 			<%= food.name %>
 		</td>
+	</tr>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Price
+		</td>
 		<td>
 			<%= number_to_currency(meal.price, :unit => "$") %>
+		</td>
+	</tr>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Location
 		</td>
 		<td>
 			<% locations = ["The Diner", "South Campus Diner", "Denton", "Shops", "Off-Campus"] %>
 			<%= locations[meal.location.to_i - 1] %>
 		</td>
+	</tr>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Portion
+		</td>
 		<td>
 			<%= pluralize(meal.serving_size, food.portion_display_name) %>
+		</td>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Calories
 		</td>
 		<td>
 			<%= food.calories %>
 		</td>
+	</tr>
+	<% if food.added_sugars > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
 		<td>
-			<%= food.saturated_fats %>
+			Added Sugars
+		</td>
+		<td>
+			<%= pluralize food.added_sugars,  "gram"%>
 		</td>
 	</tr>
+	<%end%>
+	<% if food.alcohol > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Alcohol
+		</td>
+		<td>
+			<%= pluralize food.alcohol , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.dark_green_vegetables > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Dark Green Vegetables
+		</td>
+		<td>
+			<%= pluralize food.dark_green_vegetables , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.dry_beans_peas > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Dry Beans/Peas
+		</td>
+		<td>
+			<%= pluralize food.dry_beans_peas , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.fruits > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Fruits
+		</td>
+		<td>
+			<%= pluralize food.fruits , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.grains > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Grains
+		</td>
+		<td>
+			<%= pluralize food.grains , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.meats > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Meats
+		</td>
+		<td>
+			<%= pluralize food.meats , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.milk > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Milk
+		</td>
+		<td>
+			<%= pluralize food.milk , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.oils > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Oils
+		</td>
+		<td>
+			<%= pluralize food.oils , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.orange_vegetables > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Orange Vegetables
+		</td>
+		<td>
+			<%= pluralize food.orange_vegetables , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.other_vegetables > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Other Vegetables
+		</td>
+		<td>
+			<%= pluralize food.other_vegetables , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.saturated_fats > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Saturated Fats
+		</td>
+		<td>
+			<%= pluralize food.saturated_fats , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.solid_fats > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Solid Fats
+		</td>
+		<td>
+			<%= pluralize food.solid_fats , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.soy > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Soy
+		</td>
+		<td>
+			<%= pluralize food.soy , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.starchy_vegetables > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Starchy Vegetables
+		</td>
+		<td>
+			
+			<%= pluralize food.starchy_vegetables , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vegetables > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vegetables
+		</td>
+		<td>
+			<%= pluralize food.vegetables , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.whole_grains > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Whole Grains
+		</td>
+		<td>
+			<%= pluralize food.whole_grains , "serving"%>
+		</td>
+	</tr>
+	<%end%>
+	<% reset_cycle %>
 </table>
+</div>
 <% end %>
 <% end %>
 

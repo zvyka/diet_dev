@@ -230,3 +230,23 @@ div.user_info span.user_name {
 	margin-bottom: 1em; 
 	background-color: #cff;
 }
+
+/* meal history page */
+
+#nut_facts {
+	-moz-border-radius:    10px;
+  -webkit-border-radius: 10px;
+  border-radius:         10px;
+  display: block;
+  text-align: left;
+  width: 90%;
+  color: #000;
+  background: #cff;
+  font-size: 150%;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.even {
+	background: #99ffff;
+}
