@@ -2,15 +2,28 @@
   <table class="front" summary="For signed-in users">
     <tr>
     <h3>Diet Tracker</h3>
-      <%= link_to "See your profile", user_path(current_user) %>
+      <%= link_to "Go to your profile", user_path(current_user) %>
     </tr>
   </table>
 <% else %>
-  <h1>Team Diet Tracker</h1>
+  <% if @username %>
+	<h1>Hello, <%= @username %>!</h1>
 
+	  <p>You are authenticated.</p> 
+	
+		<p>Please <%= link_to "sign in here", signin_path %> if you are a returning user, or sign up below if this is your first time using the tool:</p>
+
+	<p><%= link_to "Sign up now!", signup_path, :class => "login_button round" %></p>
+	
+	<p><%= link_to("Logout", :action => 'logout') %></p>
+	<% else %>
+	<h1>Welcome</h1>
   <p>
-    Welcome to the Diet Tracker. Please <%= link_to "sign in", signin_path %> or sign up below.
+    Welcome to the Diet Tracker. This website is only available to students currently enrolled at the University of Maryland, College Park. Please continue by pressing the button below.
   </p>
 
-  <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+<p> For all other inquiries, please feel free to <a href="mailto:teamdietumd@gmail.com">contact us</a>.
+
+  <%= link_to "Log in here",  @login_url, :class => "login_button round" %>
+ <% end %>
 <% end %>

@@ -43,5 +43,9 @@ module DietApp
    #if Rails.env == "development" ##change to production when ready.
     #  config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-22558843-1")
    #end
+   
+   #CAS
+   config.rubycas.cas_base_url = 'https://login.umd.edu'
+   
   end
 end

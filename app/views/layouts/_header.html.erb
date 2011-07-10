@@ -1,21 +1,29 @@
 <header>
-  <%= link_to logo, root_path %>
+	<% if signed_in? %>
+  	<%= link_to logo, user_path(current_user) %>
+	<% else %>
+		<%= link_to logo, root_path %>
+	<% end %>
   <nav class="round">
     <ul>
+	<% if signed_in? %>
+			<li>Welcome, <%= session[:cas_user] %> |</li>
+			<% else %>
+			<li>Welcome, guest | </li>
+			<% end %>
+			<% if !signed_in? %>
       <li><%= link_to "Home", root_path %></li>
-      <% if signed_in? %>
-	  		<li><%= link_to "Profile", user_path(current_user) %></li>
+      <% else %>
+	  		<li><%= link_to "Home", user_path(current_user) %></li>
 	  		<li><%= link_to "Settings", edit_user_path(current_user) %></li>
 				<li><%= link_to "Analysis", analysis_path %></li>
       <% end %>
 			<li><%= link_to "About", about_path %></li>
-      <li><%= link_to "Help", help_path %></li>
 			<li><%= link_to "FAQ", faq_path %></li>
-      <% if signed_in? %>
-      	<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
-      <% else %>
-      	<li><%= link_to "Sign in", signin_path %></li>
-      <% end %>
+			<% if signed_in? %>
+      	<li><%= link_to "Help", help_path %></li>
+				<li><%= link_to "Sign out", signout_path, :method => :delete %></li> 
+			<% end %>
     </ul>
   </nav>
 </header>

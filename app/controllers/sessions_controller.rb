@@ -1,17 +1,18 @@
 class SessionsController < ApplicationController
-
+  
   def new
     @title = "Sign in"
   end
   
   def create
-    user = User.authenticate(params[:session][:email],
-                             params[:session][:password])
+    user = User.authenticate_with_UID(params[:session][:UID])
         if user.nil?
-          flash.now[:error] = "Invalid email/password combination."
-          @title = "Sign in"
+          flash.now[:error] = "Oops, looks like you are a new user, please click the link on the bottom of the page to continue."
+          @title = "Sign up"
+          #redirect_to signup_path
           render 'new'
         else
+          flash.now[:success] = "Success!"
           sign_in user
           redirect_back_or user
         end
@@ -19,6 +20,6 @@ class SessionsController < ApplicationController
   
   def destroy
     sign_out
-    redirect_to root_path
+    #redirect_to root_path
   end
 end

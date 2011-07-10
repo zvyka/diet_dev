@@ -9,6 +9,12 @@ gem 'jquery-rails'
 gem 'chronic'
 gem 'googlecharts'  #gem to make nice graphs
 
+#CAS stuff
+gem 'rubycas-client'
+gem 'rubycas-client-rails', :path => '/Users/jon/Sites/diet_app/cas/rubycas-client-rails/'
+
+
+
 group :development do
   gem 'rspec-rails', '2.5.0'
   gem 'annotate-models', '1.0.4'

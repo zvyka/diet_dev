@@ -5,7 +5,9 @@ class UsersController < ApplicationController
   
   def index
     @title = "All users"
-    @users = User.paginate(:page => params[:page])   
+    @users = User.paginate(:page => params[:page])
+    @login_url = CASClient::Frameworks::Rails::Filter.login_url(self)
+    @username = session[:casfilteruser]   
   end
 
   def show
@@ -18,18 +20,20 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @title = "Sign up"
+    @login_url = CASClient::Frameworks::Rails::Filter.login_url(self)
+    @username = session[:casfilteruser]
   end
   
   def create
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = "Welcome!"
       redirect_to @user
     else
-      @title = "Sign up"
-      @user.password = ""
-      @user.password_confirmation = ""
+      @title = "Oops"
+      #@user.password = ""
+      #@user.password_confirmation = ""
       render 'new'
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110420214011) do
+ActiveRecord::Schema.define(:version => 20110710223349) do
 
   create_table "foods", :force => true do |t|
     t.decimal "added_sugars",          :precision => 10, :scale => 0
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20110420214011) do
     t.decimal "food_id",               :precision => 10, :scale => 0
     t.decimal "fruits",                :precision => 10, :scale => 0
     t.decimal "grains",                :precision => 10, :scale => 0
-    t.decimal "inc",                   :precision => 10, :scale => 0
+    t.decimal "incr",                  :precision => 10, :scale => 0
     t.decimal "meats",                 :precision => 10, :scale => 0
     t.decimal "milk",                  :precision => 10, :scale => 0
     t.decimal "multiplier",            :precision => 10, :scale => 0
@@ -41,8 +41,6 @@ ActiveRecord::Schema.define(:version => 20110420214011) do
     t.decimal "whole_grains",          :precision => 10, :scale => 0
     t.integer "meal_id"
   end
-
-  add_index "foods", ["meal_id"], :name => "index_foods_on_meal_id"
 
   create_table "meals", :force => true do |t|
     t.integer  "food_id"
@@ -63,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20110420214011) do
     t.string   "email"
     t.integer  "grad_year"
     t.integer  "birth_year"
-    t.integer  "UID"
+    t.string   "UID"
     t.boolean  "is_male"
     t.integer  "height"
     t.boolean  "is_special"

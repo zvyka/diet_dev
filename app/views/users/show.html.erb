@@ -10,11 +10,7 @@
       <% end %>
     </td>
     <td class="sidebar round">
-			<% mealnum = "meals" %>
-			<% if @user.meals.count == 1 %>
-				<% mealnum = "meal" %>
-			<% end%>
-			<strong>You have </strong> <%= @user.meals.count %>  <strong> <%=mealnum%></strong><br /><br />
+			<strong>You have <%= pluralize(@user.meals.count, "meal") %></strong><br /><br />
 			<%=  link_to 'Add a meal', foods_path %> <br />
     </td>
   </tr>

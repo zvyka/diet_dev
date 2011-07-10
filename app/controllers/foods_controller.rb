@@ -1,7 +1,7 @@
 class FoodsController < ApplicationController
   before_filter :authenticate
   helper_method :sort_column, :sort_direction
- 
+  
   def index
     @foods = Food.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
     @meal = Meal.new if signed_in?

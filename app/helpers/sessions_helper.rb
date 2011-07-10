@@ -1,7 +1,7 @@
 module SessionsHelper
 
   def sign_in(user)
-    cookies.permanent.signed[:remember_token] = [user.id, user.salt]
+    cookies.permanent.signed[:remember_token] = [user.UID]
     self.current_user = user
   end
   def current_user=(user)
@@ -34,16 +34,17 @@ module SessionsHelper
   def sign_out
     cookies.delete(:remember_token)
     self.current_user = nil
+    CASClient::Frameworks::Rails::Filter.logout(self)
   end
 
     private
 
       def user_from_remember_token
-        User.authenticate_with_salt(*remember_token)
+        User.authenticate_with_UID(*remember_token)
       end
 
       def remember_token
-        cookies.signed[:remember_token] || [nil, nil]
+        cookies.signed[:remember_token] || [nil]
       end
       
       def store_location

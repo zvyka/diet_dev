@@ -48,13 +48,4 @@ table.tableizer-table {border: 1px solid #CCC; font-family: Arial, Helvetica, sa
   <p>
     This is a real chart that can be dynamic with the data it takes. 
   </p> 
-
-<% else %>
- <h1>Team Diet Tracker</h1>
-
-  <p>
-    Oops, you need to sign in! Please <%= link_to "sign in", signin_path %> or sign up below.
-  </p>
-
-  <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
 <% end %>
