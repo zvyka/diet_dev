@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
+  before_filter CASClient::Frameworks::Rails::Filter
+  
   before_filter :authenticate, :only => [:index, :edit, :update, :destroy]
   before_filter :correct_user, :only => [:edit, :update]
-  before_filter :admin_user,   :only => :destroy
+  before_filter :admin_user,   :only => [:destroy, :index]
   
   def index
     @title = "All users"
@@ -11,10 +13,18 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @meals = @user.meals.paginate(:page => params[:page])
-    @foods = Food.search(params[:search])
-    @title = @user.name
+    @username = session[:casfilteruser]
+
+    if User.find_by_id(params[:id]).nil?
+      deny_access
+    elsif User.find_by_id(params[:id]) == User.authenticate_with_UID(@username)
+      @user = User.find_by_id(params[:id])
+      @meals = @user.meals.paginate(:page => params[:page])
+      @foods = Food.search(params[:search])
+      @title = @user.name
+    else
+      deny_access
+    end
   end
 
   def new
@@ -22,6 +32,9 @@ class UsersController < ApplicationController
     @title = "Sign up"
     @login_url = CASClient::Frameworks::Rails::Filter.login_url(self)
     @username = session[:casfilteruser]
+    if !User.authenticate_with_UID(@username).nil?  
+      redirect_to signin_path, :notice => "Please sign in."
+    end
   end
   
   def create

@@ -1,5 +1,5 @@
-# Ruby on Rails Tutorial: sample application
+# Team DIET UMD's nutrition-tracking webapp
 
-This is the sample application for
-[*Ruby on Rails Tutorial: Learn Rails by Example*](http://railstutorial.org/)
-by [Michael Hartl](http://michaelhartl.com/).
+See 
+[*our website*](http://teams.gemstone.umd.edu/classof2013/diet/)
+for more details.
