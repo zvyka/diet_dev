@@ -8,6 +8,7 @@ gem 'formtastic', '~> 1.2.3'
 gem 'jquery-rails'
 gem 'chronic'
 gem 'googlecharts'  #gem to make nice graphs
+gem 'pony'
 
 #CAS stuff
 gem 'rubycas-client'

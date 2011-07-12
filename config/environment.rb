@@ -13,4 +13,7 @@ CASClient::Frameworks::Rails::Filter.configure(
   :cas_base_url => "https://login.umd.edu/cas"
 )
 
+# Pony mailer
+require 'rubygems'
+require 'pony'
 

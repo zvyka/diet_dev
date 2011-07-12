@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     @title = "Sign up"
     @login_url = CASClient::Frameworks::Rails::Filter.login_url(self)
     @username = session[:casfilteruser]
-    if !User.authenticate_with_UID(@username).nil?  
+    if !User.authenticate_with_UID(@username).nil?  #if the user exists, sign in instead.
       redirect_to signin_path, :notice => "Please sign in."
     end
   end
@@ -43,6 +43,15 @@ class UsersController < ApplicationController
       sign_in @user
       flash[:success] = "Welcome!"
       redirect_to @user
+      Pony.mail(:from => 'teamdietumd@gmail.com', :to => @user.email, :subject => 'Welcome to the DIET Tracker!', :html_body => '<h1>Welcome!</h1> <p> Thanks for joining up! </p> <p> You rock! </p>',:body => 'Thanks for joining us! You rock!' ,:via => :smtp, :via_options => {
+          :address              => 'smtp.gmail.com',
+          :port                 => '587',
+          :enable_starttls_auto => true,
+          :user_name            => 'teamdietumd@gmail.com',
+          :password             => 'Gemstone13',
+          :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
+          :domain               => "localhost.localdomain" # the HELO domain provided by the client to the server
+        })
     else
       @title = "Oops"
       #@user.password = ""
