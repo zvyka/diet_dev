@@ -3,7 +3,7 @@
 	<%= render 'shared/error_messages', :object => f.object %>
 		<% if @foods.size != 0 %>		
 			<% f.inputs do %>
-				<%= f.input :food_id, :as => :radio, :collection => @foods  %>		
+				<%= f.input :id, :as => :radio, :collection => @foods  %>		
 				<%= f.input :serving_size, :as => :select, :label => "Serving Size: ", :collection => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] %>
 				<%= f.input :location, :as => :select, :collection => [["The Diner", 1], ["South Campus", 2], ["251 North (Denton)", 3], ["Shops", 4], ["Off-Campus", 5]] %>
 				<%= f.input :price, :input_html => {  :cols => 10 } %>

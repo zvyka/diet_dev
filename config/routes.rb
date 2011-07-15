@@ -28,6 +28,7 @@ DietApp::Application.routes.draw do
   match '/faq',      :to => 'pages#faq'
     
   match '/foods',    :to => 'foods#index'
+  match '/foods/search', :to => 'foods#show'
 
   root :to => 'pages#home'
 

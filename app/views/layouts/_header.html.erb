@@ -7,7 +7,7 @@
   <nav class="round">
     <ul>
 	<% if signed_in? %>
-			<li>Welcome, <%= session[:cas_user] %> |</li>
+			<li>Welcome, <%= current_user.name.split(' ', 2)[0] %> |</li>
 			<% else %>
 			<li>Welcome, guest | </li>
 			<% end %>

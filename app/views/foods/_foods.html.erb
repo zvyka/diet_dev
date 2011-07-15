@@ -1,21 +1,535 @@
 <%= hidden_field_tag :direction, params[:direction] %>
 <%= hidden_field_tag :sort, params[:sort] %>
-<table class="pretty">
-  <tr>
-    <th><%= "Name" %></th>
-    <th><%= "Serving Size" %></th>
-    <th><%= "Serving Type" %></th>
-    <th><%= "Calories" %></th>
-    <th><%= "Sat. Fats" %></th>
-  </tr>
-  <% for food in @foods %>
-    <tr>
-      <td><%= food.name %></td>
-      <td><%= food.portion_default %></td>
-      <td><%= food.portion_display_name %></td>
-      <td><%= food.calories %></td>
-      <td><%= food.saturated_fats %> g</td>
-    </tr>
-  <% end %>
+
+	<p>
+		<span class="content round">
+		<% @foods.each do |food| %>
+		</span>
+		</p>
+<div id="nut_facts">
+<table>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Food ID
+		</td>
+		<td>
+			<%= food.id %>
+		</td>
+	</tr>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Food Name
+		</td>
+		<td>
+			<%= food.name %>
+		</td>
+	</tr>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Portion Type One (grams)
+		</td>
+		<td>
+			<%= food.weight_1_gms %>
+		</td>
+	</tr>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Portion Type One (desc)
+		</td>
+		<td>
+			<%= food.weight_1_desc %>
+		</td>
+	</tr>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Portion Type Two (grams)
+		</td>
+		<td>
+			<%= food.weight_2_gms %>
+		</td>
+	</tr>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Portion Type Two (desc)
+		</td>
+		<td>
+			<%= food.weight_2_desc %>
+		</td>
+	</tr>
+	<% if food.water > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Water Content
+		</td>
+		<td>
+			<%= pluralize food.water,  "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.calories > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Calories
+		</td>
+		<td>
+			<%= pluralize food.calories , "calorie"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.protein > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Protein
+		</td>
+		<td>
+			<%= pluralize food.protein , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.lipid_total > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Total Fat
+		</td>
+		<td>
+			<%= pluralize food.lipid_total , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.ash > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Ash
+		</td>
+		<td>
+			<%= pluralize food.ash , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.carbohydrates > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Carbohydrates
+		</td>
+		<td>
+			<%= pluralize food.carbohydrates , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.fiber > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Dietary Fiber
+		</td>
+		<td>
+			<%= pluralize food.fiber , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.sugar_total > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Total Sugars
+		</td>
+		<td>
+			<%= pluralize food.sugar_total , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.calcium > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Calcium, Ca
+		</td>
+		<td>
+			<%= pluralize food.calcium , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.iron > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Iron, Fe
+		</td>
+		<td>
+			<%= pluralize food.iron , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.magnesium > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Magnesium, Mg
+		</td>
+		<td>
+			<%= pluralize food.magnesium , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.phosphorus > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Phosphorus, P
+		</td>
+		<td>
+			<%= pluralize food.phosphorus , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.potassium > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Potassium, K
+		</td>
+		<td>
+			<%= pluralize food.potassium , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.sodium > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Sodium, Na
+		</td>
+		<td>
+			<%= pluralize food.sodium , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.zinc > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Zinc, Zn
+		</td>
+		<td>		
+			<%= pluralize food.zinc , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.copper > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Copper, Cu
+		</td>
+		<td>
+			<%= pluralize food.copper , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.manganese > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Manganese, Mn
+		</td>
+		<td>
+			<%= pluralize food.manganese , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.selenium > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Selenium, Se
+		</td>
+		<td>
+			<%= pluralize food.selenium , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vit_c > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vitamin C, total ascorbic acid
+		</td>
+		<td>
+			<%= pluralize food.vit_c , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.thiamin > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Thiamin
+		</td>
+		<td>
+			<%= pluralize food.thiamin , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.riboflavin > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Riboflavin
+		</td>
+		<td>
+			<%= pluralize food.riboflavin , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.niacin > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Niacin
+		</td>
+		<td>
+			<%= pluralize food.niacin , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.panto_acid > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Pantothenic Acid
+		</td>
+		<td>
+			<%= pluralize food.panto_acid , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vit_b6 > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vitamin B-6
+		</td>
+		<td>
+			<%= pluralize food.vit_b6 , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.folate_total > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Total Folate
+		</td>
+		<td>
+			<%= pluralize food.folate_total , "microgram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.folic_acid > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Folic Acid
+		</td>
+		<td>
+			<%= pluralize food.folic_acid , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.food_folate > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Food Folate
+		</td>
+		<td>
+			<%= pluralize food.food_folate , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.folate_dfe > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Dietary Food Equivalent (DFE) Folate
+		</td>
+		<td>
+			<%= pluralize food.folate_dfe , "microgram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.choline_total > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Total Choline
+		</td>
+		<td>
+			<%= pluralize food.choline_total , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vit_b12 > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vitamin B-12
+		</td>
+		<td>
+			<%= pluralize food.vit_b12 , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vit_a_iu > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vitamin A, IU
+		</td>
+		<td>
+			<%= pluralize food.vit_a_iu , "IU"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vit_a_rae > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vitamin A, RAE
+		</td>
+		<td>
+			<%= pluralize food.vit_a_rae , "RAE"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.retinol > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Retinol
+		</td>
+		<td>
+			<%= pluralize food.retinol , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.alpha_carotene > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Alpha Carotene
+		</td>
+		<td>
+			<%= pluralize food.alpha_carotene , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.beta_carotene > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Beta Carotene
+		</td>
+		<td>
+			<%= pluralize food.beta_carotene , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.beta_crypt > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Beta Cryptoxanthin
+		</td>
+		<td>
+			<%= pluralize food.beta_crypt , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.lycopene > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Lycopene
+		</td>
+		<td>
+			<%= pluralize food.lycopene , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.lut_zea > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Lutein and Zeaxanthin
+		</td>
+		<td>
+			<%= pluralize food.lut_zea , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vit_e > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vitamin E
+		</td>
+		<td>
+			<%= pluralize food.vit_e , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vit_d_mcg > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vitamin D
+		</td>
+		<td>
+			<%= pluralize food.vit_d_mcg , "microgram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vit_d_iu > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vitamin D
+		</td>
+		<td>
+			<%= pluralize food.vit_d_iu , "IU"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.vit_k > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Vitamin K
+		</td>
+		<td>
+			<%= pluralize food.vit_k , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.fa_sat > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Saturated Fats
+		</td>
+		<td>
+			<%= pluralize food.fa_sat , "gram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.fa_mono > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Monounsaturated Fats
+		</td>
+		<td>
+			<%= pluralize food.fa_mono , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.fa_poly > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Polyunsaturated Fats
+		</td>
+		<td>
+			<%= pluralize food.fa_poly , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.cholesterol > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Cholesterol
+		</td>
+		<td>
+			<%= pluralize food.cholesterol , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% if food.refuse_pct > 0 %>
+	<tr class="<%= cycle("even", "odd") %>"> 
+		<td>
+			Refuse PCT
+		</td>
+		<td>
+			<%= pluralize food.refuse_pct , "milligram"%>
+		</td>
+	</tr>
+	<%end%>
+	<% reset_cycle %>
 </table>
+</div>
+<% end %>
+
+
 <%= will_paginate @foods %>
