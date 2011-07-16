@@ -3,12 +3,15 @@ class FoodsController < ApplicationController
   helper_method :sort_column, :sort_direction
   
   def index
-    @foods = Food.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
+    #@foods = Food.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
+    @foods = Food.search(params[:search])
+    
     @meal = Meal.new if signed_in?
   end
   
   def show
-     @foods = Food.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
+    @foods = Food.search(params[:search])
+     #@foods = Food.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
     @meal = Meal.new if signed_in?
   end
   

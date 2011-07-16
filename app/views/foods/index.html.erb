@@ -1,4 +1,6 @@
 <h1>Add a Meal</h1><br />
+<h2> Note: this doesn't work temporarily as I am fixing the database</h2>
+
 <%= form_tag foods_path, :method => 'get', :id => "add_search" do %>
   <p>
     Start typing your food here: <%= text_field_tag :search, params[:search] %>

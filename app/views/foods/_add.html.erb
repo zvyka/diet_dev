@@ -2,15 +2,15 @@
 	<%= semantic_form_for @meal, :url => meals_path do |f| %>
 	<%= render 'shared/error_messages', :object => f.object %>
 		<% if @foods.size != 0 %>		
-			<% f.inputs do %>
-				<%= f.input :id, :as => :radio, :collection => @foods  %>		
+			<%= f.inputs do %>
+				<%= f.input :food_id, :as => :select, :collection => @foods  %>		
 				<%= f.input :serving_size, :as => :select, :label => "Serving Size: ", :collection => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] %>
 				<%= f.input :location, :as => :select, :collection => [["The Diner", 1], ["South Campus", 2], ["251 North (Denton)", 3], ["Shops", 4], ["Off-Campus", 5]] %>
 				<%= f.input :price, :input_html => {  :cols => 10 } %>
 				<%= f.input :day, :as => :select, :collection => [["Today: #{Date.today}", Date.today], ["Yesterday: #{Date.today - 1.days}", Date.today - 1.days], ["Two Days Ago: #{Date.today - 2.days}", Date.today - 2.days], ["Three Days Ago: #{Date.today - 3.days}", Date.today - 3.days], ["Four Days Ago: #{Date.today - 4.days}", Date.today - 4.days], ["Five Days Ago: #{Date.today - 5.days}", Date.today - 5.days], ["Six Days Ago: #{Date.today - 6.days}", Date.today - 6.days], ["Seven Days Ago: #{Date.today - 7.days}", Date.today - 7.days]] %>
 				<%= f.input :time_of_day, :as => :select, :collection => [["morning", 1], ["afternoon", 2], ["evening", 3], ["night", 4]] %>
 			<% end %>
-			<% f.buttons do %>
+			<%= f.buttons do %>
 				<%= f.commit_button %>
 			<% end %>
 	 <% else %>

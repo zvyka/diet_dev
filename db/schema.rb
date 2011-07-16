@@ -10,36 +10,61 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110710223349) do
+ActiveRecord::Schema.define(:version => 20110716072509) do
 
-  create_table "foods", :force => true do |t|
-    t.decimal "added_sugars",          :precision => 10, :scale => 0
-    t.decimal "alcohol",               :precision => 10, :scale => 0
-    t.decimal "calories",              :precision => 10, :scale => 0
-    t.string  "name"
-    t.decimal "dark_green_vegetables", :precision => 10, :scale => 0
-    t.decimal "dry_beans_peas",        :precision => 10, :scale => 0
-    t.decimal "factor",                :precision => 10, :scale => 0
-    t.decimal "food_id",               :precision => 10, :scale => 0
-    t.decimal "fruits",                :precision => 10, :scale => 0
-    t.decimal "grains",                :precision => 10, :scale => 0
-    t.decimal "incr",                  :precision => 10, :scale => 0
-    t.decimal "meats",                 :precision => 10, :scale => 0
-    t.decimal "milk",                  :precision => 10, :scale => 0
-    t.decimal "multiplier",            :precision => 10, :scale => 0
-    t.decimal "oils",                  :precision => 10, :scale => 0
-    t.decimal "orange_vegetables",     :precision => 10, :scale => 0
-    t.decimal "other_vegetables",      :precision => 10, :scale => 0
-    t.decimal "portion_amount",        :precision => 10, :scale => 0
-    t.decimal "portion_default",       :precision => 10, :scale => 0
-    t.string  "portion_display_name"
-    t.decimal "saturated_fats",        :precision => 10, :scale => 0
-    t.decimal "solid_fats",            :precision => 10, :scale => 0
-    t.decimal "soy",                   :precision => 10, :scale => 0
-    t.decimal "starchy_vegetables",    :precision => 10, :scale => 0
-    t.decimal "vegetables",            :precision => 10, :scale => 0
-    t.decimal "whole_grains",          :precision => 10, :scale => 0
-    t.integer "meal_id"
+  create_table "foods", :primary_key => "food_id", :force => true do |t|
+    t.string "name"
+    t.float  "water"
+    t.float  "calories"
+    t.float  "protein"
+    t.float  "lipid_total"
+    t.float  "ash"
+    t.float  "carbohydrates"
+    t.float  "fiber"
+    t.float  "sugar_total"
+    t.float  "calcium"
+    t.float  "iron"
+    t.float  "magnesium"
+    t.float  "phosphorus"
+    t.float  "potassium"
+    t.float  "sodium"
+    t.float  "zinc"
+    t.float  "copper"
+    t.float  "manganese"
+    t.float  "selenium"
+    t.float  "vit_c"
+    t.float  "thiamin"
+    t.float  "riboflavin"
+    t.float  "niacin"
+    t.float  "panto_acid"
+    t.float  "vit_b6"
+    t.float  "folate_total"
+    t.float  "folic_acid"
+    t.float  "food_folate"
+    t.float  "folate_dfe"
+    t.float  "choline_total"
+    t.float  "vit_b12"
+    t.float  "vit_a_iu"
+    t.float  "vit_a_rae"
+    t.float  "retinol"
+    t.float  "alpha_carotene"
+    t.float  "beta_carotene"
+    t.float  "beta_crypt"
+    t.float  "lycopene"
+    t.float  "lut_zea"
+    t.float  "vit_e"
+    t.float  "vit_d_mcg"
+    t.float  "vit_d_iu"
+    t.float  "vit_k"
+    t.float  "fa_sat"
+    t.float  "fa_mono"
+    t.float  "fa_poly"
+    t.float  "cholesterol"
+    t.float  "weight_1_gms"
+    t.string "weight_1_desc"
+    t.float  "weight_2_gms"
+    t.string "weight_2_desc"
+    t.float  "refuse_pct"
   end
 
   create_table "meals", :force => true do |t|
