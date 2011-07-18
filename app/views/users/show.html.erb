@@ -4,14 +4,30 @@
       <h1>
         <%= @user.name %>
       </h1>
-      <% unless @user.meals.empty? %>
-          <%= render @meals %>
-        <%= will_paginate @meals %>
-      <% end %>
+        <div id="calendar">
+				  <h2 id="month">
+				    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d") %>
+				    <%=h @date.strftime("%B %Y") %>
+				    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
+				  </h2>
+				  <% calendar_for @user.meals, :year => @date.year, :month => @date.month do |calendar| %>
+				    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
+				    <% calendar.day(:day_method => :date_eaten) do |date, meals| %>
+				      <%= date.day %>
+				      <ul>
+				        <% for meal in meals.sort_by(&:time_of_day) %>
+									<% times = ["Morning", "Afternoon", "Evening", "Night"] %>
+				          <li><%= link_to h(times[meal.time_of_day.to_i - 1]), meal %></li>
+				        <% end %>
+				      </ul>
+				    <% end %>
+				  <% end %>
+				</div>
     </td>
     <td class="sidebar round">
 			<strong>You have <%= pluralize(@user.meals.count, "meal") %></strong><br /><br />
-			<%=  link_to 'Add a meal', foods_path %> <br />
+			<p><%= link_to "New Meal", new_meal_path %></p>
+			 <br />
     </td>
   </tr>
 </table>

@@ -7,7 +7,7 @@ DietApp::Application.routes.draw do
   get "sessions/new"
 
   get "users/new"
-
+  
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#create'
   match '/signout', :to => 'sessions#destroy'

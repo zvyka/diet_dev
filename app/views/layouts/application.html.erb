@@ -5,8 +5,11 @@
     <title><%= title %></title>
     <%= csrf_meta_tag %>
     <%= render 'layouts/stylesheets' %>
-    <%= javascript_include_tag :defaults %>
+    <%= stylesheet_link_tag "application", "token-input" %>
+		<%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css", "application" %>
+    <%= javascript_include_tag :defaults, 'jquery-ui', 'jquery_ujs','rails.validations', 'jquery.tokeninput' %>
     <%= render :partial => 'layouts/ga' %>
+		<% csrf_meta_tag %>
   </head>
   <body>
     <div class="container">

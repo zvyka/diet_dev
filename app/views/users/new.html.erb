@@ -11,7 +11,7 @@
   </div>
 	<div class="field">
     <%= f.label :UID, "Your Directory ID" %><br />
-    <%= f.text_field(:UID, :size => 9, :value=> session[:cas_user], :readonly => true, :size => session[:cas_user].length-1 ) %>
+    <%= f.text_field(:UID, :value=> session[:cas_user], :readonly => true, :size => session[:cas_user].length-1 ) %>
   </div>
 	<div class="field">
     <%= f.label :birth_year, "Your birth year" %><br />

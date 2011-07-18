@@ -10,16 +10,17 @@ class UsersController < ApplicationController
     @users = User.paginate(:page => params[:page])
     @login_url = CASClient::Frameworks::Rails::Filter.login_url(self)
     @username = session[:casfilteruser]   
+    @date = params[:month] ? Date.parse(params[:month]) : Date.today
   end
 
   def show
     @username = session[:casfilteruser]
-
+    @date = params[:month] ? Date.parse(params[:month]) : Date.today
+    
     if User.find_by_id(params[:id]).nil?
       deny_access
     elsif User.find_by_id(params[:id]) == User.authenticate_with_UID(@username)
       @user = User.find_by_id(params[:id])
-      @meals = @user.meals.paginate(:page => params[:page])
       @foods = Food.search(params[:search])
       @title = @user.name
     else

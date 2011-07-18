@@ -1,0 +1,17 @@
+<p>
+  <strong>Name:</strong>
+  <%= @meal.name %>
+</p>
+
+<strong>Foods:</strong>
+<ul>
+<% for food in @meal.foods %>
+  <li><%= food.name %></li>
+<% end %>
+</ul>
+
+<p>
+  <%= link_to "Edit", edit_meal_path(@meal) %> |
+  <%= link_to "Destroy", @meal, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", user_path(current_user) %>
+</p>

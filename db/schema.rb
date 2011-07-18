@@ -10,9 +10,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110716072509) do
+ActiveRecord::Schema.define(:version => 20110717185040) do
 
-  create_table "foods", :primary_key => "food_id", :force => true do |t|
+  create_table "foods", :force => true do |t|
     t.string "name"
     t.float  "water"
     t.float  "calories"
@@ -67,19 +67,24 @@ ActiveRecord::Schema.define(:version => 20110716072509) do
     t.float  "refuse_pct"
   end
 
+  create_table "ingredients", :force => true do |t|
+    t.integer  "meal_id"
+    t.integer  "food_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "meals", :force => true do |t|
     t.integer  "food_id"
-    t.integer  "serving_size"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "price",        :precision => 8, :scale => 2
+    t.decimal  "price",       :precision => 8, :scale => 2
     t.integer  "location"
-    t.date     "day"
+    t.date     "date_eaten"
     t.integer  "time_of_day"
+    t.string   "name"
   end
-
-  add_index "meals", ["user_id"], :name => "index_meals_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

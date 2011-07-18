@@ -1,7 +1,4 @@
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
-
-	<p>
+<p>
 		<span class="content round">
 		<% @foods.each do |food| %>
 		</span>
@@ -530,6 +527,3 @@
 </table>
 </div>
 <% end %>
-
-
-<%= will_paginate @foods %>

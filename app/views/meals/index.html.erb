@@ -1,8 +1,28 @@
-<h1>Add a meal:</h1><br />
-<%= form_tag meals_path, :method => 'get', :id => "meals_search" do %>
-  <p>
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "Search", :name => nil %>
-  </p>
-	<div id="meals"><%= render 'meals' %></div>
-<% end %>
+<h1>Meal</h1>
+
+<p> Under construction! Won't work as expected! </p>
+
+<p><%= link_to "New Meal", new_meal_path %></p>
+
+
+<div id="calendar">
+  <h2 id="month">
+    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d") %>
+    <%=h @date.strftime("%B %Y") %>
+    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
+  </h2>
+  <% calendar_for @meals, :year => @date.year, :month => @date.month do |calendar| %>
+    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
+    <% calendar.day(:day_method => :date_eaten) do |date, meals| %>
+      <%= date.day %>
+      <ul>
+        <% for meal in meals %>
+					<% times = ["in the morning", "in the afternoon", "during the evening", "at night"] %>
+          <li><%= link_to h(times[meal.time_of_day.to_i - 1]), meal %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>
+
+

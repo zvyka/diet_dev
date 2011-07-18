@@ -4,11 +4,14 @@ gem 'rails', '3.0.5'
 gem 'mysql2'
 gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
 gem 'will_paginate', '3.0.pre2'
-gem 'formtastic', '~> 1.2.3'
-gem 'jquery-rails'
+gem 'formtastic'
+gem 'jquery-rails', '>= 1.0.12'
 gem 'chronic'
 gem 'googlecharts'  #gem to make nice graphs
 gem 'pony'
+gem 'nifty-generators'
+gem 'client_side_validations'
+gem 'thinking-sphinx', '2.0.3'
 
 #CAS stuff
 gem 'rubycas-client'

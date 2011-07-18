@@ -1,27 +1,48 @@
 class FoodsController < ApplicationController
   before_filter :authenticate
-  helper_method :sort_column, :sort_direction
   
   def index
-    #@foods = Food.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
-    @foods = Food.search(params[:search])
-    
-    @meal = Meal.new if signed_in?
+    # @foods = Food.where("name like ?", "%#{params[:q]}%")
+    @foods = Food.search params[:q], :match_mode => :all, :excerpts => false
+    respond_to do |format|
+      format.html
+      format.json { render :json => @foods.map(&:attributes) }
+    end
   end
-  
+
   def show
-    @foods = Food.search(params[:search])
-     #@foods = Food.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
-    @meal = Meal.new if signed_in?
+    @food = Food.find(params[:id])
   end
-  
-  private
-  
-  def sort_column
-    Meal.column_names.include?(params[:sort]) ? params[:sort] : "name"
+
+  def new
+    @food = Food.new
   end
-  
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+
+  def create
+    @food = Food.new(params[:food])
+    if @food.save
+      redirect_to @food, :notice => "Successfully created food."
+    else
+      render :action => 'new'
+    end
+  end
+
+  def edit
+    @food = Food.find(params[:id])
+  end
+
+  def update
+    @food = Food.find(params[:id])
+    if @food.update_attributes(params[:food])
+      redirect_to @food, :notice  => "Successfully updated food."
+    else
+      render :action => 'edit'
+    end
+  end
+
+  def destroy
+    @food = Food.find(params[:id])
+    @food.destroy
+    redirect_to foods_url, :notice => "Successfully destroyed food."
   end
 end
