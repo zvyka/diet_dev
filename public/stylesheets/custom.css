@@ -134,6 +134,18 @@ td.meal_list {
   padding: 1em;
 }
 
+#meal_container {
+	position: relative; 
+	width: 100%; 
+	height: 100%;
+}
+
+#meal_top_right {
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+
 td.sidebar {
   width: 20%;
   padding: 1em;

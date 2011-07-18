@@ -1,17 +1,51 @@
-<p>
-  <strong>Name:</strong>
-  <%= @meal.name %>
-</p>
+<div id="meal_container">
+<div id="meal_top_right"><%= link_to "Edit", edit_meal_path(@meal) %> | <%= link_to "Delete", @meal, :confirm => 'Are you sure?', :method => :delete %> | <%= link_to "View all", user_path(current_user) %></div>
 
-<strong>Foods:</strong>
-<ul>
-<% for food in @meal.foods %>
-  <li><%= food.name %></li>
+<h1>Meal details</h1>
+
+<p>
+<strong> <% times = ["in the morning", "in the afternoon", "during the evening", "at night"] %>
+	<% locs = ["at the North Campus Diner", "at the South Campus Diner", "at 251 North (Denton)", "at the Shops", "off campus"] %>
+		On <%= @meal.date_eaten.strftime("%A, %B %e") %> 
+		<%= times[@meal.time_of_day.to_i - 1] %>
+		 you spent $<%= @meal.price %>0 
+		when you were <%= locs[@meal.location.to_i - 1] %>, and you ate: </strong>
+
+<% table_for(@meal.foods) do |t| %>
+  <% t.head do %>
+    <% t.r do %>
+      <%= t.h('Name') %>
+			<%= t.h("Serving Size (g)") %>
+			<%= t.h("Serving Type") %>
+      <%= t.h("Serving Size Alt (g)") %>
+      <%= t.h("Serving Type Alt") %>
+			<%= t.h('Proteins (g)') %>
+      <%= t.h('Fats (g)') %>
+			<%= t.h('Carbs (g)') %>
+			<%= t.h('Sugars (g)') %>
+      <%= t.h('Calcium (mg)') %>
+      <%= t.h('Vitamin C (g)') %>
+			<%= t.h('Cholesterol (g)') %>
+      <%= t.h('Saturated Fats (g)') %>
+    <% end %>
+  <% end %>
+  <% t.body do |food| %>
+  
+    <% t.r do %>
+      <%= t.d(h(food.name)) %>
+			<%= t.d(h(food.weight_1_gms )) %>
+			<%= t.d(h(food.weight_1_desc )) %>
+			<%= t.d(h(food.weight_2_gms )) %>
+			<%= t.d(h(food.weight_2_desc )) %>
+      <%= t.d(h(food.protein)) %>
+			<%= t.d(h(food.lipid_total)) %>
+      <%= t.d(h(food.carbohydrates)) %>
+      <%= t.d(h(food.sugar_total)) %>
+      <%= t.d(h(food.iron)) %>
+			<%= t.d(h(food.vit_c)) %>
+      <%= t.d(h(food.cholesterol)) %>
+			<%= t.d(h(food.fa_sat)) %>
+    <% end %>
+  <% end %>
 <% end %>
-</ul>
-
-<p>
-  <%= link_to "Edit", edit_meal_path(@meal) %> |
-  <%= link_to "Destroy", @meal, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", user_path(current_user) %>
-</p>
+</div>
