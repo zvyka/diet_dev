@@ -2,7 +2,7 @@
 <% form_for @meal, :validate => true do |f| %>
   <p>
     <%= f.label :date_eaten, "When did you eat your meal?" %><br />
-    <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= Date.today %>
+    <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= params[:date_eaten] ||= Date.today %>
   </p>
 	<p>
     <%= f.label :time_of_day, "In the Morning, Afternoon, Evening, or at Night?" %><br />

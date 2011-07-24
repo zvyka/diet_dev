@@ -4,16 +4,25 @@
       <h1>
         <%= @user.name %>
       </h1>
+			<strong>Click on the date to add a new meal</strong>
         <div id="calendar">
 				  <h2 id="month">
 				    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d") %>
-				    <%=h @date.strftime("%B %Y") %>
+				    <%=h @date.strftime("%B %Y") %> : <%= Date.today.month %>
 				    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
 				  </h2>
 				  <% calendar_for @user.meals, :year => @date.year, :month => @date.month do |calendar| %>
 				    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
 				    <% calendar.day(:day_method => :date_eaten) do |date, meals| %>
-				      <%= date.day %>
+								<% unless date > Date.today %>
+									<% if date.month == Date.today.month %>
+				      			<%= link_to date.day, :controller => "meals", :action => "new", :date_eaten => "#{date.year}-#{date.month}-#{date.day}" %>
+									<% else %>
+										<%= date.day %>
+									<% end %>
+								<% else %>
+									<%= date.day %>
+								<% end %>
 				      <ul>
 				        <% for meal in meals.sort_by(&:time_of_day) %>
 									<% times = ["Morning", "Afternoon", "Evening", "Night"] %>
@@ -25,8 +34,7 @@
 				</div>
     </td>
     <td class="sidebar round">
-			<strong>You have <%= pluralize(@user.meals.count, "meal") %></strong><br /><br />
-			<p><%= link_to "New Meal", new_meal_path %></p>
+			<strong>[Analysis link goes here]</strong><br /><br />
 			 <br />
     </td>
   </tr>

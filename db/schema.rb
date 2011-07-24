@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110717185040) do
+ActiveRecord::Schema.define(:version => 20110724043441) do
+
+  create_table "announcements", :force => true do |t|
+    t.text     "message"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "foods", :force => true do |t|
     t.string "name"
@@ -84,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20110717185040) do
     t.date     "date_eaten"
     t.integer  "time_of_day"
     t.string   "name"
+    t.integer  "servings",                                  :default => 1
   end
 
   create_table "users", :force => true do |t|

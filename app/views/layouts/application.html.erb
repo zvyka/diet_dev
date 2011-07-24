@@ -14,6 +14,11 @@
   <body>
     <div class="container">
       	<%= render 'layouts/header' %>
+				<div class="notice">
+					<% for announcement in Announcement.current_announcements %>
+					<p><b><%=h announcement.starts_at.strftime("%A, %B %e") %>: </b><%= h announcement.message %></p>
+					<% end %>
+				</div>
 		      <section class="round">
 			        <% flash.each do |key, value| %>
 			          <%= content_tag(:div, value, :class => "flash #{key}") %>

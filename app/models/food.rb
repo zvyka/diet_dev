@@ -17,6 +17,13 @@ class Food < ActiveRecord::Base
     
     #fuzzy search (min 2 characters)
     set_property :min_infix_len => 2
+    
+    #ignore punctuation and some other characters
+    set_property :ignore_chars => "U+0027"    
+    set_property :charset_table => "0..9, A..Z->a..z, _, a..z, U+410..U+42F->U+430..U+44F, U+430..U+44F"
+    
+    #ignore common words
+    set_property :stopwords => "/Users/jon/Sites/diet_app/stopwords.txt"
   end
     
   # def self.search(search)

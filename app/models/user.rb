@@ -20,24 +20,23 @@ require 'digest'
 
 class User < ActiveRecord::Base
    attr_accessor :password
-  attr_accessible :name, :email, 
-                  #:password, :password_confirmation, 
-                  :UID, :birth_year, :grad_year, :is_male, :height, :is_special 
+  attr_accessible :name, :email, :UID, :birth_year, :grad_year, :is_male, :height, :is_special 
   
-  has_many :meals #, :dependent => :destroy
+  has_many :meals , :dependent => :destroy
 
-  email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  #email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  email_regex = /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i #newer regex, better?
+  
+  name_regex = /\A[a-zA-Z]+\z/
   
   validates :name,  :presence => true,
-                    :length   => { :maximum => 50 }
+                    :length   => { :maximum => 50 },
+                    :format => { :with => name_regex, :message => "Invalid name format"}
+                    
   validates :email, :presence => true,
-                    :format   => { :with => email_regex },
+                    :format   => { :with => email_regex, :message => "Not a valid email format" },
                     :uniqueness => {:case_sensitive  => false }
-  # Automatically create the virtual attribute 'password_confirmation'.
-   # validates :password, :presence     => true,
-   #                               :confirmation => true,
-   #                               :length       => { :within => 6..40 }
-  
+
   validates :UID, :presence => true, #UMD UID
                   :uniqueness => true
   validates :birth_year, :presence => true, #Year of birth
@@ -47,20 +46,8 @@ class User < ActiveRecord::Base
                         :numericality => true,
                         :inclusion => {:in => 2011..2017}
   validates :height, :presence => true,
-                     :numericality => true
+                     :numericality => { :greater_than => 0}
   
-  #before_save :encrypt_password
-  
-  # Return true if the user's password matches the submitted password.
-   # def has_password?(submitted_password)
-   #      encrypted_password == encrypt(submitted_password)
-   #   end
-  
-  # def self.authenticate(email, submitted_password)
-  #     user = find_by_email(email)
-  #     return nil if user.nil?
-  #     return user if user.has_password?(submitted_password)
-  #   end
 
   def self.authenticate_with_UID(uid)
     user = find_by_UID(uid)
@@ -70,12 +57,6 @@ class User < ActiveRecord::Base
       return user
     end
   end
-   
-   # def self.authenticate_with_salt(id, cookie_salt)
-   #      user = find_by_id(id)
-   #      (user && user.salt == cookie_salt) ? user : nil
-   #    end 
-
      
    def index
      @meals = Meal.search(params[:search])
@@ -88,20 +69,6 @@ class User < ActiveRecord::Base
        scoped
      end
    end
-     
-  private
-     # def encrypt_password
-     #        self.salt = make_salt if new_record?
-     #        self.encrypted_password = encrypt(password)
-     #      end
-     #      def encrypt(string)
-     #        secure_hash("#{salt}--#{string}")
-     #      end
-     #      def make_salt
-     #        secure_hash("#{Time.now.utc}--#{password}")
-     #      end
-     #      def secure_hash(string)
-     #        Digest::SHA2.hexdigest(string)
-     #      end
+    
 end
 

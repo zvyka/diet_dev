@@ -1,20 +1,17 @@
+
+
 <h1>Welcome! How can we help you?</h1>
 	<p>
     <div id="help">
 			<ul>
-				<dt><%= link_to "Give us your feedback!", 'http://teamdietumd.uservoice.com/' %></dt>
-		    <dd>Let us know how we're doing! Report bugs or feature requests here. For your conveniance, a feedback button is always available on the bottom right corner of the website on every page.</dd>
+				<dt><a href="#" onclick="UserVoice.showPopupWidget(); return false;">Give us your feedback!</a>
+				</dt>
+		    <dd>Let us know how we're doing! Report problems, bugs or feature requests here.</dd>
 		
     		<dt><%= link_to "DIET Tracker Basics", '/tutorial' %></dt>
 		    <dd>Getting started, account settings, searching for foods</dd>
     
-		    <dt>Something's not working</dt> 
-		    <dd>Can't login, missing meals, food search failure</dd>
-    
-				<dt><%= link_to "Report A Problem", '/help/report-a-problem' %></dt>
-		    <dd>Hacked accounts, spam, privacy breach</dd>
-    
-		    <dt>Mobile Help</dt>
+		    <dt><%= link_to "Mobile Help", '/mobile' %></dt>
 		    <dd>Connecting your mobile, SMS/text messaging device to DIET Tracker</dd>
 		</ul>
 	</div>

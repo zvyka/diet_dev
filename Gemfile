@@ -12,6 +12,7 @@ gem 'pony'
 gem 'nifty-generators'
 gem 'client_side_validations'
 gem 'thinking-sphinx', '2.0.3'
+gem "nifty-generators"
 
 #CAS stuff
 gem 'rubycas-client'

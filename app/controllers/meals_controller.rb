@@ -5,8 +5,9 @@ class MealsController < ApplicationController
   # auto_complete_for :foods, :name
   
   def index
-    @meals = Meal.find(:all)
-    @date = params[:month] ? Date.parse(params[:month]) : Date.today
+    # @meals = Meal.find(:all)
+    #     @date = params[:month] ? Date.parse(params[:month]) : Date.today
+    redirect_to user_path(current_user)
   end
 
   def show
@@ -31,7 +32,7 @@ class MealsController < ApplicationController
   def create
     # @foods = Food.search(params[:search])
     # @meal  = current_user.meals.build(params[:meal])
-    # @meal.update_attributes(params[:meal])
+    # @meal.update_attributes(params[:meal]) 
     @meal = Meal.new(params[:meal])
     if @meal.save
       flash[:success] = "Meal saved!"
@@ -41,7 +42,7 @@ class MealsController < ApplicationController
     end
   end
 
-  def update
+  def update       
       @meal = Meal.find(params[:id])
       if @meal.update_attributes(params[:meal])
         redirect_to @meal, :notice  => "Successfully updated meal."
@@ -53,7 +54,7 @@ class MealsController < ApplicationController
     def destroy
       @meal = Meal.find(params[:id])
       @meal.destroy
-      redirect_to meals_url, :notice => "Successfully destroyed meal."
+      redirect_to user_path(current_user), :notice => "Successfully deleted meal."
     end
   
   private

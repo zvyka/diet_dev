@@ -162,14 +162,13 @@ div.field, div.actions {
 }
 
 .field_with_errors {
-  margin-top: 10px;
-  padding: 2px;
-  background-color: red;
-  display: table;
+  display: inline;
 }
 
-.field_with_errors label {
-  color: #fff;
+.field_with_errors .message {
+  color: red;
+	padding-left: 10px;
+	font-size: 12px;
 }
 
 #error_explanation {

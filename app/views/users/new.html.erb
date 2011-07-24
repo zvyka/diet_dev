@@ -1,5 +1,5 @@
 <h1>Sign up</h1>
-<%= form_for(@user) do |f| %>
+<%= form_for @user, :validate => true do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
     <%= f.label :name %><br />
@@ -26,8 +26,9 @@
 		<%= f.select(:is_male, [["Male", true],["Female", false]])%>
 	</div>
 	<div class="field">
-    <%= f.label :height, "Your height (in cm, for now)" %><br />
-    <%= f.text_field :height %>
+    <%= f.label :height, "Use the slider to provide your height: " %> <strong><span id="size-range"></span></strong> <i>(feet and inches)</i>
+    <%= f.hidden_field :height %>
+		<div id="slider-range"></div>
   </div>
 	<div class="field">
     <%= f.label :is_special, "Specialty Diet" %><br />

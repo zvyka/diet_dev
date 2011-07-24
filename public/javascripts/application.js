@@ -20,13 +20,20 @@
 // });
 
 $(function() {
+	// ***Meal form***
+	
+	// 			Grabs meal input
   $("#meal_food_tokens").tokenInput("/foods.json", {
     crossDomain: false,
     prePopulate: $("#meal_food_tokens").data("pre"),
 		theme: ""
   });
+	
+	//Makes the calendar
  $("#meal_date_eaten").datepicker();
-$( "#slider" ).slider({
+
+	//Makes the slider for the meal price
+ $("#slider").slider({
 			value: $( "#meal_price" ).val(),
 			min: 0,
 			max: 40,
@@ -36,4 +43,20 @@ $( "#slider" ).slider({
 			}
 		});
 		$( "#meal_price" ).val( $( "#slider" ).slider( "value" ) );
+		
+		//  ***User form***
+		
+		//Makes the slider for the user's height.
+		$(function() { 
+		    $( "#slider-range" ).slider({ 
+		        min: 0,
+						max: 96, 
+		        slide: function( event, ui ) { 
+		            $("#size-range").html(Math.floor(ui.value / 12) + "'" + (ui.value % 12) + '"'); 
+		            $("#user_height").val(ui.value); 
+		        } 
+		    }); 
+		    $("#size-range").html(Math.floor($("#slider-range").slider("value") / 12) + "'" + ($("#slider-range").slider("value") % 12) + '"');
+				$("#user_height").val($("#slider-range").slider("value")); 
+		});
 });
