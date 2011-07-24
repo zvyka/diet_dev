@@ -44,12 +44,14 @@ class UsersController < ApplicationController
       sign_in @user
       flash[:success] = "Welcome!"
       redirect_to @user
+      f = File.new('/Users/jon/Sites/mail_pass.txt')
+      pass= f.gets
       Pony.mail(:from => 'teamdietumd@gmail.com', :to => @user.email, :subject => 'Welcome to the DIET Tracker!', :html_body => '<h1>Welcome!</h1> <p> Thanks for joining up! </p> <p> You rock! </p>',:body => 'Thanks for joining us! You rock!' ,:via => :smtp, :via_options => {
           :address              => 'smtp.gmail.com',
           :port                 => '587',
           :enable_starttls_auto => true,
           :user_name            => 'teamdietumd@gmail.com',
-          :password             => 'Gemstone13',
+          :password             => pass,
           :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
           :domain               => "localhost.localdomain" # the HELO domain provided by the client to the server
         })

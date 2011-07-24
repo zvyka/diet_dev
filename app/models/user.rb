@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   #email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   email_regex = /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i #newer regex, better?
   
-  name_regex = /\A[a-zA-Z]+\z/
+  name_regex = /\A[a-zA-Z ]+\z/
   
   validates :name,  :presence => true,
                     :length   => { :maximum => 50 },
