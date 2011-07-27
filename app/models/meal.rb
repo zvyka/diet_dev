@@ -3,8 +3,12 @@ class Meal < ActiveRecord::Base
   
   belongs_to :user
   
-  has_many :ingredients
+  has_many :ingredients, :dependent => :destroy
   has_many :foods, :through => :ingredients
+  accepts_nested_attributes_for :ingredients
+  
+  
+  
   attr_reader :food_tokens
   
   def food_tokens=(ids)

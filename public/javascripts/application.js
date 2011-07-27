@@ -23,11 +23,12 @@ $(function() {
 	// ***Meal form***
 	
 	// 			Grabs meal input
-  $("#meal_food_tokens").tokenInput("/foods.json", {
-    crossDomain: false,
-    prePopulate: $("#meal_food_tokens").data("pre"),
-		theme: ""
-  });
+  $('*[id*=food_tokens]').tokenInput("/foods.json", {
+	  crossDomain: false,
+	  prePopulate: $('*[id*=food_tokens]').data("pre"),
+		theme: "",
+		tokenLimit: 1
+	});
 	
 	//Makes the calendar
  $("#meal_date_eaten").datepicker();

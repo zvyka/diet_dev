@@ -19,7 +19,7 @@
   </p>
 	<p>
     <%= f.label :food_tokens, "What did you eat?" %><br />
- 		<%= f.text_field :food_tokens, "data-pre" => @meal.foods.map(&:attributes).to_json %>		
+ 		<%= f.text_field :food_tokens, "data-pre" => @meal.foods.map(&:attributes).to_json %>
   </p>
 	<div class="field">
     <%= f.hidden_field :user_id, :value => current_user.id %>
