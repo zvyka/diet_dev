@@ -1,5 +1,5 @@
 <h1>Add your meals</h1>
-<% form_for @meal, :validate => true do |f| %>
+<% form_for @meal do |f| %>
   <p>
     <%= f.label :date_eaten, "When did you eat your meal?" %><br />
     <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= params[:date_eaten] ||= Date.today %>
@@ -16,11 +16,13 @@
     <%= f.label :price, "Use the slider to choose the closest price: $" %>
 		<%= f.text_field :price, :size => 3, :value => @meal.price %>
     <div id="slider"></div>
-  </p>
+  </p>	
+	<% f.fields_for :ingredients do |builder|%>
 	<p>
-    <%= f.label :food_tokens, "What did you eat?" %><br />
- 		<%= f.text_field :food_tokens, "data-pre" => @meal.foods.map(&:attributes).to_json %>
+    <%= builder.label :food_id, "What did you eat?" %><br />
+ 		<%= builder.text_field :food_id %>
   </p>
+		<% end %>
 	<div class="field">
     <%= f.hidden_field :user_id, :value => current_user.id %>
   </div>

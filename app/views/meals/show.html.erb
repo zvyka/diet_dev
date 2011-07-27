@@ -11,6 +11,7 @@
 		 you spent $<%= @meal.price %>0 
 		when you were <%= locs[@meal.location.to_i - 1] %>, and you ate: </strong>
 
+
 <% table_for(@meal.foods) do |t| %>
   <% t.head do %>
     <% t.r do %>

@@ -9,11 +9,11 @@ class Meal < ActiveRecord::Base
   
   
   
-  attr_reader :food_tokens
-  
-  def food_tokens=(ids)
-    self.food_ids = ids.split(",")    
-  end
+  # attr_reader :food_tokens
+  # 
+  # def food_tokens=(ids)
+  #   self.food_ids = ids.split(",")    
+  # end
 
   validates :date_eaten, :presence => true
   validates :time_of_day, :presence => true
