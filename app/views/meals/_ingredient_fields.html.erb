@@ -1,7 +1,15 @@
-<div class="fields">
-	<p>
-		<%= f.label :food_id, "Food" %>
-		<%= f.link_to_remove "remove" %><br />
-		<%= f.text_field :food_id %>
-	</p>
-</div>
+<p class="fields">
+	<%= f.label :what_food, "Food" %><br />
+	<%= f.text_field :what_food %>
+	<%= f.label :servings, "How many?" %>
+	<%= f.text_field :servings %>
+	<%= f.link_to_remove "remove" %>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+	    var data = <%= @autocomplete_foods %>;
+	    $('*[id*=what_food]').autocomplete( { source: data } );
+	});
+	
+	</script>
+</p>

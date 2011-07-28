@@ -1,26 +1,25 @@
-<h1>Add your meals</h1>
-<%= nested_form_for @meal do |f| %>
+<%= nested_form_for @meal do |f| %>  
   <p>
-    <%= f.label :date_eaten, "When did you eat your meal?" %><br />
-    <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= params[:date_eaten] ||= Date.today %>
-  </p>
-	<p>
-    <%= f.label :time_of_day, "In the Morning, Afternoon, Evening, or at Night?" %><br />
-		<%= f.select :time_of_day, [["Morning", 1], ["Afternoon", 2], ["Evening", 3], ["Night", 4]]%>
-  </p>
-	<p>
-    <%= f.label :location, "Where did you eat?" %><br />
-    <%= f.select :location, [["The Diner", 1], ["South Campus", 2], ["251 North (Denton)", 3], ["Shops", 4], ["Off-Campus", 5]] %>
-  </p>
-	<p>
-    <%= f.label :price, "Use the slider to choose the closest price: $" %>
-		<%= f.text_field :price, :size => 3, :value => @meal.price %>
-    <div id="slider"></div>
-  </p>	
-	<%= f.fields_for :ingredients %>	
-	<p><%= f.link_to_add "Add Ingredient", :ingredients %></p>
-	<div class="field">
-    <%= f.hidden_field :user_id, :value => current_user.id %>
-  </div>
-  <p><%= f.submit %></p>
+	    <%= f.label :date_eaten, "When did you eat your meal?" %><br />
+	    <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= params[:date_eaten] ||= Date.today %>
+	  </p>
+		<p>
+	    <%= f.label :time_of_day, "In the Morning, Afternoon, Evening, or at Night?" %><br />
+			<%= f.select :time_of_day, [["Morning", 1], ["Afternoon", 2], ["Evening", 3], ["Night", 4]]%>
+	  </p>
+		<p>
+	    <%= f.label :location, "Where did you eat?" %><br />
+	    <%= f.select :location, [["The Diner", 1], ["South Campus", 2], ["251 North (Denton)", 3], ["Shops", 4], ["Off-Campus", 5]] %>
+	  </p>
+		<p>
+	    <%= f.label :price, "Use the slider to choose the closest price: $" %>
+			<%= f.text_field :price, :size => 3, :value => @meal.price %>
+	    <div id="slider"></div>
+	  </p>
+		<div class="field">
+	    <%= f.hidden_field :user_id, :value => current_user.id %>
+	  </div>
+  <%= f.fields_for :ingredients %>	
+	<p><%= f.link_to_add "Add Food", :ingredients %></p> 
+  <p><%= f.submit "Submit" %></p>  
 <% end %>

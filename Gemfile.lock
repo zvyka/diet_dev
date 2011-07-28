@@ -58,6 +58,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    mocha (0.9.12)
     mysql2 (0.2.6)
     nested_form (0.1.1)
     nifty-generators (0.4.6)
@@ -79,6 +80,8 @@ GEM
       activesupport (= 3.0.5)
       bundler (~> 1.0)
       railties (= 3.0.5)
+    rails3-jquery-autocomplete (0.9.0)
+      rails (~> 3.0)
     railties (3.0.5)
       actionpack (= 3.0.5)
       activesupport (= 3.0.5)
@@ -125,12 +128,14 @@ DEPENDENCIES
   formtastic
   googlecharts
   jquery-rails (>= 1.0.12)
+  mocha
   mysql2
   nested_form
   nifty-generators
   pony
   rack-google_analytics
   rails (= 3.0.5)
+  rails3-jquery-autocomplete
   rspec (= 2.5.0)
   rspec-rails (= 2.5.0)
   rubycas-client

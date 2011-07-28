@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110724043441) do
+ActiveRecord::Schema.define(:version => 20110728184342) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -77,22 +77,20 @@ ActiveRecord::Schema.define(:version => 20110724043441) do
 
   create_table "ingredients", :force => true do |t|
     t.integer  "meal_id"
-    t.integer  "food_id"
+    t.string   "what_food"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "servings"
   end
 
   create_table "meals", :force => true do |t|
-    t.integer  "food_id"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "price",       :precision => 8, :scale => 2
-    t.integer  "location"
+    t.integer  "user_id"
     t.date     "date_eaten"
+    t.integer  "location"
+    t.decimal  "price",       :precision => 10, :scale => 0
     t.integer  "time_of_day"
-    t.string   "name"
-    t.integer  "servings",                                  :default => 1
   end
 
   create_table "users", :force => true do |t|

@@ -14,6 +14,7 @@ gem 'client_side_validations'
 gem 'thinking-sphinx', '2.0.3'
 gem "nifty-generators"
 gem "nested_form"
+gem "rails3-jquery-autocomplete"
 
 #CAS stuff
 gem 'rubycas-client'
@@ -35,3 +36,4 @@ end
 group :production do
   gem 'rack-google_analytics', :require => "rack/google_analytics"
 end
+gem "mocha", :group => :test
