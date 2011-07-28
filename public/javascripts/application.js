@@ -23,7 +23,7 @@ $(function() {
 	// ***Meal form***
 	
 	// 			Grabs meal input
-  $('*[id*=ingredients_attributes]').tokenInput("/foods.json", {
+  $('*[id*=food_tokens]').tokenInput("/foods.json", {
 	  crossDomain: false,
 	  prePopulate: $('*[id*=food_tokens]').data("pre"),
 		theme: "",

@@ -1,5 +1,5 @@
 <h1>Add your meals</h1>
-<% form_for @meal do |f| %>
+<%= nested_form_for @meal do |f| %>
   <p>
     <%= f.label :date_eaten, "When did you eat your meal?" %><br />
     <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= params[:date_eaten] ||= Date.today %>
@@ -17,15 +17,10 @@
 		<%= f.text_field :price, :size => 3, :value => @meal.price %>
     <div id="slider"></div>
   </p>	
-	<% f.fields_for :ingredients do |builder|%>
-	<p>
-    <%= builder.label :food_id, "What did you eat?" %><br />
- 		<%= builder.text_field :food_id %>
-  </p>
-		<% end %>
+	<%= f.fields_for :ingredients %>	
+	<p><%= f.link_to_add "Add Ingredient", :ingredients %></p>
 	<div class="field">
     <%= f.hidden_field :user_id, :value => current_user.id %>
   </div>
   <p><%= f.submit %></p>
 <% end %>
-

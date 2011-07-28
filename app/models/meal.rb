@@ -3,11 +3,12 @@ class Meal < ActiveRecord::Base
   
   belongs_to :user
   
+  # has_many :ingredients, :dependent => :destroy
+  #   has_many :foods, :through => :ingredients
+  #   accepts_nested_attributes_for :ingredients
+  
   has_many :ingredients, :dependent => :destroy
-  has_many :foods, :through => :ingredients
-  accepts_nested_attributes_for :ingredients
-  
-  
+  accepts_nested_attributes_for :ingredients, :reject_if => lambda { |a| a[:id].blank? }, :allow_destroy => true
   
   # attr_reader :food_tokens
   # 

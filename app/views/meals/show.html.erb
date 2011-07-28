@@ -10,45 +10,47 @@
 		<%= times[@meal.time_of_day.to_i - 1] %>
 		 you spent $<%= @meal.price %>0 
 		when you were <%= locs[@meal.location.to_i - 1] %>, and you ate: </strong>
-
-
-<% table_for(@meal.foods) do |t| %>
-  <% t.head do %>
-    <% t.r do %>
-      <%= t.h('Name') %>
-			<%= t.h("Serving Size (g)") %>
-			<%= t.h("Serving Type") %>
-      <%= t.h("Serving Size Alt (g)") %>
-      <%= t.h("Serving Type Alt") %>
-			<%= t.h('Calories') %>
-			<%= t.h('Proteins (g)') %>
-      <%= t.h('Fats (g)') %>
-			<%= t.h('Carbs (g)') %>
-			<%= t.h('Sugars (g)') %>
-      <%= t.h('Calcium (mg)') %>
-      <%= t.h('Vitamin C (g)') %>
-			<%= t.h('Cholesterol (g)') %>
-      <%= t.h('Saturated Fats (g)') %>
-    <% end %>
-  <% end %>
-  <% t.body do |food| %>
-  
-    <% t.r do %>
-      <%= t.d(h(food.name)) %>
-			<%= t.d(h(food.weight_1_gms )) %>
-			<%= t.d(h(food.weight_1_desc )) %>
-			<%= t.d(h(food.weight_2_gms )) %>
-			<%= t.d(h(food.weight_2_desc )) %>
-			<%= t.d(h(food.calories )) %>
-      <%= t.d(h(food.protein)) %>
-			<%= t.d(h(food.lipid_total)) %>
-      <%= t.d(h(food.carbohydrates)) %>
-      <%= t.d(h(food.sugar_total)) %>
-      <%= t.d(h(food.iron)) %>
-			<%= t.d(h(food.vit_c)) %>
-      <%= t.d(h(food.cholesterol)) %>
-			<%= t.d(h(food.fa_sat)) %>
-    <% end %>
-  <% end %>
-<% end %>
+		
+		<% table_for(@meal.ingredients) do |t| %>
+		  <% t.head do %>
+		    <% t.r do %>
+		      <%= t.h('Name') %>
+					<%= t.h("Serving Size (g)") %>
+					<%= t.h("Serving Type") %>
+		      <%= t.h("Serving Size Alt (g)") %>
+		      <%= t.h("Serving Type Alt") %>
+					<%= t.h('Calories') %>
+					<%= t.h('Proteins (g)') %>
+		      <%= t.h('Fats (g)') %>
+					<%= t.h('Carbs (g)') %>
+					<%= t.h('Sugars (g)') %>
+		      <%= t.h('Calcium (mg)') %>
+		      <%= t.h('Vitamin C (g)') %>
+					<%= t.h('Cholesterol (g)') %>
+		      <%= t.h('Saturated Fats (g)') %>
+		    <% end %>
+		  <% end %>
+		  <% t.body do |ingredient| %>
+				<% for food in @foods %>
+					<% if ingredient.food_id == food.id%>
+				    <% t.r do %>
+				      <%= t.d(h(food.name)) %>
+							<%= t.d(h(food.weight_1_gms )) %>
+							<%= t.d(h(food.weight_1_desc )) %>
+							<%= t.d(h(food.weight_2_gms )) %>
+							<%= t.d(h(food.weight_2_desc )) %>
+							<%= t.d(h(food.calories )) %>
+				      <%= t.d(h(food.protein)) %>
+							<%= t.d(h(food.lipid_total)) %>
+				      <%= t.d(h(food.carbohydrates)) %>
+				      <%= t.d(h(food.sugar_total)) %>
+				      <%= t.d(h(food.iron)) %>
+							<%= t.d(h(food.vit_c)) %>
+				      <%= t.d(h(food.cholesterol)) %>
+							<%= t.d(h(food.fa_sat)) %>
+				    <% end %>
+				  <% end %>
+				<% end %>
+			<% end %>
+		<% end %>
 </div>
