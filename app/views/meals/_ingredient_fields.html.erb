@@ -3,13 +3,32 @@
 	<%= f.text_field :what_food %>
 	<%= f.label :servings, "How many?" %>
 	<%= f.text_field :servings %>
+	<label id="serving_size"></label>
 	<%= f.link_to_remove "remove" %>
 
 	<script type="text/javascript">
 	$(document).ready(function() {
-	    var data = <%= @autocomplete_foods %>;
-	    $('*[id*=what_food]').autocomplete( { source: data } );
+	    var name = <%= @autocomplete_foods %>;
+	    $('*[id*=what_food]').autocomplete( { source: name } );
 	});
-	
+			
+	$(function() {
+	        $('*[id*=what_food]').focusout(function() {
+						current_val = $(this).val();
+						 var foodArray = "<%= @food_array %>".split("|");
+						var individual = "";
+						var message = "One serving is: ";
+						 for (var i in foodArray) {
+							individual = foodArray[i].split(":");
+								if(individual[0].toString().indexOf(current_val.toString()) != -1) {
+									if(individual[1] == ""){
+										message = "each"
+									}
+										//$('*[id*=serving_size]').text(message + individual[1]);
+										$(this).next().next().next().text(message + individual[1]);
+								}
+						}
+	        })
+	      })
 	</script>
 </p>

@@ -14,8 +14,13 @@ class MealsController < ApplicationController
     @foods = Food.all
     @keys = @foods.map { |x| x.name }
     @autocomplete_foods = @keys.to_json.html_safe
-    @s_keys = @foods.map { |x| x.weight_1_desc }
-    @autocomplete_servings = @s_keys.to_json.html_safe
+
+    s_keys = "{ "
+    @foods.map do |x|
+      s_keys += "#{x.name}:#{x.weight_1_desc}|"
+    end
+    s_keys += "}"
+    @food_array = s_keys 
   end
 
   def create
@@ -32,8 +37,13 @@ class MealsController < ApplicationController
     @foods = Food.all
     @keys = @foods.map { |x| x.name }
     @autocomplete_foods = @keys.to_json.html_safe
-    @s_keys = @foods.map { |x| x.weight_1_desc }
-    @autocomplete_servings = @s_keys.to_json.html_safe
+
+    s_keys = "{ "
+    @foods.map do |x|
+      s_keys += "#{x.name}:#{x.weight_1_desc}|"
+    end
+    s_keys += "}"
+    @food_array = s_keys
   end
 
   def update
