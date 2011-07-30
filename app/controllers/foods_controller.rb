@@ -3,10 +3,21 @@ class FoodsController < ApplicationController
   
   def index
     # @foods = Food.where("name like ?", "%#{params[:q]}%")
-    @foods = Food.search params[:q], :match_mode => :all, :excerpts => false
+    @foods = Food.search params[:term], :match_mode => :all, :excerpts => false
     respond_to do |format|
       format.html
-      format.json { render :json => @foods.map(&:attributes) }
+      # format.json { render :json => @foods.map(&:attributes) }
+      #       format.js { render :json => @foods.map(&:name)}
+      format.json do 
+             # make an array
+             @foods.map! do |u| 
+               {
+                 # :name => u.name,
+                 :value => u.name
+               }
+             end
+             render :json => @foods 
+           end
     end
   end
 
