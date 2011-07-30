@@ -1,8 +1,12 @@
 class MealsController < ApplicationController
   
-  def index
-    @meals = Meal.all
-  end
+  before_filter CASClient::Frameworks::Rails::Filter
+
+    before_filter :authenticate, :only => [:create, :destroy]
+
+    def index
+      redirect_to user_path(current_user)
+    end
 
   def show
     @meal = Meal.find(params[:id])
@@ -12,12 +16,10 @@ class MealsController < ApplicationController
   def new
     @meal = Meal.new
     @foods = Food.all
-    @keys = @foods.map { |x| x.name }
-    @autocomplete_foods = @keys.to_json.html_safe
     
     s_keys = "{ "
     @foods.map do |x|
-      s_keys += "#{x.name}:#{x.weight_1_desc}|"
+      s_keys += "#{x.name}:#{x.weight_1_desc}:#{x.weight_1_gms}|"
     end
     s_keys += "}"
     @food_array = s_keys 
@@ -35,12 +37,10 @@ class MealsController < ApplicationController
   def edit
     @meal = Meal.find(params[:id])
     @foods = Food.all
-    @keys = @foods.map { |x| x.name }
-    @autocomplete_foods = @keys.to_json.html_safe
 
     s_keys = "{ "
     @foods.map do |x|
-      s_keys += "#{x.name}:#{x.weight_1_desc}|"
+      s_keys += "#{x.name}:#{x.weight_1_desc}:#{x.weight_1_gms}|"
     end
     s_keys += "}"
     @food_array = s_keys
@@ -58,6 +58,6 @@ class MealsController < ApplicationController
   def destroy
     @meal = Meal.find(params[:id])
     @meal.destroy
-    redirect_to meals_url, :notice => "Successfully destroyed meal."
+    redirect_to user_path(current_user), :notice => "Successfully destroyed meal."
   end
 end

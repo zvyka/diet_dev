@@ -91,11 +91,11 @@ class AnnouncementsController < ApplicationController
   # DELETE /announcements/1
   # DELETE /announcements/1.xml
   def destroy
-    @announcement = Announcement.find(params[:id])
-    @announcement.destroy
     if current_user.UID != "jindig"
       redirect_to user_path(current_user), :notice => "Unauthorized User."
     end
+    @announcement = Announcement.find(params[:id])
+    @announcement.destroy
 
     respond_to do |format|
       format.html { redirect_to(announcements_url) }

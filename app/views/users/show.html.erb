@@ -11,9 +11,9 @@
 				    <%=h @date.strftime("%B %Y") %> : <%= Date.today.month %>
 				    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
 				  </h2>
-				  <% calendar_for @user.meals, :year => @date.year, :month => @date.month do |calendar| %>
+				  <%= calendar_for @user.meals, :year => @date.year, :month => @date.month do |calendar| %>
 				    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
-				    <% calendar.day(:day_method => :date_eaten) do |date, meals| %>
+				    <%= calendar.day(:day_method => :date_eaten) do |date, meals| %>
 								<% unless date > Date.today %>
 									<% if date.month == Date.today.month %>
 				      			<%= link_to date.day, :controller => "meals", :action => "new", :date_eaten => "#{date.year}-#{date.month}-#{date.day}" %>

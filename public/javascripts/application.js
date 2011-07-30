@@ -1,34 +1,18 @@
-// $(function() {
-//   $("#foods th a, #foods .pagination a").live("click", function() {
-//     $.getScript(this.href);
-//     return false;
-//   });
-//   $("#foods_search input").keyup(function() {
-//     $.get($("#foods_search").attr("action"), $("#foods_search").serialize(), null, "script");
-//     return false;
-//   });
-// });
-// $(function() {
-//   $("#add th a, #add .pagination a").live("click", function() {
-//     $.getScript(this.href);
-//     return false;
-//   });
-//   $("#add_search input").keyup(function() {
-//     $.get($("#add_search").attr("action"), $("#add_search").serialize(), null, "script");
-//     return false;
-//   });
-// });
+
 
 $(function() {
-	// ***Meal form***
+	// ***delete better***
+	$('a[data-method="delete"]').click (function(){
+	            if(confirm("Are you sure?")){	               
+	            	                return true;
+	            	            } else {
+	            	                //they clicked no.
+	            	                return false;
+	            	            }
+	    });
 	
-	// 			Grabs meal input
-  // $('*[id*=what_food]').tokenInput("/foods.json", {
-  // 	  crossDomain: false,
-  // 	  prePopulate: $('*[id*=what_food]').data("pre"),
-  // 		theme: "",
-  // 		tokenLimit: 1
-  // 	});
+	
+	// ***Meal form***
 	
 	//Makes the calendar
  $("#meal_date_eaten").datepicker();

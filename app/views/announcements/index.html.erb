@@ -10,14 +10,14 @@
     <th></th>
   </tr>
 
-<% @announcements.each do |announcement| %>
-  <tr>
-    <td><%= announcement.message %></td>
+<% @announcements.each do |announcement| %>  
+	<tr>
+    <td><div class="<%= announcement.tag %>"><%= announcement.message %></div></td>
     <td><%= announcement.starts_at %></td>
     <td><%= announcement.ends_at %></td>
     <td><%= link_to 'Show', announcement %></td>
     <td><%= link_to 'Edit', edit_announcement_path(announcement) %></td>
-    <td><%= link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', announcement, :method => :delete %></td>
   </tr>
 <% end %>
 </table>

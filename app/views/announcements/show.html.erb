@@ -2,7 +2,7 @@
 
 <p>
   <b>Message:</b>
-  <%= @announcement.message %>
+  <div class="<%= @announcement.tag %>"><%= @announcement.message %></div>
 </p>
 
 <p>
@@ -17,4 +17,5 @@
 
 
 <%= link_to 'Edit', edit_announcement_path(@announcement) %> |
+<%= link_to 'Destroy', @announcement, :method => :delete %>|
 <%= link_to 'Back', announcements_path %>

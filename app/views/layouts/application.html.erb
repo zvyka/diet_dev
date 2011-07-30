@@ -5,7 +5,7 @@
     <title><%= title %></title>
     <%= csrf_meta_tag %>
     <%= render 'layouts/stylesheets' %>
-    <%= stylesheet_link_tag "application", "token-input", "jquery-ui-1.8.14.custom.css" %>
+    <%= stylesheet_link_tag "token-input", "jquery-ui-1.8.14.custom.css" %>
     <%= javascript_include_tag :defaults, 'jquery-ui', 'jquery_ujs','rails.validations', 'jquery.tokeninput', 'nested_form', :cache => true %>
     <%= render :partial => 'layouts/ga' %>
 		<% csrf_meta_tag %>
@@ -13,11 +13,13 @@
   <body>
     <div class="container">
       	<%= render 'layouts/header' %>
-				<div class="notice">
+				
 					<% for announcement in Announcement.current_announcements %>
-					<p><b><%=h announcement.starts_at.strftime("%A, %B %e") %>: </b><%= h announcement.message %></p>
+						<div class="<%= announcement.tag %>">
+						<p><b><%=h announcement.starts_at.strftime("%A, %B %e") %>: </b><%= h announcement.message %></p>
+						</div>
 					<% end %>
-				</div>
+				
 		      <section class="round">
 			        <% flash.each do |key, value| %>
 			          <%= content_tag(:div, value, :class => "flash #{key}") %>

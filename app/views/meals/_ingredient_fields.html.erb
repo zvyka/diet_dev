@@ -1,15 +1,14 @@
 <p class="fields">
 	<%= f.label :what_food, "Food" %><br />
 	<%= f.text_field :what_food %>
-	<%= f.label :servings, "How many?" %>
+	<%= f.label :servings, "How many servings?" %>
 	<%= f.text_field :servings %>
 	<label id="serving_size"></label>
 	<%= f.link_to_remove "remove" %>
 	<script type="text/javascript">
 	$(document).ready(function() {
-	    var name = <%= @autocomplete_foods %>;
-	    $('*[id*=what_food]').autocomplete({ source: '<%= foods_path(:format => :json) %>'
-	 });
+	    // var name = <%= @autocomplete_foods %>;
+	    $('*[id*=what_food]').autocomplete({ source: '<%= foods_path(:format => :json) %>'});
 	$.ui.autocomplete.prototype._renderItem = function (ul, item) {
 							the_term = this.term.split(' ').join('|');
 	            item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + the_term + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong></strong>");
@@ -30,15 +29,16 @@
 							individual = foodArray[i].split(":");
 							name = individual[0];
 							serving_size = individual[1];
+							grams = individual[2];
 								if(name.toString().indexOf(current_val.toString()) != -1) {
 									if(serving_size == ""){
 										message = "each";
 									}
-									else if (typeof serving_size == 'undefined'){
-										message = "";
+									else if (typeof serving_size == 'string'){
+										message = "One serving is: " + serving_size + " (" + grams + " grams)";
 									}
-									else {
-										message = "One serving is: " + serving_size;
+									else{
+										message = "";
 									}
 									$(this).next().next().next().text(message);
 								}
