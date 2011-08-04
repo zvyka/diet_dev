@@ -46,7 +46,7 @@ class UsersController < ApplicationController
       redirect_to @user
       f = File.new('/Users/jon/Sites/mail_pass.txt')
       pass= f.gets
-      Pony.mail(:from => 'teamdietumd@gmail.com', :to => @user.email, :subject => 'Welcome to the DIET Tracker!', :html_body => '<h1>Welcome!</h1> <p> Thanks for joining up! </p> <p> You rock! </p>',:body => 'Thanks for joining us! You rock!' ,:via => :smtp, :via_options => {
+      Pony.mail(:from => 'teamdietumd@gmail.com', :to => @user.email, :subject => 'Welcome to the DIET Tracker!', :html_body => '<h1>Welcome!</h1> <p> Thanks for signing up! </p> <p> You rock! </p>',:body => 'Thanks for signing up! You rock!' ,:via => :smtp, :via_options => {
           :address              => 'smtp.gmail.com',
           :port                 => '587',
           :enable_starttls_auto => true,
@@ -86,7 +86,7 @@ class UsersController < ApplicationController
   
   def deny_access
       redirect_to signin_path, :notice => "Please sign in to access this page."
-    end
+  end    
     
   private
 
@@ -102,4 +102,5 @@ class UsersController < ApplicationController
     def admin_user
       redirect_to(root_path) unless current_user.admin?
     end
+    
 end

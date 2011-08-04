@@ -9,7 +9,7 @@
 		On <%= @meal.date_eaten.strftime("%A, %B %e") %> 
 		<%= times[@meal.time_of_day.to_i - 1] %>
 		 you spent $<%= @meal.price %> 
-		when you were <%= locs[@meal.location.to_i - 1] %>, and you ate: </strong>
+		when you were <%= locs[@meal.location.to_i - 1] %>, and you ate:</strong>
 
 <% table_for(@meal.ingredients) do |t| %>
   <% t.head do %>
@@ -30,8 +30,8 @@
     <% end %>
   <% end %>
   <% t.body do |ingredient| %>
-  	<% for food in @foods %>
-			<% if food.name == ingredient.what_food %>
+  	<% foods = Food.search ingredient.what_food, :match_mode => :all, :excerpts => false %>
+		<% foods.map do |food|%>
 	    	<% t.r do %>
 		      <%= t.d(h(food.name)) %>
 					<%= t.d(h(ingredient.servings )) %>
@@ -47,9 +47,191 @@
 		      <%= t.d(h(food.cholesterol)) %>
 					<%= t.d(h(food.fa_sat)) %>
 		    <% end %>
-			<% end %>
 		<% end %>
   <% end %>
 <% end %>
 </div>
 <p>*Nutritional information shown per serving</p>
+<p>=====================*TEST*====================</p>
+<% for ingredient in @meal.ingredients do %>
+	<% foods = Food.search ingredient.what_food, :match_mode => :all, :excerpts => false %>
+	<% foods.map do |food|%>
+<div id="food_title"><%= h(food.name) %></div>
+<br />
+
+
+
+<table id="nut_facts_table">
+	<table>
+		<tr>
+			<td id="left_part">
+		    <div id="header"><b>Nutrition Facts</b></div>            
+		    <div class="label">Serving Size <%= h(food.weight_1_desc) %></div>     
+				<div class="label">Servings eaten <%= h(ingredient.servings) %>**</div>          
+		    <div class="label"><b>Calories <%= h(food.calories) %></b></div>            
+		    <div class="label indent">Calories from Fat <%= h(food.lipid_total*9) %></div><br />            
+		    <div class="label">*Percent Daily Values (DV) are based on a 2,000 calorie diet.</div><br />
+				<div class="label">**Nutritional information shown per one serving.</div>
+		  </td>
+		</tr>
+	</table>
+  <table>
+		<tr>          
+       <td class="label amount_serving">
+         <div class="item"><b>Amount/Serving</b></div>
+         <div class="hr thick" />
+       </td>
+       <td class="label dv">
+         <b>%DV*</b>
+         <div class="hr thick" />
+       </td>
+       <td class="label amount_serving">
+         <b>Amount/Serving</b>
+         <div class="hr thick" />
+       </td>
+       <td class="label dv">
+         <b>%DV*</b>
+         <div class="hr thick" />
+       </td>
+     </tr>
+     <tr>
+       <td/>
+       <td>
+         <div class="label amount_serving"><b>Total Fat</b> <%= h(food.lipid_total) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.lipid_total/@dvs[:total_fat])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label amount_serving"><b>Total Carbs</b> <%= h(food.carbohydrates) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.carbohydrates/@dvs[:tot_carbs])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+     </tr>
+     <tr>
+		<td/>
+       <td>            
+         <div class="label amount_serving indent">Sat. Fats <%= h(food.fa_sat) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.fa_sat/@dvs[:sat_fat])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label amount_serving indent">Dietary Fiber <%= h(food.fiber) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.fiber/@dvs[:fiber])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+     </tr>
+     <tr>
+       <td/>
+       <td>            
+         <div class="label amount_serving indent">Monounsat. Fats <%= h(food.fa_mono) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"></div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label amount_serving indent">Sugars <%= h(food.sugar_total) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.sugar_total/@dvs[:fiber])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+     </tr>
+     <tr>
+       <td/>
+		<td>            
+         <div class="label amount_serving indent">Polyunsat. Fats <%= h(food.fa_poly) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"></div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label amount_serving"><b>Cholesterol</b> <%= h(food.cholesterol) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.cholesterol/@dvs[:cholesterol])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>          
+     </tr>
+     <tr>
+       <td/>
+       <td>            
+         <div class="label amount_serving"><b>Sodium</b> <%= h(food.sodium) %>g</div>          
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.sodium/@dvs[:sodium])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label amount_serving "><b>Protein</b> <%= h(food.protein) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.protein/@dvs[:protein])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+     </tr>
+     <tr>
+       <td/>
+       <td>            
+         <div class="label amount_serving"><b>Calcium</b> <%= h(food.calcium) %>g</div>          
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.calcium/@dvs[:calcium])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label amount_serving"><b>Iron</b> <%= h(food.iron) %>g</div>            
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.iron/@dvs[:iron])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+     </tr>
+		<tr>
+			<td/>
+       <td>            
+         <div class="label amount_serving">Vitamin C <%= h(food.vit_c) %>g</div>          
+         <div class="hr thin" />
+       </td>
+       <td>            
+         <div class="label dv"><b><%= h('%.0f' % (food.vit_c/@dvs[:vit_c])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
+		</tr>
+	</table>
+    
+    <tr>
+      <td colspan="2" align="left">
+        <font face="arial" size="2">The nutrient composition of food may vary due to:   genetic, environmental and processing variables;  changes in the manufacturer's product formulation; and   cooking and preparation techniques.                                                                  The information UMD Dining provides should be considered as approximations of the nutritional analysis menu items.  </font>     
+      </td>
+    </tr>
+    
+     
+  </table>
+  </form>
+
+  </table>
+  </div>
+<% end %>
+<% end %>

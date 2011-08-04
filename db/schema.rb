@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110730010250) do
+ActiveRecord::Schema.define(:version => 20110731234120) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -19,6 +19,24 @@ ActiveRecord::Schema.define(:version => 20110730010250) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "tag"
+  end
+
+  create_table "consumer_tokens", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "type"
+    t.string   "token"
+    t.string   "secret"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "consumer_tokens", ["token"], :name => "index_consumer_tokens_on_token", :unique => true
+
+  create_table "credentials", :force => true do |t|
+    t.string   "consumer_key"
+    t.string   "shared_secret"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "foods", :force => true do |t|

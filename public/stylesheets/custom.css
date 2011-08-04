@@ -336,3 +336,69 @@ div.user_info span.user_name {
 	font-size: 14px;
 	font-weight:bold;
 }
+
+/* autocomplete scrollbar */
+
+.ui-autocomplete { height: 200px; width: 300px; overflow-y: scroll; overflow-x: hidden;}
+
+/* Nutrition Label */
+#food_title {
+	text-align: center;
+	font-family: "Arial";
+	font-size: 2em; 
+	color: #006400;
+}
+
+#nut_facts_table {
+	border: 3px;
+	border-color: black;
+	border-style: solid; 
+	text-align: center;
+	width:90%;
+	float: center; 
+	padding: 10px; 
+	border-spacing: 0px;
+	background-color: white;
+}
+
+#left_part {
+	vertical-align:top;
+	float: left;
+	width: 34%;
+}
+#header {
+	font-size: 24px; 
+}
+
+.indent {
+	text-indent: 20px;
+}
+
+.label {
+	vertical-align: top; 
+	padding-left: 0;
+	padding-right: 0;
+	font-size: 18px;
+}
+
+.dv {
+	width: 11%;
+}
+
+.amount_serving {
+	width: 22%;
+}
+
+.hr {
+	background-color: black;
+}
+
+.thin {
+	height: 2px;
+	margin: 2px 0;
+}
+
+.thick {
+	height: 10px;
+	margin: 10px 0;
+}

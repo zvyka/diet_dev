@@ -11,18 +11,14 @@ class MealsController < ApplicationController
   def show
     @meal = Meal.find(params[:id])
     @foods = Food.all
+    
+    @dvs = {:total_fat => 65, :sat_fat => 20, :cholesterol => 300, :sodium => 2400, :potassium => 3500, :tot_carbs => 300, :fiber => 25, 
+            :protein => 50, :vit_c => 60, :calcium => 1000, :iron => 18}
   end
 
   def new
     @meal = Meal.new
     @foods = Food.all
-    
-    s_keys = "{ "
-    @foods.map do |x|
-      s_keys += "#{x.name}:#{x.weight_1_desc}:#{x.weight_1_gms}|"
-    end
-    s_keys += "}"
-    @food_array = s_keys 
   end
 
   def create
@@ -37,13 +33,6 @@ class MealsController < ApplicationController
   def edit
     @meal = Meal.find(params[:id])
     @foods = Food.all
-
-    s_keys = "{ "
-    @foods.map do |x|
-      s_keys += "#{x.name}:#{x.weight_1_desc}:#{x.weight_1_gms}|"
-    end
-    s_keys += "}"
-    @food_array = s_keys
   end
 
   def update

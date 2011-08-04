@@ -8,7 +8,15 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 	    // var name = <%= @autocomplete_foods %>;
-	    $('*[id*=what_food]').autocomplete({ source: '<%= foods_path(:format => :json) %>'});
+	    $('*[id*=what_food]').autocomplete({ source: '<%= foods_path(:format => :json) %>',
+																						change: function(event, ui) {
+																						            $(this).next().next().next().text(ui.item ? ui.item.serving : "each");
+																						            if (ui.item) {
+																						                $(this).next().next().next().text("One serving is: " + ui.item.serving + " (" + ui.item.grams + " grams)");
+																						            }
+																												$(this).next().next().val(1);
+																						        }});
+	
 	$.ui.autocomplete.prototype._renderItem = function (ul, item) {
 							the_term = this.term.split(' ').join('|');
 	            item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + the_term + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong></strong>");
@@ -17,33 +25,7 @@
 	                    .append("<a>" + item.label + "</a>")
 	                    .appendTo(ul);
 	        };
+	
 	});
-			
-	$(function() {
-	        $('*[id*=what_food]').focusout(function() {
-						current_val = $(this).val();
-						 var foodArray = "<%= @food_array %>".split("|");
-						var individual = "";
-						var message = "";
-						 for (var i in foodArray) {
-							individual = foodArray[i].split(":");
-							name = individual[0];
-							serving_size = individual[1];
-							grams = individual[2];
-								if(name.toString().indexOf(current_val.toString()) != -1) {
-									if(serving_size == ""){
-										message = "each";
-									}
-									else if (typeof serving_size == 'string'){
-										message = "One serving is: " + serving_size + " (" + grams + " grams)";
-									}
-									else{
-										message = "";
-									}
-									$(this).next().next().next().text(message);
-								}
-						}
-	        })
-	      })
 	</script>
 </p>

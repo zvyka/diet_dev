@@ -15,6 +15,10 @@ gem 'thinking-sphinx', '2.0.3'
 gem "nifty-generators"
 gem "nested_form"
 gem "rails3-jquery-autocomplete"
+gem "oauth-plugin", ">= 0.4.0.pre5"
+gem "oauth"
+require 'oauth/consumer'
+gem "ruby-hmac"
 
 #CAS stuff
 gem 'rubycas-client'

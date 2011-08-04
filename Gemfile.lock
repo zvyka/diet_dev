@@ -35,6 +35,7 @@ GEM
       activemodel (= 3.0.5)
       activesupport (= 3.0.5)
     activesupport (3.0.5)
+    addressable (2.2.6)
     annotate-models (1.0.4)
     arel (2.0.9)
     builder (2.1.2)
@@ -43,6 +44,10 @@ GEM
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    faraday (0.7.4)
+      addressable (~> 2.2.6)
+      multipart-post (~> 1.1.0)
+      rack (< 2, >= 1.1.0)
     formtastic (1.2.3)
       actionpack (>= 2.3.7)
       activesupport (>= 2.3.7)
@@ -59,10 +64,21 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.16)
     mocha (0.9.12)
+    multi_json (1.0.3)
+    multipart-post (1.1.3)
     mysql2 (0.2.6)
     nested_form (0.1.1)
     nifty-generators (0.4.6)
     nokogiri (1.4.4)
+    oauth (0.4.5)
+    oauth-plugin (0.4.0.pre6)
+      multi_json
+      oauth (~> 0.4.4)
+      oauth2
+      rack
+    oauth2 (0.5.0)
+      faraday (< 0.8, >= 0.6.1)
+      multi_json (~> 1.0.0)
     polyglot (0.3.1)
     pony (1.3)
       mail (> 2.0)
@@ -102,6 +118,7 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.5.0)
+    ruby-hmac (0.4.0)
     rubycas-client (2.2.1)
       activesupport
     sqlite3-ruby (1.3.2)
@@ -132,12 +149,15 @@ DEPENDENCIES
   mysql2
   nested_form
   nifty-generators
+  oauth
+  oauth-plugin (>= 0.4.0.pre5)
   pony
   rack-google_analytics
   rails (= 3.0.5)
   rails3-jquery-autocomplete
   rspec (= 2.5.0)
   rspec-rails (= 2.5.0)
+  ruby-hmac
   rubycas-client
   rubycas-client-rails!
   sqlite3-ruby (= 1.3.2)
