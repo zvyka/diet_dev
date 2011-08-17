@@ -16,10 +16,11 @@
 			<%= f.text_field :price, :size => 3, :value => @meal.price %>
 	    <div id="slider"></div>
 	  </p>
+	
 		<div class="field">
 	    <%= f.hidden_field :user_id, :value => current_user.id %>
 	  </div>
-  <%= f.fields_for :ingredients %>	
+  		<%= f.fields_for :ingredients %>	
 	<p><%= f.link_to_add "Add Food", :ingredients %></p> 
   <p><%= f.submit "Submit" %></p>  
 <% end %>

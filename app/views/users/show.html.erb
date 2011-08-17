@@ -13,22 +13,63 @@
 				  </h2>
 				  <%= calendar_for @user.meals, :year => @date.year, :month => @date.month do |calendar| %>
 				    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
-				    <%= calendar.day(:day_method => :date_eaten) do |date, meals| %>
+				    <%= calendar.day(:day_method => :date_eaten) do |date, meals| %><div id="test">
 								<% unless date > Date.today %>
 									<% if date.month == Date.today.month %>
-				      			<%= link_to date.day, :controller => "meals", :action => "new", :date_eaten => "#{date.year}-#{date.month}-#{date.day}" %>
+										<% if !Meal.search(date, @user.id).blank? %>
+				      				<%= link_to date.day, :controller => "meals", :action => "show", :id => Meal.search(date, @user.id).sort_by(&:time_of_day).first.id %>
+										<% else %>
+											<%= date.day %>
+										<% end %>
+										<div id="calendar_top_right"><%= link_to "add", :controller => "meals", :action => "new", :date_eaten => "#{date.year}-#{date.month}-#{date.day}" %></div>
 									<% else %>
 										<%= date.day %>
 									<% end %>
 								<% else %>
 									<%= date.day %>
 								<% end %>
-				      <ul>
-				        <% for meal in meals.sort_by(&:time_of_day) %>
-									<% times = ["Morning", "Afternoon", "Evening", "Night"] %>
-				          <li><%= link_to h(times[meal.time_of_day.to_i - 1]), meal %></li>
-				        <% end %>
-				      </ul>
+								<% if !Meal.search(date, @user.id).blank? %>
+									<% cals = 0 %>
+									<% salt = 0 %>
+									<% fats = 0 %>
+									<% sugs = 0%>
+									<% for meal in meals do %>
+										<% for ingredient in meal.ingredients do %>
+											<% food = Food.find(ingredient.food_id) %>
+
+											<% if food.weight_1_gms == 0 %>
+												<% multiplication_factor = ingredient.servings%>
+											<% else %>
+												<% multiplication_factor = ingredient.servings*(food.weight_1_gms/100)%>
+											<% end %>	
+											<% cals = cals + (food.calories*multiplication_factor) %>
+											<% salt = salt + (food.sodium*multiplication_factor) %>
+											<% fats = fats + (food.lipid_total*multiplication_factor) %>
+											<% sugs = sugs + (food.sugar_total*multiplication_factor) %>
+										<% end %>
+									<% end %>	
+									<% dv_color_cals = cals < 2000 ? "dv_good" : "dv_bad" %>
+									<% dv_color_salt = salt < @dvs[:sodium] ? "dv_good" : "dv_bad" %>
+									<% dv_color_fats = fats < @dvs[:total_fat] ? "dv_good" : "dv_bad" %>
+									<% dv_color_sugs = sugs < @dvs[:total_fat] ? "dv_good" : "dv_bad" %>
+
+									<div class="badges">
+										<a href="<%= url_for :controller => "meals", :action => "show", :id => Meal.search(date, @user.id).sort_by(&:time_of_day).first.id %>"><span></span>
+										<div class="summary round small_badge <%= dv_color_cals %>">
+											<div class="summary_label small_badge">Calories: <%= h('%.0f' % (cals)) %></div>
+										</div>
+										<div class="summary round  small_badge <%= dv_color_salt %>">
+											<div class="summary_label small_badge">Sodium: <%= h('%.0f' % (salt)) %>mg</div>
+										</div>
+										<div class="summary round  small_badge <%= dv_color_fats %>">
+											<div class="summary_label small_badge">Fats: <%= h('%.0f' % (fats)) %>g</div>
+										</div>
+										<div class="summary round  small_badge <%= dv_color_sugs %>">
+											<div class="summary_label small_badge">Sugar: <%= h('%.0f' % (sugs)) %>g</div>
+										</div>
+									</div>
+								<% end %>
+						</div>
 				    <% end %>
 				  <% end %>
 				</div>

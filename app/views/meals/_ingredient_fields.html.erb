@@ -1,21 +1,27 @@
 <p class="fields">
 	<%= f.label :what_food, "Food" %><br />
 	<%= f.text_field :what_food %>
+	<%= f.hidden_field :food_id %>
 	<%= f.label :servings, "How many servings?" %>
 	<%= f.text_field :servings %>
 	<label id="serving_size"></label>
 	<%= f.link_to_remove "remove" %>
 	<script type="text/javascript">
 	$(document).ready(function() {
-	    // var name = <%= @autocomplete_foods %>;
 	    $('*[id*=what_food]').autocomplete({ source: '<%= foods_path(:format => :json) %>',
-																						change: function(event, ui) {
-																						            $(this).next().next().next().text(ui.item ? ui.item.serving : "each");
-																						            if (ui.item) {
-																						                $(this).next().next().next().text("One serving is: " + ui.item.serving + " (" + ui.item.grams + " grams)");
-																						            }
-																												$(this).next().next().val(1);
-																						        }});
+						focus: function(event, ui) {
+						           $(this).next().next().next().next().text(ui.item ? ui.item.serving : "100 grams");
+						           if (ui.item) {
+						               $(this).next().next().next().next().text("One serving is: " + ui.item.serving
+						 																												+	" (" + ui.item.grams + " grams)");
+														$(this).next().val(ui.item.food_id);
+						           }
+											if (!ui.item.serving){
+												$(this).next().next().next().next().text("100 grams");
+											}
+						       }
+						}
+			 );
 	
 	$.ui.autocomplete.prototype._renderItem = function (ul, item) {
 							the_term = this.term.split(' ').join('|');

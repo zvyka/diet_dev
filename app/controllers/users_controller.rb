@@ -17,6 +17,10 @@ class UsersController < ApplicationController
     @username = session[:casfilteruser]
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
     
+    
+    @dvs = {:total_fat => 65, :sat_fat => 20, :cholesterol => 300, :sodium => 2400, :potassium => 3500, :tot_carbs => 300, :fiber => 25, 
+            :protein => 50, :vit_c => 60, :calcium => 1000, :iron => 18}
+    
     if User.find_by_id(params[:id]).nil?
       deny_access
     elsif User.find_by_id(params[:id]) == User.authenticate_with_UID(@username)

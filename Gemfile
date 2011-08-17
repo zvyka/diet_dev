@@ -19,6 +19,7 @@ gem "oauth-plugin", ">= 0.4.0.pre5"
 gem "oauth"
 require 'oauth/consumer'
 gem "ruby-hmac"
+gem "mechanize"
 
 #CAS stuff
 gem 'rubycas-client'

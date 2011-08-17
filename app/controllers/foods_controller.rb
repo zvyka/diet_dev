@@ -9,9 +9,11 @@ class FoodsController < ApplicationController
              # make an array
              @foods.map! do |u| 
                {
+                 :food_id => u.id,
                  :value => u.name,
                  :grams => u.weight_1_gms,
-                 :serving => u.weight_1_desc
+                 :serving => u.weight_1_desc,
+                 :umd => u.umd
                }
              end
              render :json => @foods 

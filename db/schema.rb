@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110731234120) do
+ActiveRecord::Schema.define(:version => 20110817055551) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -21,17 +21,6 @@ ActiveRecord::Schema.define(:version => 20110731234120) do
     t.string   "tag"
   end
 
-  create_table "consumer_tokens", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "type"
-    t.string   "token"
-    t.string   "secret"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "consumer_tokens", ["token"], :name => "index_consumer_tokens_on_token", :unique => true
-
   create_table "credentials", :force => true do |t|
     t.string   "consumer_key"
     t.string   "shared_secret"
@@ -40,58 +29,59 @@ ActiveRecord::Schema.define(:version => 20110731234120) do
   end
 
   create_table "foods", :force => true do |t|
-    t.string "name"
-    t.float  "water"
-    t.float  "calories"
-    t.float  "protein"
-    t.float  "lipid_total"
-    t.float  "ash"
-    t.float  "carbohydrates"
-    t.float  "fiber"
-    t.float  "sugar_total"
-    t.float  "calcium"
-    t.float  "iron"
-    t.float  "magnesium"
-    t.float  "phosphorus"
-    t.float  "potassium"
-    t.float  "sodium"
-    t.float  "zinc"
-    t.float  "copper"
-    t.float  "manganese"
-    t.float  "selenium"
-    t.float  "vit_c"
-    t.float  "thiamin"
-    t.float  "riboflavin"
-    t.float  "niacin"
-    t.float  "panto_acid"
-    t.float  "vit_b6"
-    t.float  "folate_total"
-    t.float  "folic_acid"
-    t.float  "food_folate"
-    t.float  "folate_dfe"
-    t.float  "choline_total"
-    t.float  "vit_b12"
-    t.float  "vit_a_iu"
-    t.float  "vit_a_rae"
-    t.float  "retinol"
-    t.float  "alpha_carotene"
-    t.float  "beta_carotene"
-    t.float  "beta_crypt"
-    t.float  "lycopene"
-    t.float  "lut_zea"
-    t.float  "vit_e"
-    t.float  "vit_d_mcg"
-    t.float  "vit_d_iu"
-    t.float  "vit_k"
-    t.float  "fa_sat"
-    t.float  "fa_mono"
-    t.float  "fa_poly"
-    t.float  "cholesterol"
-    t.float  "weight_1_gms"
-    t.string "weight_1_desc"
-    t.float  "weight_2_gms"
-    t.string "weight_2_desc"
-    t.float  "refuse_pct"
+    t.string  "name"
+    t.float   "water"
+    t.float   "calories"
+    t.float   "protein"
+    t.float   "lipid_total"
+    t.float   "ash"
+    t.float   "carbohydrates"
+    t.float   "fiber"
+    t.float   "sugar_total"
+    t.float   "calcium"
+    t.float   "iron"
+    t.float   "magnesium"
+    t.float   "phosphorus"
+    t.float   "potassium"
+    t.float   "sodium"
+    t.float   "zinc"
+    t.float   "copper"
+    t.float   "manganese"
+    t.float   "selenium"
+    t.float   "vit_c"
+    t.float   "thiamin"
+    t.float   "riboflavin"
+    t.float   "niacin"
+    t.float   "panto_acid"
+    t.float   "vit_b6"
+    t.float   "folate_total"
+    t.float   "folic_acid"
+    t.float   "food_folate"
+    t.float   "folate_dfe"
+    t.float   "choline_total"
+    t.float   "vit_b12"
+    t.float   "vit_a_iu"
+    t.float   "vit_a_rae"
+    t.float   "retinol"
+    t.float   "alpha_carotene"
+    t.float   "beta_carotene"
+    t.float   "beta_crypt"
+    t.float   "lycopene"
+    t.float   "lut_zea"
+    t.float   "vit_e"
+    t.float   "vit_d_mcg"
+    t.float   "vit_d_iu"
+    t.float   "vit_k"
+    t.float   "fa_sat"
+    t.float   "fa_mono"
+    t.float   "fa_poly"
+    t.float   "cholesterol"
+    t.float   "weight_1_gms"
+    t.string  "weight_1_desc"
+    t.float   "weight_2_gms"
+    t.string  "weight_2_desc"
+    t.float   "refuse_pct"
+    t.integer "umd",            :default => 0
   end
 
   create_table "ingredients", :force => true do |t|
@@ -99,7 +89,8 @@ ActiveRecord::Schema.define(:version => 20110731234120) do
     t.string   "what_food"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "servings"
+    t.decimal  "servings",   :precision => 4, :scale => 2, :default => 1.0
+    t.integer  "food_id"
   end
 
   create_table "meals", :force => true do |t|
