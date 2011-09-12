@@ -28,20 +28,4 @@ $(function() {
 			}
 		});
 		$( "#meal_price" ).val( $( "#slider" ).slider( "value" ) );
-		
-		//  ***User form***
-		
-		//Makes the slider for the user's height.
-		$(function() { 
-		    $( "#slider-range" ).slider({ 
-		        min: 0,
-						max: 96, 
-		        slide: function( event, ui ) { 
-		            $("#size-range").html(Math.floor(ui.value / 12) + "'" + (ui.value % 12) + '"'); 
-		            $("#user_height").val(ui.value); 
-		        } 
-		    }); 
-		    $("#size-range").html(Math.floor($("#slider-range").slider("value") / 12) + "'" + ($("#slider-range").slider("value") % 12) + '"');
-				$("#user_height").val($("#slider-range").slider("value")); 
-		});
 });

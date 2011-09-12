@@ -82,7 +82,7 @@ nav ul li a:hover {
 
 /* Sign up button */
 
-a.login_button {
+a.big_green_button {
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -295,7 +295,7 @@ div.user_info span.user_name {
   color: #CCC;
 }
 
-#calendar #month {
+#month {
   margin: 0;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -389,7 +389,12 @@ div.user_info span.user_name {
 
 
 .amount_serving {
-	width: 33%;
+	width: 200px;
+}
+
+.dv {
+	width: 80px;
+	text-align: center;
 }
 
 .hr {
@@ -431,6 +436,10 @@ div.user_info span.user_name {
 	font-size: 125%;
 }
 
+.summary_info {
+	font-size: 75%;
+}
+
 legend {
 	float:left;
   padding:0 5px;
@@ -440,7 +449,7 @@ legend {
 }
 
 #meal_summary {
-	height: 100px;
+	height: 175px;
 	border: 3px;
 	border-color: SkyBlue;
 	border-style: dotted; 
@@ -472,4 +481,61 @@ legend {
 	 top:0;
 	 left: 0;
 	 z-index: 1;
+}
+
+/* tooltip styling. by default the element to be styled is .tooltip  */
+.converter {
+	float: right;
+  margin-right: 0px !important;
+	border: 2px;
+	border-color: black;
+	border-style: solid; 
+	background-color: SkyBlue;
+	-moz-border-radius:    5px;
+  -webkit-border-radius: 5px;
+  border-radius:         5px;
+	font-size:12px;
+	height:100px;
+	padding:10px 10px 10px 10px;
+	width:200px;
+	color:black;	
+}
+
+#default_serving {
+  float: left;
+  margin-left:373px;
+}
+
+#form_top_right {
+	float: right;
+	top: 0px;
+	right: 0px;
+  margin-right: 0px !important;
+}
+
+#calories_chart {
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.favorite_list {
+	position: relative;
+	float: right;
+	border: 2px;
+	border-color: black;
+	border-style: solid; 
+	background-color: SkyBlue;
+	-moz-border-radius:    5px;
+  -webkit-border-radius: 5px;
+  border-radius:         5px;
+	font-size:14px;
+	padding:10px 10px 10px 10px;
+	width: 200px;
+	color:black;
+}
+
+.favorite_list a {
+	color: black;
 }

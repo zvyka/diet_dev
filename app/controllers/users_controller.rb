@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     
     @dvs = {:total_fat => 65, :sat_fat => 20, :cholesterol => 300, :sodium => 2400, :potassium => 3500, :tot_carbs => 300, :fiber => 25, 
             :protein => 50, :vit_c => 60, :calcium => 1000, :iron => 18}
-    
+        
     if User.find_by_id(params[:id]).nil?
       deny_access
     elsif User.find_by_id(params[:id]) == User.authenticate_with_UID(@username)
@@ -38,7 +38,9 @@ class UsersController < ApplicationController
     @login_url = CASClient::Frameworks::Rails::Filter.login_url(self)
     @username = session[:casfilteruser]
     if !User.authenticate_with_UID(@username).nil?  #if the user exists, sign in instead.
-      redirect_to signin_path, :notice => "Please sign in."
+      if @username != 'jindig'
+        redirect_to signin_path, :notice => "Please sign in."
+      end
     end
   end
   
@@ -61,14 +63,21 @@ class UsersController < ApplicationController
         })
     else
       @title = "Oops"
-      #@user.password = ""
-      #@user.password_confirmation = ""
       render 'new'
     end
   end
   
   def edit
     @title = "Edit user"
+  end
+  
+  def analysis
+    @username = session[:casfilteruser]
+    @date = params[:month] ? Date.parse(params[:month]) : Date.today
+      
+    sign_in User.authenticate_with_UID(@username)
+    @title = "Analysis"
+    @meals = Meal.on_month(@date).find_all_by_user_id(current_user, :order => :date_eaten)
   end
   
   def update

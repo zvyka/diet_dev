@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110817055551) do
+ActiveRecord::Schema.define(:version => 20110907154515) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20110817055551) do
     t.datetime "updated_at"
   end
 
-  create_table "foods", :force => true do |t|
+  create_table "foods", :id => false, :force => true do |t|
     t.string  "name"
     t.float   "water"
     t.float   "calories"
@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(:version => 20110817055551) do
     t.string  "weight_2_desc"
     t.float   "refuse_pct"
     t.integer "umd",            :default => 0
+    t.integer "id",             :default => 0, :null => false
+    t.integer "user_id"
   end
 
   create_table "ingredients", :force => true do |t|
@@ -89,8 +91,9 @@ ActiveRecord::Schema.define(:version => 20110817055551) do
     t.string   "what_food"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "servings",   :precision => 4, :scale => 2, :default => 1.0
+    t.decimal  "servings",     :precision => 4,  :scale => 2, :default => 1.0
     t.integer  "food_id"
+    t.decimal  "serving_size", :precision => 10, :scale => 0
   end
 
   create_table "meals", :force => true do |t|
@@ -101,6 +104,8 @@ ActiveRecord::Schema.define(:version => 20110817055551) do
     t.integer  "location"
     t.decimal  "price",       :precision => 10, :scale => 0
     t.integer  "time_of_day"
+    t.boolean  "favorite"
+    t.string   "fave_name"
   end
 
   create_table "users", :force => true do |t|

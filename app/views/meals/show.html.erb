@@ -8,16 +8,15 @@
 	<% cals = 0 %>
 	<% salt = 0 %>
 	<% fats = 0 %>
-	<% sugs = 0%>
+	<% sugs = 0 %>
 	<% for individual_meal in todays_meals do %>
 		<% for ingredient in individual_meal.ingredients do %>
 			<% food = Food.find(ingredient.food_id) %>
-			
-			<% if food.weight_1_gms == 0 %>
+			<% if ingredient.serving_size.nil? %>
 				<% multiplication_factor = ingredient.servings%>
 			<% else %>
-				<% multiplication_factor = ingredient.servings*(food.weight_1_gms/100)%>
-			<% end %>	
+				<% multiplication_factor = ingredient.servings*ingredient.serving_size/100%>
+			<% end %>
 			<% cals = cals + (food.calories*multiplication_factor) %>
 			<% salt = salt + (food.sodium*multiplication_factor) %>
 			<% fats = fats + (food.lipid_total*multiplication_factor) %>
@@ -27,28 +26,32 @@
 	<% dv_color_cals = cals < 2000 ? "dv_good" : "dv_bad" %>
 	<% dv_color_salt = salt < @dvs[:sodium] ? "dv_good" : "dv_bad" %>
 	<% dv_color_fats = fats < @dvs[:total_fat] ? "dv_good" : "dv_bad" %>
-	<% dv_color_sugs = sugs < @dvs[:total_fat] ? "dv_good" : "dv_bad" %>
+	<% dv_color_sugs = sugs < @dvs[:sugar_total] ? "dv_good" : "dv_bad" %>
 	
 	<table>
 		<td><div class="summary round <%= dv_color_cals %>">
 			<div class="summary_label">Calories:</div>
 			<div class="summary_value"><%= h('%.0f' % (cals)) %></div>
+			<div class = "summary_info">(Max: 2000)*</div>
 		</div></td>
 		<td><div class="summary round <%= dv_color_salt %>">
 			<div class="summary_label">Sodium:</div>
 			<div class="summary_value"><%= h('%.0f' % (salt)) %>mg</div>
+			<div class = "summary_info">(Max: <%= @dvs[:sodium] %>mg)*</div>
 		</div></td>
 		<td><div class="summary round <%= dv_color_fats %>">
 			<div class="summary_label">Fats:</div>
 			<div class="summary_value"><%= h('%.0f' % (fats)) %>g</div>
+			<div class = "summary_info">(Max: <%= @dvs[:total_fat] %>g)*</div>
 		</div></td>
 		<td><div class="summary round <%= dv_color_sugs %>">
 			<div class="summary_label">Sugar:</div>
 			<div class="summary_value"><%= h('%.0f' % (sugs)) %>g</div>
+			<div class = "summary_info">(Max: <%= @dvs[:sugar_total] %>g)*</div>
 		</div></td>
 	</table>
+	<span>*Try to stay green! Badges in red mean you're above your Daily Value (DV) for this item (based on a 2000 calorie diet). Green means you're under your Daily Value (DV).</span>
 </div>
-
 <% times = ["Morning", "Afternoon", "Evening", "Night"] %>
 
 <div id="meal">
@@ -66,7 +69,7 @@
 		You spent $<%= individual_meal.price %> 
 		when you were <%= locs[individual_meal.location.to_i - 1] %>, and you ate:</strong>
 
-<div id="meal_top_right"><%= link_to "Edit", edit_meal_path(individual_meal) %> | <%= link_to "Delete", individual_meal, :method => :delete %></div>
+<div id="meal_top_right"><%= link_to "Create new meal using the food(s) below", :controller => "meals", :action => "make_clone", :id => individual_meal.id %> | <%= link_to "Edit", edit_meal_path(individual_meal) %> | <%= link_to "Delete", individual_meal, :method => :delete %></div>
 <% for ingredient in individual_meal.ingredients do %>
 
 	<% food = Food.find(ingredient.food_id) %>
@@ -76,15 +79,27 @@
 <table id="nut_facts_table">
 		<tr>
 			<td id="left_part">
-		    <div id="header"><b>Nutrition Facts</b></div>            
-		    <div class="label">Serving Size <%= h(food.weight_1_desc.blank? ? "100 grams" : "#{food.weight_1_desc} (#{food.weight_1_gms})") %>*</div>     		    
+		    <div id="header"><b>Nutrition Facts</b></div>
+				<% if food.umd == 0 %>            
+		    <div class="label">Serving Size <%= h(ingredient.serving_size.nil? ? "100 grams" : "#{ingredient.serving_size}g") %>*</div>   
+		  	<% elsif food.umd == 1 %>
+				<div class="label">Serving Size <%= h(food.weight_1_desc.blank? ? "100 grams" : "#{food.weight_1_desc}") %>*</div> 
+				<% end %>
 		  </td>          
        <td class="label amount_serving">
          <div class="item"><b>Amount/Serving</b></div>
          <div class="hr thick" />
        </td>
+			<td class="label dv">
+        <div class="item"><b>%DV**</b></div>
+         <div class="hr thick" />
+       </td>
        <td class="label amount_serving">
          <b>Amount/Serving</b>
+         <div class="hr thick" />
+       </td>
+       <td class="label dv">
+         <div class="item"><b>%DV**</b></div>
          <div class="hr thick" />
        </td>
      </tr>
@@ -93,65 +108,106 @@
 					<div class="label">Servings eaten <%= h(ingredient.servings) %></div>          
 			</td>
        <td class="label amount_serving">
-         <div><b>Total Fat</b> <%= h(food.lipid_total) %>g</div>            
+         <div><b>Total Fat</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.lipid_total : food.lipid_total*ingredient.servings*ingredient.serving_size/100) )%>g</div>            
+         <div class="hr thin" />
+       </td>
+		  <td class="label dv">            
+         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.lipid_total/@dvs[:total_fat] : (100*food.lipid_total*ingredient.servings*ingredient.serving_size/100)/@dvs[:total_fat])) %></b>%</div>            
          <div class="hr thin" />
        </td>
        <td class="label amount_serving">            
-         <div><b>Total Carbs</b> <%= h(food.carbohydrates) %>g</div>            
+         <div><b>Total Carbs</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.carbohydrates : food.carbohydrates*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
+         <div class="hr thin" />
+       </td>
+		  <td class="label dv">            
+         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.carbohydrates/@dvs[:tot_carbs] : (100*food.carbohydrates*ingredient.servings*ingredient.serving_size/100)/@dvs[:tot_carbs])) %></b>%</div>            
          <div class="hr thin" />
        </td>
      </tr>
      <tr>
 			 <td>
-				<div class="label"><b>Calories <%= h(food.calories) %></b></div>
+				<div class="label"><b>Calories <%= h('%.0f' % (ingredient.serving_size.nil? ? food.calories : food.calories*ingredient.servings*ingredient.serving_size/100)) %></b></div>
 			 </td>
        <td class="label amount_serving">            
-         <div class="indent">Sat. Fats <%= h(food.fa_sat) %>g</div>            
+         <div class="indent">Sat. Fats <%= h('%.0f' % (ingredient.serving_size.nil? ? food.fa_sat : food.fa_sat*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
          <div class="hr thin " />
        </td>
+		  <td class="label dv">            
+         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.fa_sat/@dvs[:fa_sat] : (100*food.fa_sat*ingredient.servings*ingredient.serving_size/100)/@dvs[:fa_sat])) %></b>%</div>            
+         <div class="hr thin" />
+       </td>
        <td class="label amount_serving">            
-         <div class="indent">Dietary Fiber <%= h(food.fiber) %>g</div>            
+         <div class="indent">Dietary Fiber <%= h('%.0f' % (ingredient.serving_size.nil? ? food.fiber : food.fiber*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
+         <div class="hr thin" />
+       </td>
+		  <td class="label dv">            
+         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.fiber/@dvs[:fiber] : (100*food.fiber*ingredient.servings*ingredient.serving_size/100)/@dvs[:fiber])) %></b>%</div>            
          <div class="hr thin" />
        </td>
      </tr>
      <tr>
        <td>
-			 		<div class="label indent">Calories from Fat <%= h(food.lipid_total*9) %></div>
+			 		<div class="label indent">Calories from Fat <%= h('%.0f' % (ingredient.serving_size.nil? ? food.lipid_total*9 : food.lipid_total*9*ingredient.servings*ingredient.serving_size/100))  %></div>
        </td>
 			 <td class="label amount_serving">            
-         <div><b>Cholesterol</b> <%= h(food.cholesterol) %>g</div>            
+         <div><b>Cholesterol</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.cholesterol : food.cholesterol*ingredient.servings*ingredient.serving_size/100)) %>mg</div>            
+         <div class="hr thin" />
+       </td>
+		  <td class="label dv">            
+         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.cholesterol/@dvs[:cholesterol] : (100*food.cholesterol*ingredient.servings*ingredient.serving_size/100)/@dvs[:cholesterol])) %></b>%</div>            
          <div class="hr thin" />
        </td>
        <td class="label amount_serving">            
-         <div class="indent">Sugars <%= h(food.sugar_total) %>g</div>            
+         <div class="indent">Sugars <%= h('%.0f' % (ingredient.serving_size.nil? ? food.sugar_total : food.sugar_total*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
+         <div class="hr thin" />
+       </td>
+		  <td class="label dv">            
+         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.sugar_total/@dvs[:sugar_total] : (100*food.sugar_total*ingredient.servings*ingredient.serving_size/100)/@dvs[:sugar_total])) %></b>%</div>            
          <div class="hr thin" />
        </td>
      </tr>
      <tr>
        <td>
-				 <div class="label">*All nutritional facts are shown <b>per 100 grams</b>.</div>
+				<% if food.umd == 0 %>
+					<% if food.weight_1_gms == 0 %>
+				 		<div class="label"><strong>*Nutritional facts are shown <i>per 100 grams</i>.</strong></div>
+					<% elsif food.weight_1_gms > 0 %>
+						<div class="label">*Nutritional facts shown for a serving of <%= food.weight_1_gms %> grams.</div>
+					<% end %>
+				<% elsif food.umd == 1 %>
+				 <div class="label">*Nutritional information provided by UMD Dining Services.</div>
+				<% end %>
 			 </td>
        <td class="label amount_serving">            
-         <div><b>Sodium</b> <%= h(food.sodium) %>g</div>          
+         <div><b>Sodium</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.sodium : food.sodium*ingredient.servings*ingredient.serving_size/100)) %>mg</div>          
+         <div class="hr thick" />
+       </td>
+		  <td class="label dv">            
+         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.sodium/@dvs[:sodium] : (100*food.sodium*ingredient.servings*ingredient.serving_size/100)/@dvs[:sodium])) %></b>%</div>            
          <div class="hr thick" />
        </td>
        <td class="label amount_serving">            
-         <div><b>Protein</b> <%= h(food.protein) %>g</div>            
+         <div><b>Protein</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.protein : food.protein*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
+         <div class="hr thick" />
+       </td>
+		  <td class="label dv">            
+         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.protein/@dvs[:protein] : (100*food.protein*ingredient.servings*ingredient.serving_size/100)/@dvs[:protein])) %></b>%</div>            
          <div class="hr thick" />
        </td>
      </tr>
      <tr>
        <td>
+				 <div class="label">**Based on a 2000-calorie diet.</div>
 			 </td>
        <td class="label amount_serving">
 	     <% if food.calcium != 0.0 %>
-         <div><b>Calcium</b> <%= h(food.calcium) %>g </div>      
+         <div><b>Calcium</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.calcium : food.calcium*ingredient.servings*ingredient.serving_size/100)) %>mg </div>      
          <div class="hr thin" />
 				<% end %>
        </td>
        <td class="label amount_serving"> 
 				<% if !food.iron.nil? %>			          
-         <div><b>Iron</b> <%= h(food.iron) %>g </div>            
+         <div><b>Iron</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.iron : food.iron*ingredient.servings*ingredient.serving_size/100)) %>mg </div>            
          <div class="hr thin" />
 				<% end %>
        </td>
@@ -160,7 +216,7 @@
 			<td/>
        <td class="label amount_serving">  
 				<% if  !food.vit_c.nil? %>			          
-         <div>Vitamin C <%= h(food.vit_c) %>g</div>          
+         <div>Vitamin C <%= h('%.0f' % (ingredient.serving_size.nil? ? food.vit_c : food.vit_c*ingredient.servings*ingredient.serving_size/100)) %>mg</div>          
          <div class="hr thin" />
 				<% end %>	
        </td>

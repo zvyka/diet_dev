@@ -1,8 +1,8 @@
 class PagesController < ApplicationController
-   before_filter CASClient::Frameworks::Rails::GatewayFilter, :only => [:home, :about, :faq, :privacy_statement]
+   before_filter CASClient::Frameworks::Rails::GatewayFilter, :only => [:home, :about, :faq, :privacy_statement, :help, :terms]
    
      # This requires the user to be authenticated for viewing allother pages.
-      before_filter CASClient::Frameworks::Rails::Filter, :except => [:home, :about, :faq, :privacy_statement]
+      before_filter CASClient::Frameworks::Rails::Filter, :except => [:home, :about, :faq, :privacy_statement, :help, :terms]
    
    
   def logout
@@ -46,10 +46,6 @@ class PagesController < ApplicationController
   
   def help
     @title = "Help"
-  end
-  
-  def analysis
-    @title = "Analysis"
   end
   
   def terms

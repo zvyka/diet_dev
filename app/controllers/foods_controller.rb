@@ -2,7 +2,7 @@ class FoodsController < ApplicationController
   before_filter :authenticate
   
   def index
-    @foods = Food.search('"^' + params[:term] + '"|"' + params[:term] + '"|(' + params[:term] + ')', :match_mode => :extended2, :excerpts => false, :per_page => 100)
+    @foods = Food.search('"^' + params[:term] + '"|"' + params[:term] + '"|(' + params[:term] + ')', :match_mode => :extended2, :excerpts => false, :per_page => 100, :order => :umd, :sort_mode => :desc)
     respond_to do |format|
       format.html
       format.json do 

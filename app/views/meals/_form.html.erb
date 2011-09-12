@@ -22,5 +22,12 @@
 	  </div>
   		<%= f.fields_for :ingredients %>	
 	<p><%= f.link_to_add "Add Food", :ingredients %></p> 
+	<p>
+		<%= f.label :favorite, "Add this meal to your favorites?" %>
+		<%= f.check_box :favorite, :default => false %>
+		<%= f.label :fave_name, "Give this meal a name!" %>
+		<%= f.text_field :fave_name %>
+	</p>
   <p><%= f.submit "Submit" %></p>  
 <% end %>
+

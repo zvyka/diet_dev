@@ -1,7 +1,9 @@
-
+<div id="form_top_right"><%= link_to "Duplicate this meal!", { :controller => "meals" , :action => "make_clone" ,
+ 																			:id => @meal.id }, :class => "big_green_button round" %></div>
 <%= render 'form' %>
 
 <p>
   <%= link_to "Show", @meal %> |
-  <%= link_to "View All", meals_path %>
+  <%= link_to "View All", meals_path %> |
+	<%= link_to "Delete", @meal, :method => :delete %>
 </p>

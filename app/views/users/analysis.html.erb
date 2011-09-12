@@ -1,0 +1,110 @@
+<h1>Analysis</h1>
+
+<h2 id="month">
+  <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d") %>
+  <%=h @date.strftime("%B %Y") %> <!-- : <%= Date.today.month %> -->
+  <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
+</h2>
+
+<% cals_string = "" %>
+<% salt_string = "" %>
+<% fats_string = "" %>
+<% sugs_string = "" %>
+<% dates = "" %>
+<% @meals.each do |m| %>
+<% dates = "#{dates + "," if !dates.blank?} '#{m.date_eaten.strftime('%b.%e')}'" %>
+<% cals = 0 %>
+<% salt = 0 %>
+<% fats = 0 %>
+<% sugs = 0 %>
+	<% m.ingredients.each do |ingredient| %>
+		<% food = Food.find(ingredient.food_id) %>
+		<% if ingredient.serving_size.nil? %>
+			<% multiplication_factor = ingredient.servings%>
+		<% else %>
+			<% multiplication_factor = ingredient.servings*ingredient.serving_size/100%>
+		<% end %>
+		<% cals = cals + (food.calories*multiplication_factor) %>
+		<% salt = salt + (food.sodium*multiplication_factor) %>
+		<% fats = fats + (food.lipid_total*multiplication_factor) %>
+		<% sugs = sugs + (food.sugar_total*multiplication_factor) %>
+	<% end %>
+	<% cals_string = cals_string + "#{cals} " %>
+	<% salt_string = salt_string + "#{salt} " %>
+	<% fats_string = fats_string + "#{fats} " %>
+	<% sugs_string = sugs_string + "#{sugs} " %>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "calories_chart"
+      },
+			title: {
+			        text: 'Click on a category on the bottom to show or hide it!'  
+			    },
+      xAxis: {
+					categories: [<%= dates %>]
+      },
+     	yAxis: [{
+	        min: 0,
+					title: {
+	            text: 'Calories'
+	        }
+	    }, {
+	        min: 0,
+					title: {
+	            text: 'grams (of sugar or fat)'
+	        },
+	        opposite: true
+	    }, {
+	        min: 0,
+					title: {
+	            text: 'milligrams (of sodium)'
+	        },
+	        opposite: true
+	    }],
+      tooltip: {
+				formatter: function() {
+            var s = '<b>'+ this.x +'</b>';
+
+            $.each(this.points, function(i, point) {
+                s += '<br/>'+ point.series.name +': '+
+                    point.y;
+								if(point.series.name == 'Calories'){
+									s += ' calories';
+								} else if(point.series.name == 'Sodium'){
+									s += 'mg';
+								} else if(point.series.name == 'Fats'){
+									s += 'g';
+								} else if(point.series.name == 'Sugars'){
+									s += 'g';
+								}
+            });
+
+            return s;
+        },
+	      shared: true,
+        crosshairs: true
+      },
+      series: [{ 
+				name: 'Calories',
+				data:[<%= cals_string.split(" ").join(",") %>],
+      },{ 
+				name: 'Sodium',
+				data:[<%= salt_string.split(" ").join(",") %>],
+				yAxis: 2
+      },{ 
+				name: 'Fats',
+				data:[<%= fats_string.split(" ").join(",") %>],
+				yAxis: 1
+      },{ 
+				name: 'Sugars',
+				data:[<%= sugs_string.split(" ").join(",") %>],
+				yAxis: 1
+      }]
+    });
+  });
+</script>
+<div id="calories_chart" style="width:800px; height:400px;"></div>

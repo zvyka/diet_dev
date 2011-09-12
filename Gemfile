@@ -20,6 +20,8 @@ gem "oauth"
 require 'oauth/consumer'
 gem "ruby-hmac"
 gem "mechanize"
+gem "whenever"
+gem "deep_cloneable"
 
 #CAS stuff
 gem 'rubycas-client'
@@ -40,5 +42,7 @@ end
 
 group :production do
   gem 'rack-google_analytics', :require => "rack/google_analytics"
+	gem 'rubycas-client'
+	gem 'rubycas-client-rails', :path => '/Users/jon/Sites/diet_app/cas/rubycas-client-rails/'
 end
 gem "mocha", :group => :test
