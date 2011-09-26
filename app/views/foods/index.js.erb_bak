@@ -1,3 +1,0 @@
-$("#foods").html("<%= escape_javascript(render("foods")) %>");
-
-$("#add").html("<%= escape_javascript(render("add")) %>");

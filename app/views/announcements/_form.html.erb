@@ -21,13 +21,19 @@
 		<div class="alert">alert</div>
 		<div class="info">info</div>
 	</div>
+	<p>
+		<% ActiveRecord::Base.connection.execute('SELECT NOW()').each do |row| %>
+			<%= row%>
+		<% end %>
+	</p>
+	<p>Times are in UTC (sorry). UTC time now is: <%= Time.now.getutc.strftime("%Y %m %d - %H:%M") %></p>
   <div class="field">
     <%= f.label :starts_at %><br />
-    <%= f.datetime_select :starts_at %>
+    <%= f.date_select :starts_at %>
   </div>
   <div class="field">
     <%= f.label :ends_at %><br />
-    <%= f.datetime_select :ends_at %>
+    <%= f.date_select :ends_at %>
   </div>
 	<div class="field">
     <%= f.label :tag, "Tag: \"success\", \"notice\", \"alert\", \"info\" (see right)" %><br />

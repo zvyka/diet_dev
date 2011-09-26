@@ -29,29 +29,28 @@
 									<%= date.day %>
 								<% end %>
 								<% if !Meal.search(date, @user.id).blank? %>
-									<% cals = 0 %>
-									<% salt = 0 %>
-									<% fats = 0 %>
-									<% sugs = 0%>
-									<% for meal in meals do %>
-										<% for ingredient in meal.ingredients do %>
-											<% food = Food.find(ingredient.food_id) %>
-
-											<% if food.weight_1_gms == 0 %>
-												<% multiplication_factor = ingredient.servings%>
-											<% else %>
-												<% multiplication_factor = ingredient.servings*(food.weight_1_gms/100)%>
-											<% end %>	
-											<% cals = cals + (food.calories*multiplication_factor) %>
-											<% salt = salt + (food.sodium*multiplication_factor) %>
-											<% fats = fats + (food.lipid_total*multiplication_factor) %>
-											<% sugs = sugs + (food.sugar_total*multiplication_factor) %>
-										<% end %>
-									<% end %>	
-									<% dv_color_cals = cals < 2000 ? "dv_good" : "dv_bad" %>
-									<% dv_color_salt = salt < @dvs[:sodium] ? "dv_good" : "dv_bad" %>
-									<% dv_color_fats = fats < @dvs[:total_fat] ? "dv_good" : "dv_bad" %>
-									<% dv_color_sugs = sugs < @dvs[:total_fat] ? "dv_good" : "dv_bad" %>
+										<% cals = 0 %>
+										<% salt = 0 %>
+										<% fats = 0 %>
+										<% sugs = 0 %>
+										<% for individual_meal in meals do %>
+											<% for ingredient in individual_meal.ingredients do %>
+												<% food = Food.find(ingredient.food_id) %>
+												<% if ingredient.serving_size.nil? %>
+													<% multiplication_factor = ingredient.servings%>
+												<% else %>
+													<% multiplication_factor = ingredient.servings*ingredient.serving_size/100%>
+												<% end %>
+												<% cals = cals + (food.calories*multiplication_factor) %>
+												<% salt = salt + (food.sodium*multiplication_factor) %>
+												<% fats = fats + (food.lipid_total*multiplication_factor) %>
+												<% sugs = sugs + (food.sugar_total*multiplication_factor) %>
+											<% end %>
+										<% end %>	
+										<% dv_color_cals = cals < 2000 ? "dv_good" : "dv_bad" %>
+										<% dv_color_salt = salt < @dvs[:sodium] ? "dv_good" : "dv_bad" %>
+										<% dv_color_fats = fats < @dvs[:total_fat] ? "dv_good" : "dv_bad" %>
+										<% dv_color_sugs = sugs < @dvs[:sugar_total] ? "dv_good" : "dv_bad" %>
 
 									<div class="badges">
 										<a href="<%= url_for :controller => "meals", :action => "show", :id => Meal.search(date, @user.id).sort_by(&:time_of_day).first.id %>"><span></span>

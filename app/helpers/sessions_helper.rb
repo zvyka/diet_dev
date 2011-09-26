@@ -35,7 +35,7 @@ module SessionsHelper
   def sign_out
     cookies.delete(:remember_token)
     self.current_user = nil
-    CASClient::Frameworks::Rails::Filter.logout(self)
+    CASClient::Frameworks::Rails::Filter.logout(self, "http://diettracker.umd.edu/")
   end
 
     private

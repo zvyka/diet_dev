@@ -1,22 +1,24 @@
 <% favorites = current_user.meals.find_all_by_favorite(true) %>
-<% if !favorites.blank? %>
-	<div class="form_top_right favorite_list">
-			<strong>Go straight to a favorite meal!</strong><br />
-			<ul>
-				<% favorites.each do |meal| %>
-						<li>
-							<% if !meal.fave_name.blank? %>
-								<%= link_to meal.fave_name, :controller => "meals", :action => "edit", :id => meal.id %>
-							<% else %>
-							<%= link_to "Meal number #{meal.id}", :controller => "meals", :action => "edit",
-							 																			:id => meal.id %>
-							<% end %>
-						</li>
-				<% end %>
-			</ul>
-		</div>
-<% end %>
 
-<%= render 'form' %>
+		<% if !favorites.blank? %>
+			<div class="form_top_right favorite_list">
+					<strong>Go straight to a favorite meal!</strong><br />
+					<ul>
+						<% favorites.each do |meal| %>
+								<li>
+									<% if !meal.fave_name.blank? %>
+										<%= link_to meal.fave_name, :controller => "meals", :action => "edit", :id => meal.id %>
+									<% else %>
+									<%= link_to "Meal number #{meal.id}", :controller => "meals", :action => "edit",
+									 																			:id => meal.id %>
+									<% end %>
+								</li>
+						<% end %>
+					</ul>
+				</div>
+		<% end %>
+	
+		<%= render 'form' %>
+
 
 <p><%= link_to "Back to List", meals_path %></p>

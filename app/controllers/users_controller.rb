@@ -18,8 +18,9 @@ class UsersController < ApplicationController
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
     
     
-    @dvs = {:total_fat => 65, :sat_fat => 20, :cholesterol => 300, :sodium => 2400, :potassium => 3500, :tot_carbs => 300, :fiber => 25, 
-            :protein => 50, :vit_c => 60, :calcium => 1000, :iron => 18}
+    @dvs = {:total_fat => 65, :fa_sat => 20, :cholesterol => 300, :sodium => 2400, :potassium => 3500,
+            :tot_carbs => 300, :fiber => 25, :protein => 50, :vit_c => 60, :calcium => 1000, :iron => 18, 
+            :sugar_total => 40}
         
     if User.find_by_id(params[:id]).nil?
       deny_access
@@ -52,7 +53,21 @@ class UsersController < ApplicationController
       redirect_to @user
       f = File.new('/Users/jon/Sites/mail_pass.txt')
       pass= f.gets
-      Pony.mail(:from => 'teamdietumd@gmail.com', :to => @user.email, :subject => 'Welcome to the DIET Tracker!', :html_body => '<h1>Welcome!</h1> <p> Thanks for signing up! </p> <p> You rock! </p>',:body => 'Thanks for signing up! You rock!' ,:via => :smtp, :via_options => {
+      Pony.mail(:from => 'teamdietumd@gmail.com', :to => @user.email, :subject => 'Team DIET Welcomes You!', 
+                :html_body => "<p>Dear #{@user.name}</p> <p> Welcome to our online diet-tracking tool! Your account is now active and ready for you to begin tracking your meals. You may log in at any time using your UID and password at <a href='http://diettracker.umd.edu'>http://diettracker.umd.edu</a>. Please refer to our Help section on our website to familiarize yourself with our tool.</p> <p>Please be on the lookout for a quick survey we will be emailing out in a few days to confirm your entry to the <b>Ipod Touch Raffle</b></p> <p> We thank you for participating in our research study.  </p> <p>Sincerely,</p> <p>Team DIET</p> <p>Gemstone Program,  UMD Honors Program</p> <p>*By virtue of logging into and using this diet tracker, you agree to the terms and conditions as listed at http://diettracker.umd.edu/terms *</p>",
+                :body => "Dear #{@user.name},
+
+                Welcome to our online diet-tracking tool! Your account is now active and ready for you to begin tracking your meals. You may log in at any time using your UID and password at http://diettracker.umd.edu. Please refer to our Help section on our website to familiarize yourself with our tool. 
+                  
+                Please be on the lookout for a quick survey we will be emailing out in a few days to confirm your entry to the **Ipod Touch Raffle.**
+
+                We thank you for participating in our research study. 
+
+                Sincerely, 
+                	Team DIET
+                	Gemstone Program, A. James Clark School of Engineering 
+
+                	*By virtue of logging into and using this diet tracker, you agree to the terms and conditions as listed at http://diettracker.umd.edu/terms *" ,:via => :smtp, :via_options => {
           :address              => 'smtp.gmail.com',
           :port                 => '587',
           :enable_starttls_auto => true,
@@ -77,7 +92,23 @@ class UsersController < ApplicationController
       
     sign_in User.authenticate_with_UID(@username)
     @title = "Analysis"
-    @meals = Meal.on_month(@date).find_all_by_user_id(current_user, :order => :date_eaten)
+    @meals = Meal.find_all_by_user_id_and_date_eaten(current_user, @date.beginning_of_month..@date.end_of_month, :order => :date_eaten)
+    
+    dupe_list = ""
+    dupe_date = ""
+    orig_meal_id = ""
+    @meals.each do |m|
+      if m.date_eaten != dupe_date
+        dupe_date = m.date_eaten
+        orig_meal_id = m.id
+      else
+        dupe_list = "#{dupe_list} #{orig_meal_id}"
+        dupe_date = m.date_eaten
+        orig_meal_id = m.id
+      end
+    end
+    
+    @dupes = dupe_list
   end
   
   def update

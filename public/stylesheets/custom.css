@@ -82,7 +82,7 @@ nav ul li a:hover {
 
 /* Sign up button */
 
-a.big_green_button {
+.big_green_button {
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -336,6 +336,7 @@ div.user_info span.user_name {
 
 #slider {
 	width: 200px;
+	left:10px;
 }
 #meal_price {
 	border:0;
@@ -483,7 +484,6 @@ legend {
 	 z-index: 1;
 }
 
-/* tooltip styling. by default the element to be styled is .tooltip  */
 .converter {
 	float: right;
   margin-right: 0px !important;
@@ -498,12 +498,28 @@ legend {
 	height:100px;
 	padding:10px 10px 10px 10px;
 	width:200px;
-	color:black;	
+	color:black;
+	display:none;	
+}
+
+.converter_placeholder {
+	float: right;
+  margin-right: 0px !important;
+
+	background-color: white;
+	-moz-border-radius:    5px;
+  -webkit-border-radius: 5px;
+  border-radius:         5px;
+	font-size:12px;
+	height:100px;
+	padding:10px 10px 10px 10px;
+	width:200px;
+	color:black;
 }
 
 #default_serving {
   float: left;
-  margin-left:373px;
+  margin-left:310px;
 }
 
 #form_top_right {
@@ -518,6 +534,8 @@ legend {
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
+	position:center;
+	margin-left:-20px;
 }
 
 .favorite_list {
@@ -538,4 +556,42 @@ legend {
 
 .favorite_list a {
 	color: black;
+}
+
+#more_info {
+	display: none;
+	border: 3px;
+	border-color: black;
+	border-style: solid; 
+	text-align: center;
+	width:95%;
+	margin-left: 5%; 
+	padding: 10px; 
+	border-spacing: 0px;
+	background-color: white;
+}
+
+#just_calories {
+	display: none;
+}
+
+#hide_more_info {
+	display: none;
+}
+
+/* meal form */
+
+#meal_form_price {
+	left: 0px;
+	margin-right: 10px;
+	margin-bottom: 20px;
+}
+#meal_form_group {
+	left: 0px;
+	width: 500px;
+	margin-bottom: 25px;
+}
+
+#meal_fave{
+	display: none;
 }

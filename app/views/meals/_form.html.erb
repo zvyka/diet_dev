@@ -1,33 +1,37 @@
 <%= nested_form_for @meal do |f| %>  
-  <p>
-	    <%= f.label :date_eaten, "When did you eat your meal?" %><br />
-	    <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= params[:date_eaten] ||= Date.today %>
-	  </p>
-		<p>
-	    <%= f.label :time_of_day, "In the Morning, Afternoon, Evening, or at Night?" %><br />
-			<%= f.select :time_of_day, [["Morning", 1], ["Afternoon", 2], ["Evening", 3], ["Night", 4]]%>
-	  </p>
-		<p>
-	    <%= f.label :location, "Where did you eat?" %><br />
-	    <%= f.select :location, [["The Diner", 1], ["South Campus", 2], ["251 North (Denton)", 3], ["Shops", 4], ["Off-Campus", 5]] %>
-	  </p>
-		<p>
-	    <%= f.label :price, "Use the slider to choose the closest price: $" %>
-			<%= f.text_field :price, :size => 3, :value => @meal.price %>
-	    <div id="slider"></div>
-	  </p>
-	
 		<div class="field">
-	    <%= f.hidden_field :user_id, :value => current_user.id %>
-	  </div>
-  		<%= f.fields_for :ingredients %>	
-	<p><%= f.link_to_add "Add Food", :ingredients %></p> 
-	<p>
-		<%= f.label :favorite, "Add this meal to your favorites?" %>
-		<%= f.check_box :favorite, :default => false %>
-		<%= f.label :fave_name, "Give this meal a name!" %>
-		<%= f.text_field :fave_name %>
-	</p>
-  <p><%= f.submit "Submit" %></p>  
+		  <%= f.hidden_field :user_id, :value => current_user.id %>
+		</div>
+		<div id="meal_form_group">
+			<table>
+				<td><div id="meal_form_date">
+			    <%= f.label :date_eaten, "Date eaten" %><br />
+			    <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= params[:date_eaten] ||= Date.today %>
+			  </div></td>
+				<td><div id="meal_form_time">
+			    <%= f.label :time_of_day, "Time of day" %><br />
+					<%= f.select :time_of_day, [["Morning", 1], ["Afternoon", 2], ["Evening", 3], ["Night", 4]]%>
+			  </div></td>
+				<td><div id="meal_form_location">
+			    <%= f.label :location, "Location" %><br />
+			    <%= f.select :location, [["The Diner", 1], ["South Campus", 2], ["251 North (Denton)", 3], ["Shops", 4], ["Off-Campus", 5]] %>
+			  </div></td>
+			</table>
+		</div>
+ 		<%= f.fields_for :ingredients %>	
+		<p><%= f.link_to_add "Add Another Food", :ingredients, :class => "big_green_button round" %></p> 
+		<p>
+				<%= f.label :favorite, "Add this meal to your favorites?" %>
+				<%= f.check_box :favorite, :default => false %>
+				<div id="meal_fave">
+					<%= f.label :fave_name, "Give this meal a name!" %>
+					<%= f.text_field :fave_name %>
+				</div>
+		</p>
+	  <p><%= f.submit "Submit Meal", :class => "big_green_button round" %></p>
 <% end %>
-
+<script type="text/javascript">
+$('#meal_favorite').click(function() {
+  $('#meal_fave').toggle();
+});
+</script>

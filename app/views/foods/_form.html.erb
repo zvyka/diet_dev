@@ -1,0 +1,136 @@
+<%= nested_form_for @food do |f| %>  
+  	<p>
+	    <h3><%= f.label :name, "What's this food's name?" %></h3>
+	    <%= f.text_field :name, :value => @food.name ||= "#{current_user.name}'s New Food!" %>
+	  </p>
+		<p>
+			<h3>Okay, do you want to put just the calories, or do you have more information?</h3>
+			
+			<table>
+				<td><%= link_to "Just show me the calories",  "#", :class => "big_green_button round", 
+																									 :id => "show_just_calories" %></td>
+		   	<td><%= link_to "Show me everything!", "#", :class => "big_green_button round",
+		 																							  :id => "show_more_info" %></td>
+			</table>
+		</p>
+		<div id="just_calories">
+			<p>
+	    	<%= f.label :calories, "How many calories?" %>
+	    	<%= f.text_field :calories, :value => @food.calories, :size => 4 %>
+	    	<%= f.label :weight_1_gms, "How many grams in one serving?" %>
+				<%= f.text_field :weight_1_gms, :value => @food.weight_1_gms, :size => 4 %>
+	  	</p>
+		</div>
+	
+		<div class="field">
+			<%= f.hidden_field :weight_1_desc, :value => "grams"%><br />
+	    <%= f.hidden_field :user_id, :value => current_user.id %>
+	  </div>
+	<table id="more_info">
+			<tr>
+				<td id="left_part">
+			    <div id="header"><b>Nutrition Facts</b></div>
+			    <div class="label"><%= f.label :weight_1_gms, "Serving Size" %><%= f.text_field :weight_1_gms, :value => @food.weight_1_gms, :size => 4 %> (grams)</div>   
+			  </td>          
+	       <td class="label amount_serving">
+	         <div class="item"><b>Amount/Serving</b></div>
+	         <div class="hr thick" />
+	       </td>
+
+	       <td class="label amount_serving">
+	         <b>Amount/Serving</b>
+	         <div class="hr thick" />
+	       </td>
+
+	     </tr>
+	     <tr>
+	       <td>
+				</td>
+	       <td class="label amount_serving">
+	         <div><%= f.label :lipid_total, "Total Fat" %><%= f.text_field :lipid_total, :value => @food.lipid_total, :size => 4 %>g</div>            
+	         <div class="hr thin" />
+	       </td>
+	       <td class="label amount_serving">            
+	         <div><%= f.label :carbohydrates, "Total Carbs" %><%= f.text_field :carbohydrates, :value => @food.carbohydrates, :size => 4 %>g</div>            
+	         <div class="hr thin" />
+	       </td>
+
+	     </tr>
+	     <tr>
+				 <td>
+					<div class="label"><%= f.label :calories, "Calories" %><%= f.text_field :calories, :value => @food.calories, :size => 4 %></b></div>
+				 </td>
+	       <td class="label amount_serving">            
+	         <div class="indent"><%= f.label :fa_sat, "Sat. Fats" %><%= f.text_field :fa_sat, :value => @food.fa_sat, :size => 4 %>g</div>            
+	         <div class="hr thin " />
+	       </td>
+
+	       <td class="label amount_serving">            
+	         <div class="indent"><%= f.label :fiber, "Dietary Fiber" %><%= f.text_field :fiber, :value => @food.fiber, :size => 4 %>g</div>            
+	         <div class="hr thin" />
+	       </td>
+
+	     </tr>
+	     <tr>
+	       <td>
+	       </td>
+				 <td class="label amount_serving">            
+	         <div><%= f.label :cholesterol, "Cholesterol" %><%= f.text_field :cholesterol, :value => @food.cholesterol, :size => 4 %>mg</div>            
+	         <div class="hr thin" />
+	       </td>
+
+	       <td class="label amount_serving">            
+	         <div class="indent"><%= f.label :sugar_total, "Sugar" %><%= f.text_field :sugar_total, :value => @food.sugar_total, :size => 4 %>g</div>            
+	         <div class="hr thin" />
+	       </td>
+
+	     </tr>
+	     <tr>
+	       <td>
+				 </td>
+	       <td class="label amount_serving">            
+	         <div><%= f.label :sodium, "Sodium" %><%= f.text_field :sodium, :value => @food.sodium, :size => 4 %>mg</div>          
+	         <div class="hr thick" />
+	       </td>
+
+	       <td class="label amount_serving">            
+	         <div><%= f.label :protein, "Proteins" %><%= f.text_field :protein, :value => @food.protein, :size => 4 %>g</div>            
+	         <div class="hr thick" />
+	       </td>
+
+	     </tr>
+	     <tr>
+	       <td>
+				 </td>
+	       <td class="label amount_serving">
+	         <div><%= f.label :calcium, "Calcium" %><%= f.text_field :calcium, :value => @food.calcium, :size => 4 %>mg </div>      
+	         <div class="hr thin" />
+	       </td>
+	       <td class="label amount_serving"> 
+	         <div><%= f.label :iron, "Iron" %><%= f.text_field :iron, :value => @food.iron, :size => 4 %>mg </div>            
+	         <div class="hr thin" />
+	       </td>
+	     </tr>
+			<tr>
+				<td/>
+	       <td class="label amount_serving">  
+	         <div><%= f.label :vit_c, "Vitamin C" %><%= f.text_field :vit_c, :value => @food.vit_c, :size => 4 %>mg</div>          
+	         <div class="hr thin" />
+	       </td>
+			</tr>
+		</table>
+  <p><%= f.submit "Submit" %></p>  
+<% end %>
+
+<script>
+	$(function() {
+		$("#show_more_info").click(function() {
+			$("#more_info").show();
+			$("#just_calories").hide();
+		});
+		$("#show_just_calories").click(function() {
+			$("#more_info").hide();
+			$("#just_calories").show();
+		});
+	});
+</script>

@@ -6,7 +6,7 @@ class PagesController < ApplicationController
    
    
   def logout
-    CASClient::Frameworks::Rails::Filter.logout(self)
+    CASClient::Frameworks::Rails::Filter.logout(self, "http://diettracker.umd.edu/")
   end
   
   def home

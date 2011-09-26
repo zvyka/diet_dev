@@ -1,26 +1,34 @@
-<div class="converter">
-	<span><b>Conversion Helper</b></span><br/>
-	<span id="converter_text">Type an amount and choose a unit, then click convert</span><br/>
-	<input type="text" id="calc_text"></input>
-	<select id="calc_units">
-	  <option value="oz">oz</option>
-		<option value="cup">cup</option>
-		<option value="tsp">tsp</option>
-	  <option value="tbsp">tbsp</option>
-	  <option value="pint">pint</option>
-	</select><br/>
-	<button id="calc_button" type="button">Convert!</button>
-</div>
 <p class="fields">
+	<div class="converter_placeholder"></div>
+	<div class="converter">
+		<span><b>Conversion Helper</b></span><br/>
+		<span id="converter_text">Type an amount and choose a unit, then click convert</span><br/>
+		<input type="text" id="calc_text"></input>
+		<select id="calc_units">
+		  <option value="oz">oz</option>
+			<option value="cup">cup</option>
+			<option value="tsp">tsp</option>
+		  <option value="tbsp">tbsp</option>
+		  <option value="pint">pint</option>
+		</select><br/>
+		<button id="calc_button" type="button">Convert!</button>
+	</div>
 	<%= f.label :what_food, "Food" %><br />
 	<%= f.text_field :what_food %>
 	<%= f.hidden_field :food_id %>
 	<%= f.label :servings, "How many servings?" %>
 	<%= f.text_field :servings, :size => 5 %>
 	<%= f.label :serving_size, "Serving size (grams)" %>
-	<%= f.text_field :serving_size, :size => 6 %>
-	<%= f.link_to_remove "remove" %>
-		<div id="default_serving"><span>Default serving: </span><label id="serving_desc"></label></div><br/><br/><br/>
+	<%= f.text_field :serving_size, :size => 6 %><br/>
+
+	
+		<div id="default_serving">
+			<span>Default serving: </span><label id="serving_desc"></label>
+		</div>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
 	<script type="text/javascript">
 
 	$('*[id*=calc_button]').bind("click", function( e ) {
@@ -42,7 +50,7 @@
 			$(e.target).parent().children('#calc_text').css("background-color","white");	
 			$(e.target).parent().children('#converter_text').text("Type an amount and choose a unit, then click convert");
 			$(e.target).parent().children('#converter_text').css("color","black");
-	$(e.target).parent().parent().children().children('*[id*=serving_size]').val(output.toFixed(0));
+	$(e.target).parent().parent().children('*[id*=serving_size]').val(output.toFixed(0));
 	} else {
 		$(e.target).parent().children('#calc_text').css("background-color","yellow");
 		$(e.target).parent().children('#converter_text').css("color","red");
@@ -50,30 +58,33 @@
 	}
 	});
 	
-	$(document).ready(function() {
+	$(document).ready(function() {			
 	    $('*[id*=what_food]').autocomplete({ source: '<%= foods_path(:format => :json) %>',
 						focus: function(event, ui) {
 										if(ui.item.umd == 0) {
-											 $(this).parent().children('#convert_units,*[id*=serving_size], label[for*=serving_size]').show();	
-																				
+										 	$(this).parent().children('.converter, *[id*=serving_size], label[for*=serving_size]').show();
+											 $(this).parent().children('.converter_placeholder').css("display","none");
+																			
 						           $(this).parent().children('*[id*=serving_size]').val(ui.item ? ui.item.grams : 100);
-											 $(this).parent().parent().children("div").children("#serving_desc").text(ui.item ? ui.item.serving : "100 grams");
+											 $(this).parent().children("div").children("#serving_desc").text(ui.item ? ui.item.serving : "100 grams");
 						           if (ui.item) {
 													if (ui.item.grams != 0){
 						                $(this).parent().children('*[id*=serving_size]').val(ui.item.grams);
-													  $(this).parent().parent().children("div").children("#serving_desc").text(ui.item.serving + ' (' + ui.item.grams + ' grams)');
+													  $(this).parent().children("div").children("#serving_desc").text(ui.item.serving + ' (' + ui.item.grams + ' grams)');
 													} else {
 														$(this).parent().children('*[id*=serving_size]').val(ui.item.grams);
-													  $(this).parent().parent().children("div").children("#serving_desc").text(ui.item.serving);
+													  $(this).parent().children("div").children("#serving_desc").text(ui.item.serving);
 													}
 						           }
-											if (!ui.item.serving){
-												$(this).parent().children('*[id*=serving_size]').val(100);
-											  $(this).parent().parent().children("div").children("#serving_desc").text('None given, based off of 100 grams');
-											}
+											 if (!ui.item.serving){
+												 $(this).parent().children('*[id*=serving_size]').val(100);
+											   $(this).parent().children("div").children("#serving_desc").text('None given, based off of 100 grams');
+											 }
 										} else {
-										  $(this).parent().parent().children("div").children("#serving_desc").text(ui.item.serving + ' (' + ui.item.grams + ' grams)');
-											$(this).parent().children('#convert_units,*[id*=serving_size], label[for*=serving_size]').hide();
+										  $(this).parent().children("div").children("#serving_desc").text(ui.item.serving);
+											$(this).parent().children('.converter, *[id*=serving_size], label[for*=serving_size]').hide();
+											$(this).parent().children('.converter_placeholder').css("display","block");
+											
 										}
 										$(this).next().val(ui.item.food_id);
 					       }
@@ -91,4 +102,5 @@
 	
 	});
 	</script>
+<%= f.link_to_remove "[Remove]" %>
 </p>

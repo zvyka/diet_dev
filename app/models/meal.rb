@@ -4,9 +4,9 @@ class Meal < ActiveRecord::Base
   
   validates_presence_of :ingredients, :message => "You need to specify a food!"
       
-  def self.on_month(day) 
-    where("MONTH(date_eaten) = ?", day.month)  
-  end
+  # def self.on_month(day) 
+  #   where("MONTH(date_eaten) = ?", day.month)  
+  # end
   
  # scope :this_month, on_month(day)
   

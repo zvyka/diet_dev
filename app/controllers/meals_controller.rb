@@ -24,6 +24,8 @@ class MealsController < ApplicationController
   def new
     @meal = Meal.new
     @foods = Food.all
+    
+    @meal.ingredients.build
   end
 
   def create
