@@ -4,31 +4,34 @@ task :import_foodpro => :environment do
   require 'mechanize'
   agent = Mechanize.new
   
-  page = agent.get('http://isengard.umd.edu/foodpro/')
+  page = agent.get('http://isengard.umd.edu/foodpro/') # this is the website
   
-  location_links = page.links_with(:href => /nutframe/)
+  location_links = page.links_with(:href => /nutframe/) #this grabs all the links with "nutframe" in them, they are the links for the different dining halls - as of now only south campus and north campus
   
-  location_links.each do |l|
-    location_page = l.click
+  location_links.each do |l| # we need to repeat everythign for each location.
+    location_page = l.click #this clicks the link to the corresponding page
     puts "========********USING LOCATION: #{location_page.search("td div b").text.strip} *********========="
     
-    date_links = location_page.links_with(:href => /menuSamp/)
+    date_links = location_page.links_with(:href => /menuSamp/) #this grabs all the links with "menuSamp", they are the dates you see up top.
 
     date_links.each do |d|
-      date_page = d.click
+      date_page = d.click #click on each date
       
-      meal_links = date_page.links_with(:href => /pickMenu/)
+      meal_links = date_page.links_with(:href => /pickMenu/) #this grabs each of those stupid links behind the apple image for Breakfast, Lunch, Dinner
 
       meal_links.each do |m|
-        meal_page = m.click
+        meal_page = m.click #clicking on each gets us to the list of all the meals
         food_links = meal_page.links_with(:href => /label/)
     
-        food_links.each do |f|
+        food_links.each do |f| #finally, we get to each individual nutrition label
           food_page = f.click
-          page_food_name = "#{food_page.search("div:nth-child(1) font").text.strip} (UMD)"
           
-          if !food_page.search("font:nth-child(6) b").text.strip.blank?
-            db_food = Food.find_by_name(page_food_name)
+          page_food_name = "#{food_page.search("div:nth-child(1) font").text.strip} (UMD)" #add (UMD) to the end of the name
+          
+          #Now, we find each item
+          
+          if !food_page.search("font:nth-child(6) b").text.strip.blank? #if the name is not blank...
+            db_food = Food.find_by_name(page_food_name) #search the database to see if the food already exists
             
             page_calories = food_page.search("font:nth-child(6) b").text.strip[/\d.?\d?/].to_f
             page_protein = food_page.search("tr:nth-child(5) td:nth-child(3) font:nth-child(2)").text.strip[/\d.?\d?/].to_f
@@ -42,7 +45,7 @@ task :import_foodpro => :environment do
             page_cholesterol = food_page.search("tr:nth-child(5) td:nth-child(1) font:nth-child(2)").text.strip[/\d.?\d?/].to_f
             page_weight_1_desc = food_page.search("font:nth-child(4)").text.strip
             
-            if db_food.blank?   
+            if db_food.blank?   #if this food has never been in the database, add it
               new_food = Food.create!( :name => page_food_name,
                             :calories =>      page_calories,
                             :protein =>       page_protein,
@@ -69,7 +72,7 @@ task :import_foodpro => :environment do
                                 fa_sat is         #{new_food.fa_sat}, 
                                 cholesterol is    #{new_food.cholesterol}, 
                                 weight_1_desc is  #{new_food.weight_1_desc}"
-            else
+            else #it might need updating. So check each one in turn.
               puts "Already present: #{page_food_name} as #{db_food.id}. 
                     Calories is #{db_food.calories} vs #{page_calories}, 
                     protein is #{db_food.protein} vs #{page_protein}, 
@@ -266,6 +269,8 @@ task :import_foodpro => :environment do
       end
     end
   end
+  
+  #after we've added everything, we need to rebuild the search index, so we call that task
   puts "*******************************Should be rebuilding TS here: (after everything)*******************************"
   Rake::Task["ts:rebuild"].reenable
   Rake::Task["ts:rebuild"].invoke
