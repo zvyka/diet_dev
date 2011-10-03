@@ -23,7 +23,7 @@ DietApp::Application.routes.draw do
   match '/help/tutorial', :to => 'pages#tutorial' 
   match '/help/report-a-problem', :to => 'pages#report-a-problem' 
 
-  
+  match '/you', :to => 'users#edit'
   
   match '/analysis', :to => 'users#analysis'
   match '/terms',    :to => 'pages#terms'
@@ -31,8 +31,9 @@ DietApp::Application.routes.draw do
   match '/faq',      :to => 'pages#faq'
     
   match '/foods',    :to => 'foods#index'
-  match '/foods/search', :to => 'foods#show'
-
+  match '/food_search', :to => 'foods#search'
+  match '/myfoods', :to => 'foods#myfoods'
+  
   root :to => 'pages#home'
 
   # The priority is based upon order of creation:

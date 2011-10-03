@@ -95,6 +95,16 @@ nav ul li a:hover {
   padding: 20px;
 }
 
+.big_green_button a {
+	color: white;
+	background-color:white;
+}
+
+.big_green_button a:visited {
+	color: white;
+	background-color:white;
+}
+
 /* Round corners */
 
 .round {
@@ -484,6 +494,23 @@ legend {
 	 z-index: 1;
 }
 
+.converter_food_add {
+	float: right;
+  margin-right: 0px !important;
+	border: 2px;
+	border-color: black;
+	border-style: solid; 
+	background-color: SkyBlue;
+	-moz-border-radius:    5px;
+  -webkit-border-radius: 5px;
+  border-radius:         5px;
+	font-size:12px;
+	height:100px;
+	padding:10px 10px 10px 10px;
+	width:200px;
+	color:black;  	
+}
+
 .converter {
 	float: right;
   margin-right: 0px !important;
@@ -505,7 +532,6 @@ legend {
 .converter_placeholder {
 	float: right;
   margin-right: 0px !important;
-
 	background-color: white;
 	-moz-border-radius:    5px;
   -webkit-border-radius: 5px;
@@ -541,6 +567,7 @@ legend {
 .favorite_list {
 	position: relative;
 	float: right;
+	top: -50px;
 	border: 2px;
 	border-color: black;
 	border-style: solid; 
@@ -550,8 +577,15 @@ legend {
   border-radius:         5px;
 	font-size:14px;
 	padding:10px 10px 10px 10px;
-	width: 200px;
+	width: 250px;
+	height: 110px;
 	color:black;
+}
+
+.scroll {
+	overflow: auto;
+	position: relative;
+	height: 90px;
 }
 
 .favorite_list a {
@@ -559,7 +593,6 @@ legend {
 }
 
 #more_info {
-	display: none;
 	border: 3px;
 	border-color: black;
 	border-style: solid; 
@@ -594,4 +627,56 @@ legend {
 
 #meal_fave{
 	display: none;
+}
+
+.add_another_meal {
+	  margin-left: auto;
+	  margin-right: auto;
+	  display: block;
+	  text-align: center;
+		size:36px;
+}
+
+#update_email {
+	float: right;
+	top: 0px;
+	right: 0px;
+  margin-right: 0px !important;
+	border: 2px;
+	border-color: black;
+	border-style: solid; 
+	background-color: SkyBlue;
+	-moz-border-radius:    5px;
+  -webkit-border-radius: 5px;
+  border-radius:         5px;
+	font-size:14px;
+	padding:10px 10px 10px 10px;
+	width: 250px;
+	height: 110px;
+	color:black;
+}
+
+.food_links {
+	float: right;
+}
+
+.food_list {
+	width: 400px;
+}
+
+#profile_link_pics {
+	width: 600px;
+}
+
+#search {
+	height: 40px;
+	width: 300px;
+	font-size:24px;
+}
+
+#search_form {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
 }

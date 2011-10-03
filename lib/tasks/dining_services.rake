@@ -54,7 +54,7 @@ task :import_foodpro => :environment do
                             :sodium =>        page_sodium, 
                             :fa_sat =>        page_fa_sat, 
                             :cholesterol =>   page_cholesterol,
-                            :weight_1_gms =>  0, 
+                            :weight_1_gms =>  100, 
                             :weight_1_desc => page_weight_1_desc, 
                             :umd => 1)
               puts "************Added: #{page_food_name} as #{new_food.id}. 

@@ -1,0 +1,41 @@
+<div id="search_form">
+	<% form_tag food_search_path, :method => 'get' do %>
+		<p>
+		  <%= text_field_tag :search, params[:search] %>
+		  <%= submit_tag "Search", :name => nil, :class => "search_button" %>
+		</p>
+	<% end %>
+</div>
+<% for food in @foods %>
+	<p>
+		<%= link_to food.name, food_path(food)%>
+		</p>
+<% end%>
+
+<script type="text/javascript">
+
+$("input:submit").button();
+
+$(document).ready(function() {			
+    $('*[id*=search]').autocomplete({ source: '<%= foods_path(:format => :json) %>',
+					focus: function(event, ui) {
+									$("input#search").val(ui.item.name);
+				       },
+					select: function(event, ui) {
+									$("input#search").val(ui.item.name);
+									window.location = 'foods/' + ui.item.food_id
+							 }
+					}
+		 );
+
+$.ui.autocomplete.prototype._renderItem = function (ul, item) {
+						the_term = this.term.split(' ').join('|');
+            item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + the_term + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong></strong>");
+            return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append("<a>" + item.label + "</a>")
+                    .appendTo(ul);
+        };
+
+});
+</script>

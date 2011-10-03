@@ -1,0 +1,22 @@
+<% your_foods = Food.find_all_by_user_id(current_user.id) %>
+<%= link_to "Add a new food", new_food_path %> <br/>
+<strong>Here's a list of the foods you've added so far:</strong>
+<% if !your_foods.blank? %>
+	<div class="form_top_right food_list">
+			<br />
+			<div class="scroll">
+				<ul>
+					<% your_foods.each do |food| %>
+							<li>
+								<%= link_to food.name, :controller => "foods", :action => "show", :id => food.id %>
+								<div class="food_links">
+									<%= link_to 'Edit', edit_food_path(food) %> |
+									<%= link_to 'Destroy', food, :method => :delete %> |
+									<%= link_to 'Back', :back %>
+								</div>
+							</li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+<% end %>

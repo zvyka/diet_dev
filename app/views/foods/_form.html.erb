@@ -1,36 +1,36 @@
-<%= nested_form_for @food do |f| %>  
+<div class="converter_food_add">
+	<span><b>Conversion Helper</b></span><br/>
+	<span id="converter_text">Type an amount and choose a unit, then click convert</span><br/>
+	<input type="text" id="calc_text"></input>
+	<select id="calc_units">
+	  <option value="oz">oz</option>
+		<option value="cup">cup</option>
+		<option value="tsp">tsp</option>
+	  <option value="tbsp">tbsp</option>
+	  <option value="pint">pint</option>
+	</select><br/>
+	<button id="calc_button" type="button">Convert!</button>
+</div>
+
+<%= nested_form_for @food, :validate => true do |f| %>  
+<%= render 'shared/error_messages', :object => f.object %>
   	<p>
-	    <h3><%= f.label :name, "What's this food's name?" %></h3>
-	    <%= f.text_field :name, :value => @food.name ||= "#{current_user.name}'s New Food!" %>
-	  </p>
-		<p>
-			<h3>Okay, do you want to put just the calories, or do you have more information?</h3>
-			
-			<table>
-				<td><%= link_to "Just show me the calories",  "#", :class => "big_green_button round", 
-																									 :id => "show_just_calories" %></td>
-		   	<td><%= link_to "Show me everything!", "#", :class => "big_green_button round",
-		 																							  :id => "show_more_info" %></td>
-			</table>
+			<h4><i>Fill out the following nutrition label to create a new food. You can put as much information as you like, as long as you enter <b>calories and a serving size (in grams, please)</b>. You may the conversion helper on the right to convert some common units to grams. Please note that your custom-added foods will only be available to you.</i></h4>
 		</p>
-		<div id="just_calories">
-			<p>
-	    	<%= f.label :calories, "How many calories?" %>
-	    	<%= f.text_field :calories, :value => @food.calories, :size => 4 %>
-	    	<%= f.label :weight_1_gms, "How many grams in one serving?" %>
-				<%= f.text_field :weight_1_gms, :value => @food.weight_1_gms, :size => 4 %>
-	  	</p>
-		</div>
+		<p>
+	    <span><%= f.label :name, "Give this food a name:" %><%= f.text_field :name, :value => @food.name ||= "#{current_user.name}'s New Food!" %></span>
+	  </p>
 	
 		<div class="field">
 			<%= f.hidden_field :weight_1_desc, :value => "grams"%><br />
 	    <%= f.hidden_field :user_id, :value => current_user.id %>
+			<%= f.hidden_field :umd, :value => 2 %>
 	  </div>
 	<table id="more_info">
-			<tr>
+			<tr> 
 				<td id="left_part">
 			    <div id="header"><b>Nutrition Facts</b></div>
-			    <div class="label"><%= f.label :weight_1_gms, "Serving Size" %><%= f.text_field :weight_1_gms, :value => @food.weight_1_gms, :size => 4 %> (grams)</div>   
+			    <div class="label"><%= f.label :weight_1_gms, "Serving Size" %><%= f.text_field :weight_1_gms, :value => @food.weight_1_gms||= 100, :size => 4 %> (grams)</div>   
 			  </td>          
 	       <td class="label amount_serving">
 	         <div class="item"><b>Amount/Serving</b></div>
@@ -47,26 +47,26 @@
 	       <td>
 				</td>
 	       <td class="label amount_serving">
-	         <div><%= f.label :lipid_total, "Total Fat" %><%= f.text_field :lipid_total, :value => @food.lipid_total, :size => 4 %>g</div>            
+	         <div><%= f.label :lipid_total, "Total Fat" %><%= f.text_field :lipid_total, :value => @food.lipid_total ||=0, :size => 4 %>g</div>            
 	         <div class="hr thin" />
 	       </td>
 	       <td class="label amount_serving">            
-	         <div><%= f.label :carbohydrates, "Total Carbs" %><%= f.text_field :carbohydrates, :value => @food.carbohydrates, :size => 4 %>g</div>            
+	         <div><%= f.label :carbohydrates, "Total Carbs" %><%= f.text_field :carbohydrates, :value => @food.carbohydrates ||=0, :size => 4 %>g</div>            
 	         <div class="hr thin" />
 	       </td>
 
 	     </tr>
 	     <tr>
 				 <td>
-					<div class="label"><%= f.label :calories, "Calories" %><%= f.text_field :calories, :value => @food.calories, :size => 4 %></b></div>
+					<div class="label"><%= f.label :calories, "Calories" %><%= f.text_field :calories, :value => @food.calories ||=0, :size => 4 %></b></div>
 				 </td>
 	       <td class="label amount_serving">            
-	         <div class="indent"><%= f.label :fa_sat, "Sat. Fats" %><%= f.text_field :fa_sat, :value => @food.fa_sat, :size => 4 %>g</div>            
+	         <div class="indent"><%= f.label :fa_sat, "Sat. Fats" %><%= f.text_field :fa_sat, :value => @food.fa_sat ||=0, :size => 4 %>g</div>            
 	         <div class="hr thin " />
 	       </td>
 
 	       <td class="label amount_serving">            
-	         <div class="indent"><%= f.label :fiber, "Dietary Fiber" %><%= f.text_field :fiber, :value => @food.fiber, :size => 4 %>g</div>            
+	         <div class="indent"><%= f.label :fiber, "Dietary Fiber" %><%= f.text_field :fiber, :value => @food.fiber ||=0, :size => 4 %>g</div>            
 	         <div class="hr thin" />
 	       </td>
 
@@ -75,12 +75,12 @@
 	       <td>
 	       </td>
 				 <td class="label amount_serving">            
-	         <div><%= f.label :cholesterol, "Cholesterol" %><%= f.text_field :cholesterol, :value => @food.cholesterol, :size => 4 %>mg</div>            
+	         <div><%= f.label :cholesterol, "Cholesterol" %><%= f.text_field :cholesterol, :value => @food.cholesterol ||=0, :size => 4 %>mg</div>            
 	         <div class="hr thin" />
 	       </td>
 
 	       <td class="label amount_serving">            
-	         <div class="indent"><%= f.label :sugar_total, "Sugar" %><%= f.text_field :sugar_total, :value => @food.sugar_total, :size => 4 %>g</div>            
+	         <div class="indent"><%= f.label :sugar_total, "Sugar" %><%= f.text_field :sugar_total, :value => @food.sugar_total ||=0, :size => 4 %>g</div>            
 	         <div class="hr thin" />
 	       </td>
 
@@ -89,12 +89,12 @@
 	       <td>
 				 </td>
 	       <td class="label amount_serving">            
-	         <div><%= f.label :sodium, "Sodium" %><%= f.text_field :sodium, :value => @food.sodium, :size => 4 %>mg</div>          
+	         <div><%= f.label :sodium, "Sodium" %><%= f.text_field :sodium, :value => @food.sodium ||=0, :size => 4 %>mg</div>          
 	         <div class="hr thick" />
 	       </td>
 
 	       <td class="label amount_serving">            
-	         <div><%= f.label :protein, "Proteins" %><%= f.text_field :protein, :value => @food.protein, :size => 4 %>g</div>            
+	         <div><%= f.label :protein, "Proteins" %><%= f.text_field :protein, :value => @food.protein ||=0, :size => 4 %>g</div>            
 	         <div class="hr thick" />
 	       </td>
 
@@ -103,18 +103,18 @@
 	       <td>
 				 </td>
 	       <td class="label amount_serving">
-	         <div><%= f.label :calcium, "Calcium" %><%= f.text_field :calcium, :value => @food.calcium, :size => 4 %>mg </div>      
+	         <div><%= f.label :calcium, "Calcium" %><%= f.text_field :calcium, :value => @food.calcium ||=0, :size => 4 %>mg </div>      
 	         <div class="hr thin" />
 	       </td>
 	       <td class="label amount_serving"> 
-	         <div><%= f.label :iron, "Iron" %><%= f.text_field :iron, :value => @food.iron, :size => 4 %>mg </div>            
+	         <div><%= f.label :iron, "Iron" %><%= f.text_field :iron, :value => @food.iron ||=0, :size => 4 %>mg </div>            
 	         <div class="hr thin" />
 	       </td>
 	     </tr>
 			<tr>
 				<td/>
 	       <td class="label amount_serving">  
-	         <div><%= f.label :vit_c, "Vitamin C" %><%= f.text_field :vit_c, :value => @food.vit_c, :size => 4 %>mg</div>          
+	         <div><%= f.label :vit_c, "Vitamin C" %><%= f.text_field :vit_c, :value => @food.vit_c ||=0, :size => 4 %>mg</div>          
 	         <div class="hr thin" />
 	       </td>
 			</tr>
@@ -122,15 +122,31 @@
   <p><%= f.submit "Submit" %></p>  
 <% end %>
 
-<script>
-	$(function() {
-		$("#show_more_info").click(function() {
-			$("#more_info").show();
-			$("#just_calories").hide();
-		});
-		$("#show_just_calories").click(function() {
-			$("#more_info").hide();
-			$("#just_calories").show();
-		});
-	});
+<script type="text/javascript">
+$('*[id*=calc_button]').bind("click", function( e ) {
+	var input = $(e.target).parent().children('#calc_text').val();
+	var output = 0;
+	var unit = $(e.target).parent().children('#calc_units').val();
+	if (input != 0) {
+		if (unit == "oz"){
+				output =  28.3495231*input;
+		} else if (unit == "cup"){
+				output = 8*28.3495231*input;				
+		}	else if (unit == "tsp"){ 
+				output = (28.3495231/6)*input;
+		}	else if (unit == "tbsp"){
+				output = 0.5*28.3495231*input;
+		}	else if (unit == "pint"){
+				output = 16*28.3495231*input;
+		}
+		$(e.target).parent().children('#calc_text').css("background-color","white");	
+		$(e.target).parent().children('#converter_text').text("Type an amount and choose a unit, then click convert");
+		$(e.target).parent().children('#converter_text').css("color","black");
+		$('*[id*=weight_1_gms]').val(output.toFixed(0));
+} else {
+	$(e.target).parent().children('#calc_text').css("background-color","yellow");
+	$(e.target).parent().children('#converter_text').css("color","red");
+	$(e.target).parent().children('#converter_text').text("Input cannot be 0 or blank");
+}
+});
 </script>

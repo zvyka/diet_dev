@@ -5,16 +5,26 @@ class Food < ActiveRecord::Base
                   :vit_b6, :folate_total, :folic_acid, :food_folate, :folate_dfe, :choline_total, :vit_b12, 
                   :vit_a_iu, :vit_a_rae, :retinol, :alpha_carotene, :beta_carotene, :beta_crypt, :lycopene, 
                   :lut_zea, :vit_e, :vit_d_mcg, :vit_d_iu, :vit_k, :fa_sat, :fa_mono, :fa_poly, :cholesterol, 
-                  :weight_1_gms, :weight_1_desc, :weight_2_gms, :weight_2_desc, :refuse_pct, :umd
+                  :weight_1_gms, :weight_1_desc, :weight_2_gms, :weight_2_desc, :refuse_pct, :umd, :user_id
   
-  #belongs_to :ingredients
-  # has_many :ingredients
-  #   has_many :meals, :through => :ingredients
+  validates :name,  :presence => true,
+                    :length   => { :minimum => 5 }
+                    
+  validates :weight_1_gms, :presence => true,
+                           :numericality => { :greater_than => 0}
+   validates :calories, :presence => true, 
+                        :numericality => { :greater_than => 0 }
+   validates :protein, :presence => true, :numericality => true
+   validates :lipid_total, :presence => true, :numericality => true
+   validates :carbohydrates, :presence => true, :numericality => true
+   validates :fiber, :presence => true, :numericality => true
+   validates :sugar_total, :presence => true, :numericality => true
+   validates :sodium, :presence => true, :numericality => true
+   validates :fa_sat, :presence => true, :numericality => true
+   validates :cholesterol, :presence => true, :numericality => true
+   
   
-  # def index
-  #   @meals = Meal.search(params[:search])
-  # end
-  
+
   define_index do
     # fields
     indexes :name, :sortable => true
@@ -32,14 +42,9 @@ class Food < ActiveRecord::Base
     
     #ignore common words
     set_property :stopwords => "/Users/jon/Sites/diet_app/stopwords.txt"
+    
+    #delta indexing
+    set_property :delta => true
   end
     
-  # def self.search(search)
-  #   if search
-  #     where('name LIKE ?', "%#{search}%")
-  #   else
-  #     scoped
-  #   end
-  # end
-  
 end

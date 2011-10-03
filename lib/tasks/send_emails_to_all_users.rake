@@ -35,28 +35,35 @@ task :send_survey_emails => :environment do
     require 'pony'
     f = File.new('/Users/jon/Sites/mail_pass.txt')
     pass= f.gets
+    count = 0
     User.all.each do |user|
-        Pony.mail(:from => 'teamdietumd@gmail.com', :to => user.email, :subject => 'Team DIET Quick Survey', 
-                :html_body => "<p>Dear #{user.name}</p> <p>Thank you for signing up to be a participant in our study!</p> <p>In order to be entered into the raffle for an iPod Touch, please complete a confidential online survey by 1pm on Friday September 30, 2011.  The survey will take approximately 10 minutes, and consists of an online consent form, a brief demographics questionnaire, the Eating Attitudes Test, and a self-efficacy questionnaire. Make sure you log into your UMD terpmail account before clicking the link. Please do this even if you have your emails forwarded to another email account. </p> <p>Participation in this study is completely voluntary and confidential.</p> <p>To fill out the survey, please click the link below or copy and paste the following link to your internet browser:</p> <p><a href=' https://docs.google.com/a/terpmail.umd.edu/spreadsheet/viewform?hl=en_US&formkey=dFZvUXc5Z0dHaGFSZ01wNHZQS0FldFE6MQ#gid=0'>https://docs.google.com/a/terpmail.umd.edu/spreadsheet/viewform?hl=en_US&formkey=dFZvUXc5Z0dHaGFSZ01wNHZQS0FldFE6MQ#gid=0</a></p> <p>This research has been approved by the Institutional Review Board (IRB) at the University of Maryland (IRB #11-0312).</p> <p>Thank you for your time and participation.  Please feel free to contact us with any questions, comments, or suggestions.</p> <p>Sincerely,</br>Team DIET</br><a href='mailto:teamdietumd@gmail.com'>teamdietumd@gmail.com</a></p>",
+      count = count +1
+      if count % 50 == 0
+        puts "****** Sleeping for a minute...zzzzzzzzzzzz******"
+        sleep 60 #sleep for 60 seconds after every 50 emails sent
+        puts"******* Done sleeping! Let's get to it! **********"
+      end
+        Pony.mail(:from => 'teamdietumd@gmail.com', :to => user.email, :subject => 'Deadline extended on Team DIET Survey', 
+                :html_body => "<p>Dear #{user.name}</p> <p>If you have already taken the preliminary survey you may disregard this email. Thank you so much for choosing to participate in our study.</p> <p><b>We have recently corrected some technical problems, so if you were previously unable to complete the survey you will now have access to it. If you have not yet found time to complete the survey, now is an excellent time to do so!</b></p> <p>To fill out the survey, please click the link below or copy and paste the following link to your internet browser:</p> <p><a href=' https://docs.google.com/a/terpmail.umd.edu/spreadsheet/viewform?hl=en_US&formkey=dFZvUXc5Z0dHaGFSZ01wNHZQS0FldFE6MQ#gid=0'>https://docs.google.com/a/terpmail.umd.edu/spreadsheet/viewform?hl=en_US&formkey=dFZvUXc5Z0dHaGFSZ01wNHZQS0FldFE6MQ#gid=0</a></p> <p>The survey will take less than ten minutes, and you will be officially entered in the raffle to win the iPod touch. Due to this technical problem, the deadline for submitting the survey has been extended to <b>Friday, October 7, 2011 at noon.</b></p> <p>Sincerely,</br>Team DIET</br><a href='mailto:teamdietumd@gmail.com'>teamdietumd@gmail.com</a></p> <br/><p>This research has been approved by the Institutional Review Board (IRB) at the University of Maryland (IRB #11-0312).</p>  <p>Thank you for your time and participation.  Please feel free to contact us with any questions, comments, or suggestions.</p>",
                 :body => "Dear #{user.name},
 
-                Thank you for signing up to be a participant in our study! 
+                If you have already taken the preliminary survey you may disregard this email. Thank you so much for choosing to participate in our study. 
             
-                In order to be entered into the raffle for an iPod Touch, please complete a confidential online survey by 1pm on Friday September 30, 2011.  The survey will take approximately 10 minutes, and consists of an online consent form, a brief demographics questionnaire, the Eating Attitudes Test, and a self-efficacy questionnaire. Make sure you log into your UMD terpmail account before clicking the link. Please do this even if you have your emails forwarded to another email account.
-
-                Participation in this study is completely voluntary and confidential.
+                We have recently corrected some technical problems, so if you were previously unable to complete the survey you will now have access to it. If you have not yet found time to complete the survey, now is an excellent time to do so!
                 
                 To fill out the survey, please click the link below or copy and paste the following link to your internet browser:
                 
                 https://docs.google.com/a/terpmail.umd.edu/spreadsheet/viewform?hl=en_US&formkey=dFZvUXc5Z0dHaGFSZ01wNHZQS0FldFE6MQ#gid=0
                 
-                This research has been approved by the Institutional Review Board (IRB) at the University of Maryland (IRB #11-0312).
-                
-                Thank you for your time and participation.  Please feel free to contact us with any questions, comments, or suggestions.
+                The survey will take less than ten minutes, and you will be officially entered in the raffle to win the iPod touch. Due to this technical problem, the deadline for submitting the survey has been extended to Friday, October 7, 2011 at noon.
 
                 Sincerely, 
                 Team DIET
-                teamdietumd@gmail.com" ,:via => :smtp, :via_options => {
+                teamdietumd@gmail.com
+                
+                This research has been approved by the Institutional Review Board (IRB) at the University of Maryland (IRB #11-0312).
+                                              
+                Thank you for your time and participation.  Please feel free to contact us with any questions, comments, or suggestions." ,:via => :smtp, :via_options => {
           :address              => 'smtp.gmail.com',
           :port                 => '587',
           :enable_starttls_auto => true,

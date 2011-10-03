@@ -18,8 +18,11 @@
 			  </div></td>
 			</table>
 		</div>
+		<br/>
+		<br/>
+		
  		<%= f.fields_for :ingredients %>	
-		<p><%= f.link_to_add "Add Another Food", :ingredients, :class => "big_green_button round" %></p> 
+		<p><%= f.link_to_add "Add Another Food", :ingredients, :class => "add_another_meal" %></p> 
 		<p>
 				<%= f.label :favorite, "Add this meal to your favorites?" %>
 				<%= f.check_box :favorite, :default => false %>

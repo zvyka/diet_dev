@@ -1,12 +1,28 @@
-<h1>Update your email address</h1>
+<div id="update_email">
+	<span>Update your email address</span>
+	<%= form_for(@user) do |f| %>
+	  <%= render 'shared/error_messages', :object => f.object %>
+	  <div class="field">
+	    <%= f.label :email %><br />
+	    <%= f.text_field :email %>
+	  </div>
+	  <div class="actions">
+	    <%= f.submit "Update" %>
+	  </div>
+	<% end %>
+</div>
 
-<%= form_for(@user) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
+<h1><%= @user.name %>'s Profile</h1>
+
+<table id="profile_link_pics">
+	<tr>
+		<td><%= link_to image_tag("search.png", :style => "width: 128px; height: 128px;"), food_search_path %></td>
+		<td><%= link_to image_tag("add_food.png", :style => "width: 128px; height: 128px;"), new_food_path %></td>
+		<td><%= link_to image_tag("list_food.png", :style => "width: 128px; height: 128px;"), myfoods_path %></td>
+	</tr>
+	<tr>
+		<td><span>Search the database</span></td>
+		<td><span>Add a new food</span></td>
+		<td><span>See your foods</span></td>
+	</tr>
+</table>

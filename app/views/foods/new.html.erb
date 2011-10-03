@@ -1,17 +1,4 @@
-<% your_foods = Food.find_all_by_user_id(current_user.id) %>
-<% if !your_foods.blank? %>
-	<div class="form_top_right favorite_list">
-			<strong>Here's what you've already added</strong><br />
-			<ul>
-				<% your_foods.each do |food| %>
-						<li>
-							<%= link_to food.name, :controller => "foods", :action => "edit", :id => food.id %>
-						</li>
-				<% end %>
-			</ul>
-		</div>
-<% end %>
-
+<h1>Add a new food here!</h1>
 <%= render 'form' %>
 
 <p><%= link_to "Back to Home", user_path(current_user) %></p>

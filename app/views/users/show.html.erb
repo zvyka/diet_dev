@@ -2,7 +2,7 @@
   <tr>
     <td class="meal_list">
       <h1>
-        <%= @user.name %>
+        <%= @user.name %>'s Meals
       </h1>
 			<strong>Click on the date to add a new meal</strong>
         <div id="calendar">
@@ -15,16 +15,12 @@
 				    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
 				    <%= calendar.day(:day_method => :date_eaten) do |date, meals| %><div id="test">
 								<% unless date > Date.today %>
-									<% if date.month == @date.month %>
 										<% if !Meal.search(date, @user.id).blank? %>
 				      				<%= link_to date.day, :controller => "meals", :action => "show", :id => Meal.search(date, @user.id).sort_by(&:time_of_day).first.id %>
 										<% else %>
 											<%= date.day %>
 										<% end %>
 										<div id="calendar_top_right"><%= link_to "add", :controller => "meals", :action => "new", :date_eaten => "#{date.year}-#{date.month}-#{date.day}" %></div>
-									<% else %>
-										<%= date.day %>
-									<% end %>
 								<% else %>
 									<%= date.day %>
 								<% end %>

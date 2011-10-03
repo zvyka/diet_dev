@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110907154515) do
+ActiveRecord::Schema.define(:version => 20111001164258) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20110907154515) do
     t.datetime "updated_at"
   end
 
-  create_table "foods", :id => false, :force => true do |t|
+  create_table "foods", :force => true do |t|
     t.string  "name"
     t.float   "water"
     t.float   "calories"
@@ -82,8 +82,8 @@ ActiveRecord::Schema.define(:version => 20110907154515) do
     t.string  "weight_2_desc"
     t.float   "refuse_pct"
     t.integer "umd",            :default => 0
-    t.integer "id",             :default => 0, :null => false
     t.integer "user_id"
+    t.boolean "delta",          :default => true, :null => false
   end
 
   create_table "ingredients", :force => true do |t|

@@ -1,9 +1,11 @@
+<h1>Add a new meal</h1>
 <% favorites = current_user.meals.find_all_by_favorite(true) %>
 
 		<% if !favorites.blank? %>
-			<div class="form_top_right favorite_list">
+			<div class="favorite_list">
 					<strong>Go straight to a favorite meal!</strong><br />
-					<ul>
+					<div class="scroll">
+						<ul>
 						<% favorites.each do |meal| %>
 								<li>
 									<% if !meal.fave_name.blank? %>
@@ -14,10 +16,10 @@
 									<% end %>
 								</li>
 						<% end %>
-					</ul>
+						</ul>
+					</div>
 				</div>
 		<% end %>
-	
 		<%= render 'form' %>
 
 

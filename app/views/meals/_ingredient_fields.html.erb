@@ -13,7 +13,7 @@
 		</select><br/>
 		<button id="calc_button" type="button">Convert!</button>
 	</div>
-	<%= f.label :what_food, "Food" %><br />
+	<%= f.label :what_food, "Food" %> - <span><i>Can't find what you're looking for? <%= link_to "Add a custom food here.", new_food_path %></i></span><br />
 	<%= f.text_field :what_food %>
 	<%= f.hidden_field :food_id %>
 	<%= f.label :servings, "How many servings?" %>
