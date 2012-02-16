@@ -29,6 +29,7 @@ DietApp::Application.routes.draw do
   match '/terms',    :to => 'pages#terms'
   match '/privacy',  :to => 'pages#privacy_statement'
   match '/faq',      :to => 'pages#faq'
+  match '/admin',    :to => 'announcements#admin'
     
   match '/foods',    :to => 'foods#index'
   match '/food_search', :to => 'foods#search'

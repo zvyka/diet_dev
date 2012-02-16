@@ -24,7 +24,7 @@
 		<div class="field">
 			<%= f.hidden_field :weight_1_desc, :value => "grams"%><br />
 	    <%= f.hidden_field :user_id, :value => current_user.id %>
-			<%= f.hidden_field :umd, :value => 2 %>
+			<%= f.hidden_field :umd, :value => 3 %>
 	  </div>
 	<table id="more_info">
 			<tr> 
@@ -94,7 +94,7 @@
 	       </td>
 
 	       <td class="label amount_serving">            
-	         <div><%= f.label :protein, "Proteins" %><%= f.text_field :protein, :value => @food.protein ||=0, :size => 4 %>g</div>            
+	         <div><%= f.label :protein, "Protein" %><%= f.text_field :protein, :value => @food.protein ||=0, :size => 4 %>g</div>            
 	         <div class="hr thick" />
 	       </td>
 
@@ -103,18 +103,18 @@
 	       <td>
 				 </td>
 	       <td class="label amount_serving">
-	         <div><%= f.label :calcium, "Calcium" %><%= f.text_field :calcium, :value => @food.calcium ||=0, :size => 4 %>mg </div>      
+	         <div><%= f.label :calcium, "Calcium" %><%= f.text_field :calcium, :value => @food.calcium ||=0, :size => 4 %>% </div>      
 	         <div class="hr thin" />
 	       </td>
 	       <td class="label amount_serving"> 
-	         <div><%= f.label :iron, "Iron" %><%= f.text_field :iron, :value => @food.iron ||=0, :size => 4 %>mg </div>            
+	         <div><%= f.label :iron, "Iron" %><%= f.text_field :iron, :value => @food.iron ||=0, :size => 4 %>% </div>            
 	         <div class="hr thin" />
 	       </td>
 	     </tr>
 			<tr>
 				<td/>
 	       <td class="label amount_serving">  
-	         <div><%= f.label :vit_c, "Vitamin C" %><%= f.text_field :vit_c, :value => @food.vit_c ||=0, :size => 4 %>mg</div>          
+	         <div><%= f.label :vit_c, "Vitamin C" %><%= f.text_field :vit_c, :value => @food.vit_c ||=0, :size => 4 %>%</div>          
 	         <div class="hr thin" />
 	       </td>
 			</tr>

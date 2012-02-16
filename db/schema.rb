@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111001164258) do
+ActiveRecord::Schema.define(:version => 20111011032347) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -91,9 +91,10 @@ ActiveRecord::Schema.define(:version => 20111001164258) do
     t.string   "what_food"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "servings",     :precision => 4,  :scale => 2, :default => 1.0
+    t.decimal  "servings",              :precision => 4,  :scale => 2, :default => 1.0
     t.integer  "food_id"
-    t.decimal  "serving_size", :precision => 10, :scale => 0
+    t.decimal  "serving_size",          :precision => 10, :scale => 0
+    t.boolean  "fruits_and_vegetables",                                :default => false
   end
 
   create_table "meals", :force => true do |t|
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(:version => 20111001164258) do
     t.string   "encrypted_password"
     t.string   "salt"
     t.boolean  "admin",              :default => false
+    t.integer  "group_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -22,6 +22,7 @@ gem "ruby-hmac"
 gem "mechanize"
 gem "whenever"
 gem "deep_cloneable"
+gem "id3"
 
 #CAS stuff
 gem 'rubycas-client'

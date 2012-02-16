@@ -1,16 +1,122 @@
-<table class="profile" summary="Profile information">
-  <tr>
-    <td class="meal_list">
-      <h1>
-        <%= @user.name %>'s Meals
-      </h1>
-			<strong>Click on the date to add a new meal</strong>
+<div class="profile" summary="Profile information">
+    <div class="meal_list">
+      <div class="eight columns">
+				<h1>
+        	<%= @user.name %>'s Meals
+      	</h1>
+			</div>
+			<div class="four columns">
+				<div class="right">
+					<script type="text/javascript">
+					
+					    $(window).bind('hashchange load',function() {
+					     	var onchange_checkbox = $('.switch :checkbox').iphoneStyle({ 
+										resizeContainer: false,
+										resizeHandle: false,
+										onChange: function(elem, value) {
+						          if(value == false) {
+												window.location.hash = 'list_view';
+												// $('.list_span').show();
+												// $('.list_view').fadeIn();
+												// $('.calendar_span').hide();
+												// $('.calendar_view').hide();
+											} else {
+												window.location.hash = 'calendar_view';
+												// $('.calendar_span').show();
+												// $('.calendar_view').fadeIn();
+												// $('.list_span').hide();
+												// $('.list_view').hide();
+											}
+						        }
+						 });
+						
+								$('.switch').show();
+								$('.calendar_span').show();
+								
+								$("#month").children("a").each(function() {   
+								            $(this).get(0).hash = window.location.hash;
+								        });
+																
+									if(location.hash.indexOf('calendar_view') >=0) {
+										$('.switch :checkbox').attr('checked', true);
+										$('.calendar_span').show();
+										$('.calendar_view').fadeIn();
+										$('.list_span').hide();
+										$('.list_view').hide();
+									} else if(location.hash == '') {
+										$('.switch :checkbox').attr('checked', true);
+										location.hash = '#calendar_view';
+										// $('.calendar_span').show();
+										// $('.calendar_view').fadeIn();
+										// $('.list_span').hide();
+										// $('.list_view').hide();
+									} else {
+										$('.switch :checkbox').attr('checked', false);
+										$('.list_span').show();
+										$('.list_view').fadeIn();
+										$('.calendar_span').hide();
+										$('.calendar_view').hide();
+									}
+								
+									$('a[data-date-eaten]').live('click', function (e) {
+											date_eaten = $(this).attr('data-date-eaten');
+											$('#meal_date_eaten').val(date_eaten);
+									  });
+								
+							});
+							
+							// $(window).hashchange(function(){
+							// 								$("#month").children("a").each(function() {   
+							// 								            $(this).get(0).hash = window.location.hash;
+							// 								        });
+							// 												if(location.hash.indexOf('calendar_view') >=0) {
+							// 													$('.switch :checkbox').attr('checked', true);
+							// 													$('.calendar_span').show();
+							// 													$('.calendar_view').fadeIn();
+							// 													$('.list_span').hide();
+							// 													$('.list_view').hide();
+							// 												} else if(location.hash == '') {
+							// 													$('.switch :checkbox').attr('checked', true);
+							// 													location.hash = '#calendar_view';
+							// 													// $('.calendar_span').show();
+							// 													// $('.calendar_view').fadeIn();
+							// 													// $('.list_span').hide();
+							// 													// $('.list_view').hide();
+							// 												} else {
+							// 													$('.switch :checkbox').attr('checked', false);
+							// 													$('.list_span').show();
+							// 													$('.list_view').fadeIn();
+							// 													$('.calendar_span').hide();
+							// 													$('.calendar_view').hide();
+							// 												}						
+							// 						    });
+							
+								
+					  </script>
+
+					  <div class="switch">
+							<input type="checkbox" checked="checked" id="on_off" style="width: 40px; height: 40px;"/>
+						</div>
+					</div>
+					<div class="right">
+						<span class="calendar_span">
+							Switch to list view
+						</span>
+						<span class="list_span">
+							Switch to calendar view
+						</span>
+					</div>
+			</div>
+			<div id="calendar" class="ten columns">
+				<h2 id="month">
+		    	<%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d") %>
+		    	<%=h @date.strftime("%B %Y") %>
+		    	<%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
+		  	</h2>
+			</div>
+			<div class="calendar_view ten columns">
+				<strong>Click on the date to add a new meal</strong>
         <div id="calendar">
-				  <h2 id="month">
-				    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d") %>
-				    <%=h @date.strftime("%B %Y") %>
-				    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
-				  </h2>
 				  <%= calendar_for @user.meals, :year => @date.year, :month => @date.month do |calendar| %>
 				    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
 				    <%= calendar.day(:day_method => :date_eaten) do |date, meals| %><div id="test">
@@ -20,7 +126,7 @@
 										<% else %>
 											<%= date.day %>
 										<% end %>
-										<div id="calendar_top_right"><%= link_to "add", :controller => "meals", :action => "new", :date_eaten => "#{date.year}-#{date.month}-#{date.day}" %></div>
+										<div id="calendar_top_right"><%= link_to image_tag("add.png"), { :controller => "meals", :action => "new", :date_eaten => "#{date.year}-#{date.month}-#{date.day}"}, "data-reveal-id"=>"myModal", "data-date-eaten"=> "#{date.year}-#{date.month}-#{date.day}"%></div>
 								<% else %>
 									<%= date.day %>
 								<% end %>
@@ -68,8 +174,23 @@
 				    <% end %>
 				  <% end %>
 				</div>
-    </td>
-    <td class="sidebar round">
+			</div>
+			<div class="eight columns list_view">
+				<strong>This Month's Meals</strong><br />
+					<ul>
+						<% @user.meals.all.sort_by(&:date_eaten).each do |meal| %>
+								<li>
+									<% if meal.date_eaten.month == @date.month %>
+									<% meal_name = "#{meal.date_eaten.strftime('%A, %b %d')}" %>
+										<%= link_to meal_name, :controller => "meals", :action => "show", :id => meal.id %>
+									<% end %>									
+								</li>
+						<% end %>
+					</ul>
+					<%= link_to image_tag("add.png"), { :controller => "meals", :action => "new", :date_eaten => "#{Date.today}" }, "data-reveal-id"=>"myModal", "data-date-eaten"=> "#{Date.today}"%>
+			</div>
+    </div>
+    <div>
 			<strong>Favorite Meals</strong><br />
 				<ul>
 					<% @user.meals.find_all_by_favorite(true).each do |meal| %>
@@ -83,6 +204,11 @@
 							</li>
 					<% end %>
 				</ul>
-    </td>
-  </tr>
-</table>
+    </div>
+</div>
+<div id="myModal" class="reveal-modal">
+	<div class="container">
+		<a class="close-reveal-modal">×</a>
+		<%= render 'meals/form' %>
+	</div>
+</div>

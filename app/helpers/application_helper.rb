@@ -2,7 +2,7 @@ module ApplicationHelper
   
   # Logo
   def logo
-    logo = image_tag("DIET-logo_small.png", :alt => "Team DIET", :class => "round", :size => "150x150")
+    logo = image_tag("new_logo_5.png", :alt => "Team DIET", :class => "logo_style")
   end
   
   # Return a title on a per-page basis.

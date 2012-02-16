@@ -1,0 +1,463 @@
+<h1>[ADMIN SECTION] - Authorized Personnel Only!</h1>
+<p>
+	Hello, <%= current_user.name %>. You are authorized.
+</p>
+
+<strong>
+	There are currently <%= User.all.size %> users and <%= Meal.all.size %> meals.
+</strong>
+<br/>
+<br/>
+<p>
+	<h1>
+		<u><%= link_to 'Add an Announcement!', new_announcement_path %></u>
+	</h1>
+</p>
+<div id="pie_chart" style="height:400px;"></div>
+<div id="all_exp_chart" style="height:400px;"></div>
+<div id="full_exp_chart" style="height:400px;"></div>
+<div id="exp_1_users_chart" style="height:400px;"></div>
+<div id="exp_2_users_chart" style="height:400px;"></div>
+<div id="all_users_chart" style="height:400px;"></div>
+
+<br/>
+<h2>Send emails to users!</h2>
+<h1>CAUTION! THIS *WILL* ACTUALLY EMAIL OUR USERS. USE THIS WISELY!</h1>
+<h2>NOTE: this will take some time. Roughly, it takes a bit over a minute to email 50 users. So, emailing all <%=User.all.size%> users will take about <%=User.all.size/50 * 1.3 %> minutes. Just let it sit and work, don't press anything.</h2>
+<% form_for :email, :url => { :controller => 'announcements', :action => 'send_mail' } do |f| %>
+  <%= f.label :name, "Your Name" %><br />
+  <%= f.text_field :name, :size => 60 %><br />
+  <%= f.label :group %><br />
+	<%= f.select :group, [["All Users (this includes people not in either experimental group)", 0], ["Exp. Group 1", 1], ["Exp. Group 2", 2], ["Both experimental groups", 3], ["Team DIET members (testing purposes)", 4], ["Yourself (testing purposes)", 5]], :selected => 5 %><br/>
+  <%= f.label :subject %><br />
+  <%= f.text_field :subject, :size => 60 %><br />
+  <%= f.label :body %><br />
+  <%= f.text_area :body, :rols => 10, :cols => 60 %><br />
+  <%= f.hidden_field :user_id, :value => current_user.id %><br />
+  <%= f.label :html_body %><br />
+  <%= f.text_area :html_body, :rols => 10, :cols => 60 %><br />
+  <%= submit_tag "Send Email "%>
+<% end %>
+<div id="html_example">
+	<p>
+		This is in HTML. You should use HTML tags in order to format the message. Here's an example:
+	</p>
+	<p>
+		<p>For paragraphs, put a &lt;p&gt; before the text and &lt;/p&gt; after it.</p> <p>For example, to write &lt;p&gt;Dear #{user.name}&lt;/p&gt; As you can see, if you want to write the user's name, write "#{user.name}".</p> <p>For a link, write: &lt;a href='http://www.YOUR-LINK.com'&gt;YOUR LINK NAME&lt;/a&gt;</p> <p>An email is written like: &lt;a href='mailto:teamdietumd@gmail.com'&gt;teamdietumd@gmail.com&lt;/a&gt;</p> <p>To make a line break put this: &lt;br/&gt;</p>
+	</p>
+</div>
+<div id="body_example">
+	<p>
+		This is just in text. Write this in plain text. Make sure to write an HTML version of the same words as well (see below).
+	</p>
+</div>
+<br/>
+<br/>
+<div id="top_users_chart" style="width:500px; height:400px;"></div>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+		$(".container").css("background-color", "black")
+		$(".container").css("color", "lawngreen")		
+		$(".container").css("font-family", "monospace")
+		$("body").css("background-color", "black")
+		$("body").css("color", "lawngreen")		
+		$("body").css("font-family", "monospace")
+		$("section").css("background-color", "black")
+		$("section").css("color", "lawngreen")		
+		$("section").css("font-family", "monospace")
+		$("section").css("border-width", "1px")
+		$("section").css("border-style", "solid")
+		$("section").css("border-color", "lawngreen")
+		$("h1").css("font-family", "monospace")
+		$("h1").css("color", "lawngreen")
+		$("h2").css("font-family", "monospace")
+		$("h2").css("color", "lawngreen")
+		$("a").css("background-color", "black")
+		$("a").css("color", "lawngreen")		
+		$("a").css("font-family", "monospace")
+		$("nav").css("background-color", "black")
+		$("nav").css("color", "lawngreen")		
+		$("nav").css("font-family", "monospace")
+		$("nav").css("border-width", "1px")
+		$("nav").css("border-style", "solid")
+		$("nav").css("border-color", "lawngreen")
+		$("img").css("background-color", "lawngreen")
+		$("img").css("color", "lawngreen")		
+		$("img").css("font-family", "monospace")
+		$("img").css("border-width", "1px")
+		$("img").css("border-style", "solid")
+		$("img").css("border-color", "lawngreen")
+		
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "all_users_chart"
+      },
+			title: {
+			        text: 'All Users Meal Input Frequency'  
+			    },
+      xAxis: {
+					categories: [<%= @dates %>]
+      },
+     	yAxis: [{
+	        min: 0,
+					title: {
+	            text: 'Total Number of Users'
+	        }
+	    }, {
+	        min: 0,
+					title: {
+	            text: 'Total Number of Meals'
+	        },
+	    }, {
+					title: {
+	            text: 'Meals per User'
+	        },
+	        opposite: true
+	    }],
+      tooltip: {
+				formatter: function() {
+            var s = '<b>' + this.x +'</b>';
+
+            $.each(this.points, function(i, point) {
+                s += '<br/>'+ point.series.name +': '+
+                    point.y;
+								if(point.series.name == 'Users'){
+									s += ' users';
+								} else if(point.series.name == 'Meals'){
+									s += ' meals';
+								} else if(point.series.name == 'Meals per User'){
+									s += ' meals/user';
+								}
+            });
+
+            return s;
+        },
+	      shared: true,
+        crosshairs: true
+      },
+      series: [{ 
+				name: 'Users',
+				type: 'column',
+				data:[<%= @users %>],
+      },{ 
+				name: 'Meals',
+				type: 'column',
+				data:[<%= @meals %>],
+				yAxis: 1
+      },{ 
+				name: 'Meals per User',
+				data:[<%= @m_per_u %>],
+				yAxis: 2
+      }]
+    });
+
+		new Highcharts.Chart({
+      chart: {
+        renderTo: "top_users_chart"
+      },
+			title: {
+			        text: 'Top Users'  
+			    },
+      xAxis: {
+					categories: [<%= @top_users %>]
+      },
+     	yAxis: [{
+	        min: 0,
+					title: {
+	            text: 'Meals'
+	        }
+	    }],
+      tooltip: {
+				formatter: function() {
+            var s = '<b>' + this.x +'</b>';
+
+            $.each(this.points, function(i, point) {
+                s += '<br/>'+ point.series.name +': '+
+                    point.y;
+            });
+
+            return s;
+        },
+	      shared: true,
+        crosshairs: true
+      },
+      series: [{ 
+				name: 'Meals',
+				type: 'bar',
+				data:[<%= @top_meals %>]
+      }]
+    });
+	
+		 new Highcharts.Chart({
+	      chart: {
+	        renderTo: "exp_1_users_chart"
+	      },
+				title: {
+				        text: 'Experimental Group 1 Meal Input Frequency'  
+				    },
+	      xAxis: {
+						categories: [<%= @exp_1_dates %>]
+	      },
+	     	yAxis: [{
+		        min: 0,
+						title: {
+		            text: 'Total Number of Users'
+		        }
+		    }, {
+		        min: 0,
+						title: {
+		            text: 'Total Number of Meals'
+		        },
+		    }, {
+						title: {
+		            text: 'Meals per User'
+		        },
+		        opposite: true
+		    }],
+	      tooltip: {
+					formatter: function() {
+	            var s = '<b>' + this.x +'</b>';
+
+	            $.each(this.points, function(i, point) {
+	                s += '<br/>'+ point.series.name +': '+
+	                    point.y;
+									if(point.series.name == 'Users'){
+										s += ' users';
+									} else if(point.series.name == 'Meals'){
+										s += ' meals';
+									} else if(point.series.name == 'Meals per User'){
+										s += ' meals/user';
+									}
+	            });
+
+	            return s;
+	        },
+		      shared: true,
+	        crosshairs: true
+	      },
+	      series: [{ 
+					name: 'Exp. 1 Users',
+					type: 'column',
+					data:[<%= @exp_1_users %>]
+	      },{ 
+					name: 'Exp. 1 Meals',
+					type: 'column',
+					data:[<%= @exp_1_meals %>],
+					yAxis: 1
+	      },{ 
+					name: 'Meals per User',
+					data:[<%= @exp_1_m_per_u %>],
+					yAxis: 2
+	      }]
+	    });
+	
+			new Highcharts.Chart({
+		      chart: {
+		        renderTo: "exp_2_users_chart"
+		      },
+					title: {
+					        text: 'Experimental Group 2 Meal Input Frequency'  
+					    },
+		      xAxis: {
+							categories: [<%= @exp_2_dates %>]
+		      },
+		     	yAxis: [{
+			        min: 0,
+							title: {
+			            text: 'Total Number of Users'
+			        }
+			    }, {
+			        min: 0,
+							title: {
+			            text: 'Total Number of Meals'
+			        },
+			    }, {
+							title: {
+			            text: 'Meals per User'
+			        },
+			        opposite: true
+			    }],
+		      tooltip: {
+						formatter: function() {
+		            var s = '<b>' + this.x +'</b>';
+
+		            $.each(this.points, function(i, point) {
+		                s += '<br/>'+ point.series.name +': '+
+		                    point.y;
+										if(point.series.name == 'Users'){
+											s += ' users';
+										} else if(point.series.name == 'Meals'){
+											s += ' meals';
+										} else if(point.series.name == 'Meals per User'){
+											s += ' meals/user';
+										}
+		            });
+
+		            return s;
+		        },
+			      shared: true,
+		        crosshairs: true
+		      },
+		      series: [{ 
+						name: 'Exp. 2 Users',
+						type: 'column',
+						data:[<%= @exp_2_users %>]
+		      },{ 
+						name: 'Exp. 2 Meals',
+						type: 'column',
+						data:[<%= @exp_2_meals %>],
+						yAxis: 1
+		      },{ 
+						name: 'Meals per User',
+						data:[<%= @exp_2_m_per_u %>],
+						yAxis: 2
+		      }]
+		    });
+		
+		
+		
+				var chart = new Highcharts.Chart({
+				    chart: {
+				        renderTo: 'pie_chart',
+				        defaultSeriesType: 'pie'
+				    },
+						title: {
+							text: 'Meals by Exp. Group'
+						},
+						tooltip: {
+						         formatter: function() {
+						            return '<b>'+ this.point.name +'</b>: '+ this.point.y +' meals';
+						         }
+						      },
+						      plotOptions: {
+						         pie: {
+						            allowPointSelect: true,
+						            cursor: 'pointer',
+						            dataLabels: {
+						               enabled: true,
+						               color: 'black',
+						               connectorColor: 'black',
+						               formatter: function() {
+						                  return '<b>'+ this.point.name +'</b>: '+ this.point.y +' meals';
+						               }
+						            }
+						         }
+						      },
+
+				    series: [{
+				        data: [
+										<%= @pie_chart_values %>,
+				        ]
+				    }]
+				});
+				
+				new Highcharts.Chart({
+			      chart: {
+			        renderTo: "full_exp_chart"
+			      },
+						title: {
+						        text: 'Full Experimental Meal Input Frequency'  
+						    },
+			      xAxis: {
+								categories: [<%= @new_dates %>]
+			      },
+			     	yAxis: [{
+				        min: 0,
+								title: {
+				            text: 'Total Number of Users'
+				        }
+				    }, {
+				        min: 0,
+								title: {
+				            text: 'Total Number of Meals'
+				        },
+				    }, {
+								title: {
+				            text: 'Meals per User'
+				        },
+				        opposite: true
+				    }],
+			      tooltip: {
+							formatter: function() {
+			            var s = '<b>' + this.x +'</b>';
+
+			            $.each(this.points, function(i, point) {
+			                s += '<br/>'+ point.series.name +': '+
+			                    point.y;
+											if(point.series.name == 'Users'){
+												s += ' users';
+											} else if(point.series.name == 'Meals'){
+												s += ' meals';
+											} else if(point.series.name == 'Meals per User'){
+												s += ' meals/user';
+											}
+			            });
+
+			            return s;
+			        },
+				      shared: true,
+			        crosshairs: true
+			      },
+			      series: [{ 
+							name: 'Users',
+							type: 'column',
+							data:[<%= @new_users %>]
+			      },{ 
+							name: 'Meals',
+							type: 'column',
+							data:[<%= @new_meals %>],
+							yAxis: 1
+			      },{ 
+							name: 'Meals per User',
+							data:[<%= @new_m_per_u %>],
+							yAxis: 2
+			      }]
+			    });
+			
+					new Highcharts.Chart({
+				      chart: {
+				        renderTo: "all_exp_chart"
+				      },
+							title: {
+							        text: 'Meals per User: Exp. 1 vs. Exp. 2'  
+							    },
+				      xAxis: {
+									categories: [<%= @new_dates %>]
+				      },
+				     	yAxis: [{
+									title: {
+					            text: 'Meals per User'
+					        },
+					    }],
+				      tooltip: {
+								formatter: function() {
+				            var s = '<b>' + this.x +'</b>';
+
+				            $.each(this.points, function(i, point) {
+				                s += '<br/>'+ point.series.name +': '+
+				                    point.y;
+												if(point.series.name == 'Users'){
+													s += ' users';
+												} else if(point.series.name == 'Meals'){
+													s += ' meals';
+												} else if(point.series.name == 'Meals per User'){
+													s += ' meals/user';
+												}
+				            });
+
+				            return s;
+				        },
+					      shared: true,
+				        crosshairs: true
+				      },
+				      series: [{ 
+								name: 'Exp. 1',
+								data:[<%= @exp_1_m_per_u %>]
+				      },{ 
+									name: 'Exp. 2',
+									data:[<%= @exp_2_m_per_u %>]
+					      }]
+				    });
+  });
+</script>

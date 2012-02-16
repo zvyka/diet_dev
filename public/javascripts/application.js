@@ -15,7 +15,7 @@ $(function() {
 	// ***Meal form***
 	
 	//Makes the calendar
- $("#meal_date_eaten").datepicker();
+ $('#meal_date_eaten').datepicker();
 
 	//Makes the slider for the meal price
  $("#slider").slider({

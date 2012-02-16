@@ -50,6 +50,7 @@ class MealsController < ApplicationController
     old_meal = Meal.find(params[:id])
     new_meal = old_meal.clone :include => :ingredients
     new_meal.favorite = false
+    new_meal.date_eaten = Date.today
     new_meal.save
     redirect_to edit_meal_path(new_meal), :notice => "Edit your duplicated meal here"
   end

@@ -1,30 +1,16 @@
-<header>
-	<% if signed_in? %>
-  	<%= link_to logo, user_path(current_user) %>
-	<% else %>
-		<%= link_to logo, root_path %>
-	<% end %>
-  <nav class="round">
-    <ul>
-			<% if signed_in? %>
-			<li>Welcome, <%= current_user.name.split(' ', 2)[0] %> |</li>
-			<% else %>
-			<li>Welcome, guest | </li>
-			<% end %>
-			<% if !signed_in? %>
-      <li><%= link_to "Home", root_path %></li>
-      <% else %>
-	  		<li><%= link_to "Home", user_path(current_user) %></li>
-	  		<li><%= link_to "Profile", edit_user_path(current_user) %></li>
-				<li><%= link_to "Search", food_search_path %></li>
-				<li><%= link_to "Analysis", analysis_path %></li>
-      <% end %>
+<div class="header">
+		<% if signed_in? %>
+	  	<%= link_to logo, user_path(current_user) %>
+		<% else %>
+			<%= link_to logo, root_path %>
+		<% end %>
+    <ul class="nav-bar right round">
 			<li><%= link_to "About", about_path %></li>
-			<li><%= link_to "FAQ", faq_path %></li>
-			<li><%= link_to "Help", help_path %></li>
 			<% if signed_in? %>
-				<li><%= link_to "Sign out", signout_path, :method => :delete %></li> 
-			<% end %>
+				<li class="end"><%= link_to "Sign out", signout_path, :method => :delete %></li> 
+				<% else %>
+				<li class="end"><%= link_to "Sign in", signin_path %></li>
+			<% end %>			
     </ul>
-  </nav>
-</header>
+
+</div>

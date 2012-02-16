@@ -20,10 +20,12 @@
 	<%= f.text_field :servings, :size => 5 %>
 	<%= f.label :serving_size, "Serving size (grams)" %>
 	<%= f.text_field :serving_size, :size => 6 %><br/>
-
+	
 	
 		<div id="default_serving">
-			<span>Default serving: </span><label id="serving_desc"></label>
+			<span>Default serving: </span><label id="serving_desc"></label><br/>
+			<%= f.check_box :fruits_and_vegetables, :default => false %>
+			<%= f.label :fruits_and_vegetables, "Fruit or vegetable?" %>
 		</div>
 		<br/>
 		<br/>
@@ -83,6 +85,7 @@
 										} else {
 										  $(this).parent().children("div").children("#serving_desc").text(ui.item.serving);
 											$(this).parent().children('.converter, *[id*=serving_size], label[for*=serving_size]').hide();
+											$(this).parent().children('*[id*=serving_size]').val(null);
 											$(this).parent().children('.converter_placeholder').css("display","block");
 											
 										}

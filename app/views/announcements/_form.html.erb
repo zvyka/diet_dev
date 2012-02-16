@@ -16,10 +16,10 @@
     <%= f.text_area :message %>
   </div>
 	<div class="span-5 right">
-		<div class="success">success</div>
-		<div class="notice">notice</div>
-		<div class="alert">alert</div>
-		<div class="info">info</div>
+		<div class="alert-box success">alert-box success</div>
+		<div class="alert-box warning">alert-box warning</div>
+		<div class="alert-box error">alert-box error</div>
+		<div class="alert-box">alert-box</div>
 	</div>
 	<p>
 		<% ActiveRecord::Base.connection.execute('SELECT NOW()').each do |row| %>
@@ -37,7 +37,7 @@
   </div>
 	<div class="field">
     <%= f.label :tag, "Tag: \"success\", \"notice\", \"alert\", \"info\" (see right)" %><br />
-    <%= f.text_field :tag %>
+    <%= f.select :tag, [["alert-box success", "alert-box success"], ["alert-box warning", "alert-box warning"], ["alert-box error", "alert-box error"], ["alert-box", "alert-box"]] %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -9,8 +9,12 @@
 	<% salt = 0 %>
 	<% fats = 0 %>
 	<% sugs = 0 %>
+	<% f_and_vs = 0 %>
 	<% for individual_meal in todays_meals do %>
 		<% for ingredient in individual_meal.ingredients do %>
+			<% if ingredient.fruits_and_vegetables == true %>
+				<% f_and_vs = f_and_vs +1 %>
+			<% end %>
 			<% food = Food.find(ingredient.food_id) %>
 			<% if ingredient.serving_size.nil? %>
 				<% multiplication_factor = ingredient.servings%>
@@ -39,6 +43,9 @@
 			<div class="summary_value"><%= h('%.0f' % (salt)) %>mg</div>
 			<div class = "summary_info">(Max: <%= @dvs[:sodium] %>mg)*</div>
 		</div></td>
+		<td><div class="f_and_vs">
+			<div class="f_and_vs_num"><%= h('%.0f' % (f_and_vs)) %></div>
+		</div></td>
 		<td><div class="summary round <%= dv_color_fats %>">
 			<div class="summary_label">Fats:</div>
 			<div class="summary_value"><%= h('%.0f' % (fats)) %>g</div>
@@ -66,8 +73,7 @@
 	<p>
 <strong> 
 		<% locs = ["at the North Campus Diner", "at the South Campus Diner", "at 251 North (Denton)", "at the Shops", "off campus"] %>
-		You spent $<%= individual_meal.price %> 
-		when you were <%= locs[individual_meal.location.to_i - 1] %>, and you ate:</strong>
+		When you were <%= locs[individual_meal.location.to_i - 1] %>, you ate:</strong>
 
 <div id="meal_top_right"><%= link_to "Create new meal using the food(s) below", :controller => "meals", :action => "make_clone", :id => individual_meal.id %> | <%= link_to "Edit", edit_meal_path(individual_meal) %> | <%= link_to "Delete", individual_meal, :method => :delete %></div>
 <% for ingredient in individual_meal.ingredients do %>
@@ -83,7 +89,9 @@
 				<% if food.umd == 0 %>            
 		    <div class="label">Serving Size <%= h(ingredient.serving_size.nil? ? "100 grams" : "#{ingredient.serving_size}g") %>*</div>   
 		  	<% elsif food.umd == 1 %>
-				<div class="label">Serving Size <%= h(food.weight_1_desc.blank? ? "100 grams" : "#{food.weight_1_desc}") %>*</div> 
+				<div class="label">Serving Size <%= h(food.weight_1_desc.blank? ? "100 grams" : "#{food.weight_1_desc}") %>*</div>
+				<% elsif food.umd == 2 %>
+					<div class="label">Serving Size <%= h(food.weight_1_desc.blank? ? "100 grams" : "#{food.weight_1_gms} grams") %></div> 
 				<% end %>
 		  </td>          
        <td class="label amount_serving">
@@ -201,13 +209,13 @@
 			 </td>
        <td class="label amount_serving">
 	     <% if food.calcium != 0.0 %>
-         <div><b>Calcium</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.calcium : food.calcium*ingredient.servings*ingredient.serving_size/100)) %>mg </div>      
+         <div><b>Calcium</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? (food.umd == 2 ? food.calcium : food.calcium.to_f*100/@dvs[:calcium]) : food.calcium.to_f*100/@dvs[:calcium]*ingredient.servings*ingredient.serving_size/100)) %>%</div>      
          <div class="hr thin" />
 				<% end %>
        </td>
        <td class="label amount_serving"> 
 				<% if !food.iron.nil? %>			          
-         <div><b>Iron</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.iron : food.iron*ingredient.servings*ingredient.serving_size/100)) %>mg </div>            
+         <div><b>Iron</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? (food.umd == 2 ? food.iron : food.iron.to_f*100/@dvs[:iron]) : food.iron.to_f*100/@dvs[:iron]*ingredient.servings*ingredient.serving_size/100)) %>%</div>            
          <div class="hr thin" />
 				<% end %>
        </td>
@@ -216,7 +224,7 @@
 			<td/>
        <td class="label amount_serving">  
 				<% if  !food.vit_c.nil? %>			          
-         <div>Vitamin C <%= h('%.0f' % (ingredient.serving_size.nil? ? food.vit_c : food.vit_c*ingredient.servings*ingredient.serving_size/100)) %>mg</div>          
+         <div>Vitamin C <%= h('%.0f' % (ingredient.serving_size.nil? ? (food.umd == 2 ? food.vit_c : food.vit_c.to_f*100/@dvs[:vit_c]) : food.vit_c.to_f*100/@dvs[:vit_c]*ingredient.servings*ingredient.serving_size/100)) %>%</div>          
          <div class="hr thin" />
 				<% end %>	
        </td>

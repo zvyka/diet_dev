@@ -1,6 +1,7 @@
 <div id="form_top_right">
 	<% if @food.user_id == current_user.id %>
 		<%= link_to "Delete", @food, :method => :delete %> |
+		<%= link_to 'Edit', edit_food_path(@food) %> |
 	<% end %>
 	<%= link_to "Search Again", food_search_path %> |
 	<%= link_to "My Foods", myfoods_path %>
@@ -134,13 +135,13 @@
 			 </td>
        <td class="label amount_serving">
 	     <% if food.calcium != 0.0 %>
-         <div><b>Calcium</b> <%= h('%.0f' % (food.calcium)) %>mg </div>      
+         <div><b>Calcium</b> <%= h('%.0f' % (food.calcium.to_f*100/@dvs[:calcium])) %>%</div>      
          <div class="hr thin" /> 
 				<% end %>
        </td>
        <td class="label amount_serving"> 
 				<% if !food.iron.nil? %>			          
-         <div><b>Iron</b> <%= h('%.0f' % (food.iron)) %>mg </div>            
+         <div><b>Iron</b> <%= h('%.0f' % (food.iron.to_f*100/@dvs[:iron])) %>%</div>            
          <div class="hr thin" />
 				<% end %>
        </td>
@@ -149,7 +150,7 @@
 			<td/>
        <td class="label amount_serving">  
 				<% if  !food.vit_c.nil? %>			          
-         <div>Vitamin C <%= h('%.0f' % (food.vit_c)) %>mg</div>          
+         <div><b>Vitamin C</b><%= h('%.0f' % (food.vit_c.to_f*100/@dvs[:vit_c])) %>%</div>          
          <div class="hr thin" />
 				<% end %>	
        </td>

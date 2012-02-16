@@ -1,0 +1,5 @@
+<% for announcement in Announcement.current_announcements %>
+	<div class="<%= announcement.tag %>">
+	<p><b><%=h announcement.starts_at.strftime("%A, %B %e") %>: </b><%= h announcement.message %></p>
+	</div>
+<% end %>

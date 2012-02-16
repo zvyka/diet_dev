@@ -1,0 +1,113 @@
+Biscuit,2.8 oz,260,90,11,2.5,3,0,670,38,1,5,4,0%,0%,6%,10%
+Chick-fil-A Chick-n-Minis (three count),3.1 oz,270,100,11,3.5,1,50,640,28,1,6,14,0%,2%,2%,8%
+Chick-fil-A Chick-n-Minis (four count),4.2 oz,360,130,15,4.5,1,65,860,37,2,8,19,0%,2%,4%,10%
+Chick-fil-A Chicken Biscuit,5.1 oz,420,170,19,4.5,3,35,1,270,44,2,5,18,0%,0%,6%,15%
+Bacon Egg & Cheese Biscuit,5.7 oz,470,240,26,9,3,270,1,190,39,1,5,18,0%,15%,15%,15%
+Sausage Biscuit,4.9 oz,490,280,32,10,3,45,1,060,38,2,5,13,0%,0%,8%,15%
+Biscuit and Gravy,6.8 oz,330,130,15,4,4,5,950,43,1,5,5,0%,0%,6%,10%
+Breakfast Burrito (chicken),6.7 oz,410,150,16,7,0,210,940,42,4,4,22,15%,10%,30%,20%
+Breakfast Burrito (sausage),6.7 oz,450,200,23,9,0,215,860,39,3,3,20,15%,10%,30%,20%
+Sunflower Multigrain Bagel,2.8 oz,220,30,3,0,0,0,350,41,2,6,7,0%,0%,4%,15%
+Chicken Egg & Cheese on Sunflower Multigrain Bagel,7.5 oz,500,180,20,7,0,290,1,260,49,3,8,31,0%,15%,15%,20%
+Chick-fil-A Chicken Platter,12.6 oz,630,280,32,8,4,520,1,650,51,2,7,32,0%,15%,10%,25%
+Chick-fil-A Bacon Platter,10.8 oz,550,270,30,9,3.5,500,1,260,44,1,6,23,0%,15%,10%,20%
+Chick-fil-A Sausage Platter,12.5 oz,710,410,46,14,3.5,530,1,450,44,2,6,27,0%,20%,15%,25%
+Hash Browns,3 oz,260,150,17,3.5,1,5,380,25,3,0,2,0%,0%,2%,4%
+Bacon,one slice (0.2 oz),30,20,2,0.5,0,10,115,0,0,0,2,0%,0%,0%,0%
+Cheese,one slice (0.5 oz),50,40,4.5,3,0,15,230,1,0,0,3,0%,4%,8%,0%
+Egg,one folded (2 oz),90,50,6,1.5,0,240,70,1,0,1,7,0%,8%,2%,4%
+Sausage,one patty (2.2 oz),220,180,20,7,0,45,400,0,0,0,9,0%,0%,2%,2%
+Cinnamon Cluster,3.4 oz,380,120,13,5,2,35,250,60,2,30,6,0%,2%,6%,15%
+Chick-fil-A Chicken Sandwich,6 oz,410,150,16,3.5,0,60,1,300,38,1,5,28,0%,4%,10%,15%
+Chick-fil-A Chicken Sandwich  (Wheat bun),6.3 oz,390,120,13,3,0,65,1,370,38,3,6,30,4%,2%,10%,15%
+Chick-fil-A Chicken Sandwich  (No butter),5.8 oz,380,120,13,3,0,60,1,290,37,1,5,28,0%,4%,10%,15%
+Chick-fil-A Chicken Deluxe Sandwich,7.3 oz,420,150,16,3.5,0,60,1,300,39,2,5,28,4%,4%,10%,15%
+Chick-fil-A Chicken Deluxe Sandwich  (Wheat bun),7.7 oz,390,120,13,3,0,65,1,370,40,4,7,30,10%,10%,10%,20%
+Chicken  (No bun and pickles),one filet (3.7 oz),230,100,11,2.5,0,60,990,10,0,2,23,0%,4%,4%,6%
+Chick-fil-A Chargrilled Chicken Sandwich,6.8 oz,270,30,3.5,1,0,65,940,33,3,7,28,10%,6%,8%,15%
+Chargrilled Chicken  (No bun and pickles),one filet (3.2 oz),100,15,1.5,0,0,65,610,1,0,2,21,2%,2%,0%,4%
+Chick-fil-A Chargrilled Chicken Club Sandwich  (w/o Sauce),7.8 oz,380,100,11,5,0,90,1,240,33,3,7,35,10%,10%,25%,15%
+Chick-fil-A Chicken Salad Sandwich,5.4 oz,350,140,15,3,0,65,880,32,5,6,20,0%,0%,15%,10%
+Chick-fil-A Chick-n-Strips (four count),(4.5 oz),290,120,13,2.5,0,65,730,14,1,3,29,2%,0%,2%,2%
+Chick-fil-A Chick-n-Strips (six count), (6.7 oz),430,180,20,4,0,100,1,090,21,1,5,43,4%,0%,4%,2%
+Chick-fil-A Nuggets (four-count in Kid's Meal),2 oz,130,50,6,1,0,35,550,6,0,1,13,0%,0%,2%,4%
+Chick-fil-A Nuggets (six-count in Kid's Meal),3 oz,200,80,9,2,0,50,820,9,0,2,20,0%,0%,2%,4%
+Chick-fil-A Nuggets (eight count),4 oz,260,110,12,2.5,0,70,1,090,12,0,3,26,0%,0%,4%,6%
+Chick-fil-A Nuggets(twelve count),6 oz,390,160,18,3.5,0,100,1,640,18,1,4,40,0%,0%,6%,10%
+Spicy Chicken Cool Wrap,8.1 oz,380,60,6,3,0,60,1,090,52,3,5,30,6%,4%,20%,20%
+Chargrilled Chicken Cool Wrap,8.6 oz,390,60,7,3,0,65,1,020,54,3,7,29,10%,50%,20%,20%
+Chicken Caesar Cool Wrap,8 oz,460,90,10,6,0,80,1,350,52,3,5,36,2%,8%,50%,20%
+Chick-fil-A Chargrilled Chicken Garden Salad,9.7 oz,180,60,6,3,0,65,620,9,3,6,22,50%,70%,15%,4%
+Chick-fil-A Chick-n-Strips Salad,11.1 oz,390,160,18,5,0,80,860,22,4,8,34,50%,70%,20%,2%
+Chick-fil-A Southwest Chargrilled Salad,10.7 oz,240,70,8,3.5,0,60,770,17,5,6,25,40%,70%,20%,6%
+Garlic and Butter Croutons,0.5 oz,70,25,2.5,0,0,0,140,9,0,0,1,0%,0%,0%,4%
+Honey Roasted Sunflower Kernels,0.5 oz,80,60,7,1,0,0,38,3,1,2,2.5,0%,0%,0%,5%
+Tortilla Strips,0.5 oz,70,30,3.5,0.5,0,0,53,9,1,1,2,0%,0%,1%,1%
+Chick-fil-A Waffle Potato Fries (small),3 oz,270,120,13,3,1.5,0,115,34,4,0,3,2%,0%,2%,6%
+Chick-fil-A Waffle Potato Fries (medium),4 oz,350,150,17,3.5,2,0,150,46,5,1,4,2%,0%,2%,8%
+Chick-fil-A Waffle Potato Fries (large),4.5 oz,400,170,19,4,2.2,0,170,51,6,1,5,2%,0%,2%,8%
+Fruit Cup (small),3.3 oz,50,0,0,0,0,0,0,13,1,11,0,25%,0%,0%,2%
+Fruit Cup (medium),4.4 oz,70,0,0,0,0,0,0,17,2,14,1,40%,0%,0%,2%
+Fruit Cup (large),6.8 oz,100,0,0,0,0,0,0,26,3,22,1,70%,2%,2%,4%
+Carrot & Raisin Salad (small),4 oz,170,50,6,1,0,10,110,28,2,18,1,8%,210%,4%,2%
+Cole Slaw (small),4.5 oz,260,180,21,3.5,0,25,220,17,2,11,2,60%,8%,6%,2%
+Side Salad,3.8 oz,60,25,3,1.5,0,10,75,4,2,2,3,25%,40%,10%,0%
+Hearty Breast of Chicken Soup (small),8.5 oz,140,35,3.5,1,0,25,900,18,1,2,8,0%,30%,4%,6%
+Hearty Breast of Chicken Soup (large),15.5 oz,250,60,7,2,0,50,1,650,32,3,3,15,2%,50%,6%,10%
+Chicken Salad Cup,4.5 oz,270,160,18,3,0,85,790,8,4,4,19,0%,0%,2%,4%
+Caesar Dressing,2 tbsp,160,150,17,2.5,0,30,240,1,0,0,1,0%,0%,0%,0%
+Reduced Fat Raspberry Vinaigrette Dressing,2 tbsp,80,20,2,0,0,0,190,15,0,11,0,0%,0%,0%,0%
+Buttermilk Ranch Dressing,2 tbsp,160,150,16,2.5,0,5,270,1,0,1,0,0%,0%,0%,0%
+Blue Cheese Dressing,2 tbsp,150,140,16,3,0,20,300,1,0,1,1,0%,0%,2%,0%
+Spicy Dressing,2 tbsp,140,130,14,2,0,5,130,2,0,1,0,4%,0%,0%,0%
+Thousand Island Dressing,2 tbsp,150,130,14,2,0,10,250,5,0,4,0,0%,0%,0%,0%
+Light Italian Dressing,2 tbsp,15,5,0.5,0,0,0,570,2,0,2,0,0%,0%,0%,0%
+Fat Free Honey Mustard Dressing,2 tbsp,60,0,0,0,0,0,200,14,0,11,0,0%,0%,0%,0%
+Polynesian Sauce,1 oz,110,54,6,1,0,0,210,13,0,13,0,0%,2%,0%,0%
+Barbecue Sauce,1 oz,45,0,0,0,0,0,180,11,0,9,0,2%,2%,2%,2%
+Honey Mustard Sauce,1 oz,45,0,0,0,0,0,150,10,0,10,0,0%,0%,0%,0%
+Buttermilk Ranch Sauce,0.8 oz,110,110,12,2,0,5,200,1,0,1,0,0%,0%,0%,0%
+Chick-fil-A Buffalo Sauce,0.8 oz,15,15,1.5,0,0,0,410,1,0,0,0,0%,2%,0%,0%
+Honey Roasted BBQ Sauce,0.4 oz,60,50,6,1,0,5,90,2,0,1,0,0%,0%,0%,0%
+Chick-fil-A Lemonade (small),9 oz,170,5,0.5,0,0,0,10,41,0,40,0,25%,0%,0%,2%
+Chick-fil-A Lemonade (medium),12 oz,220,5,0.5,0,0,0,15,54,0,53,0,35%,0%,0%,2%
+Chick-fil-A Lemonade (large),21 oz,390,10,1.5,0,0,0,25,95,0,93,1,60%,0%,2%,2%
+Chick-fil-A Diet Lemonade (small),9 oz,25,0,0,0,0,0,5,5,0,3,0,25%,0%,0%,2%
+Chick-fil-A Diet Lemonade (medium),12 oz,30,0,0,0,0,0,5,7,0,3,0,35%,0%,0%,2%
+Chick-fil-A Diet Lemonade (large),21 oz,50,0,0,0,0,0,10,12,0,6,1,60%,0%,2%,2%
+Iced Tea Sweetened (small),9 oz,80,0,0,0,0,0,0,19,0,19,0,0%,0%,0%,2%
+Iced Tea Sweetened (medium),12 oz,110,0,0,0,0,0,0,26,0,26,0,0%,0%,0%,2%
+Iced Tea Sweetened (large),21 oz,180,0,0,0,0,0,5,45,0,45,0,0%,0%,0%,2%
+Iced Tea Unsweetened (small),9 oz,0,0,0,0,0,0,0,0,0,0,0,0%,0%,0%,2%
+Iced Tea Unsweetened (medium),12 oz,110,0,0,0,0,0,0,26,0,0,0,0%,0%,0%,2%
+Iced Tea Unsweetened (large),21 oz,5,0,0,0,0,0,5,1,0,0,0,0%,0%,0%,2%
+Coca-Cola Classic (small),9 oz,110,0,0,0,0,0,10,28,0,28,0,0%,0%,0%,0%
+Coca-Cola Classic (medium),12 oz,146,0,0,0,0,0,13,37,0,37,0,0%,0%,0%,0%
+Coca-Cola Classic (large),21 oz,256,0,0,0,0,0,23,65,0,65,0,0%,0%,0%,0%
+Diet Coke (small),9 oz,0,0,0,0,0,0,10,0,0,0,0,0%,0%,0%,0%
+Diet Coke (medium),12 oz,0,0,0,0,0,0,13,0,0,0,0,0%,0%,0%,0%
+Diet Coke (large),21 oz,0,0,0,0,0,0,23,0,0,0,0,0%,0%,0%,0%
+Dr Pepper (small),9 oz,110,0,0,0,0,0,40,30,0,30,0,0%,0%,0%,0%
+Dr Pepper (medium),12 oz,150,0,0,0,0,0,55,40,0,40,0,0%,0%,0%,0%
+Dr Pepper (large),21 oz,260,0,0,0,0,0,95,70,0,70,0,0%,0%,0%,0%
+Dasani Bottled Water,16.9 oz,0,0,0,0,0,0,0,0,0,0,0,0%,0%,0%,0%
+Cafe' Blends Coffee (small),10 oz,5,0,0,0,0,0,5,0,0,0,0,0%,0%,0%,0%
+Cafe' Blends Coffee (medium),16 oz,10,0,0,0,0,0,10,3,0,0,1,0%,0%,0%,0%
+Cafe' Blends Coffee (large),20 oz,15,0,0,0,0,0,15,3,0,0,1,0%,0%,0%,0%
+Orange Juice,10 oz,140,0,0,0,0,0,0,33,0,28,2,100%,0%,2%,0%
+Chocolate Milkshake,510 g,730,230,26,15,0,90,520,112,1,106,16,10%,20%,60%,4%
+Cookies & Cream Milkshake,503 g,770,280,31,16,2,90,650,109,1,99,17,10%,20%,60%,10%
+Strawberry Milkshake,531 g,710,230,26,15,0,90,550,108,1,102,16,30%,20%,60%,2%
+Vanilla Milkshake,20 oz,640,230,26,15,0,90,500,89,0,88,15,10%,20%,60%,2%
+Icedream Cup,small cup (8 oz),240,60,6,3.5,0,25,105,41,0,42,6,0%,8%,20%,2%
+Icedream Cone,small cone (4.7 oz),160,35,4,2,0,15,80,28,0,24,4,0%,4%,10%,2%
+Chick-fil-A Cheesecake,3.3 oz,340,190,21,12,1,90,270,30,2,25,6,0%,10%,6%,0%
+Chick-fil-A Lemon Pie,4.2 oz,390,117,13,4.5,1.5,30,300,63,1,36,6,4%,10%,15%,2%
+Fudge Nut Brownie,2.6 oz,330,140,15,3.5,2.5,20,210,45,2,29,4,0%,25%,2%,10%
+Ketchup,one packet (0.3 oz),10,0,0,0,0,0,100,3,0,1,0,0%,0%,0%,0%
+Mustard,one packet (0.2 oz),5,0,0,0,0,0,50,1,0,0,0,0%,0%,0%,0%
+Mayonnaise,one packet (0.4 oz),90,80,9,1.5,0,5,70,1,0,0,0,0%,0%,0%,0%
+Light Mayonnaise,one packet (0.4 oz),40,35,4,0.5,0,5,85,1,0,0,0,0%,0%,0%,0%
+Apple Jelly,one packet (0.5 oz),35,0,0,0,0,0,0,9,0,6,0,0%,0%,0%,0%
+Grape Jelly,one packet (0.5 oz),35,0,0,0,0,0,0,9,0,6,0,0%,0%,0%,0%
+Mixed Fruit Jelly,one packet (0.5 oz),35,0,0,0,0,0,0,9,0,6,0,0%,0%,0%,0%

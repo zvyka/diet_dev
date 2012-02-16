@@ -14,6 +14,9 @@ class UsersController < ApplicationController
   end
 
   def show
+    @meal = Meal.new
+    @meal.ingredients.build
+    
     @username = session[:casfilteruser]
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
     
