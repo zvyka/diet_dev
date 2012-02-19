@@ -1,246 +1,372 @@
-<div id="meal_container"><div id="meal_top_right"><%= link_to "Add new", :controller => "meals", :action => "new", :date_eaten => @meal.date_eaten %> | <%= link_to "View all", user_path(current_user) %></div>
+<div id="meal_container" class="container">
+	<div class="row">
+		<ul class="block-grid three-up">
+			<li>
+				<h1 id="show_date"><%= @meal.date_eaten.strftime("%A, %B %e") %></h1>
+				<%= link_to image_tag("add.png"), { :controller => "meals", :action => "new", :date_eaten => "#{@meal.date_eaten.year}-#{@meal.date_eaten.month}-#{@meal.date_eaten.day}"}, "data-reveal-id"=>"myModal", "data-date-eaten"=> "#{@meal.date_eaten.year}-#{@meal.date_eaten.month}-#{@meal.date_eaten.day}"%>
+			</li>
+			<li>
+				<div id="todays_chart" class="offset-by-five"></div>
+			</li>
+		</ul>
+	</div>
+	<div id="meal_top_right">
+		<%= link_to "Add new", :controller => "meals", :action => "new", :date_eaten => @meal.date_eaten %> | <%= link_to "View all", user_path(current_user) %>
+	</div>
 
-<h1>Meal details for <%= @meal.date_eaten.strftime("%A, %B %e") %></h1>
+	<div id="meal_summary" class="round">
+		<legend>Daily Totals</legend>
 
-<% todays_meals = Meal.search(@meal.date_eaten, @meal.user_id).order("time_of_day") %>
-<div id="meal_summary" class="round">
-	<legend>Daily Totals</legend>
-	<% cals = 0 %>
-	<% salt = 0 %>
-	<% fats = 0 %>
-	<% sugs = 0 %>
-	<% f_and_vs = 0 %>
-	<% for individual_meal in todays_meals do %>
-		<% for ingredient in individual_meal.ingredients do %>
-			<% if ingredient.fruits_and_vegetables == true %>
-				<% f_and_vs = f_and_vs +1 %>
-			<% end %>
-			<% food = Food.find(ingredient.food_id) %>
-			<% if ingredient.serving_size.nil? %>
-				<% multiplication_factor = ingredient.servings%>
-			<% else %>
-				<% multiplication_factor = ingredient.servings*ingredient.serving_size/100%>
-			<% end %>
-			<% cals = cals + (food.calories*multiplication_factor) %>
-			<% salt = salt + (food.sodium*multiplication_factor) %>
-			<% fats = fats + (food.lipid_total*multiplication_factor) %>
-			<% sugs = sugs + (food.sugar_total*multiplication_factor) %>
-		<% end %>
-	<% end %>	
-	<% dv_color_cals = cals < 2000 ? "dv_good" : "dv_bad" %>
-	<% dv_color_salt = salt < @dvs[:sodium] ? "dv_good" : "dv_bad" %>
-	<% dv_color_fats = fats < @dvs[:total_fat] ? "dv_good" : "dv_bad" %>
-	<% dv_color_sugs = sugs < @dvs[:sugar_total] ? "dv_good" : "dv_bad" %>
 	
-	<table>
-		<td><div class="summary round <%= dv_color_cals %>">
-			<div class="summary_label">Calories:</div>
-			<div class="summary_value"><%= h('%.0f' % (cals)) %></div>
-			<div class = "summary_info">(Max: 2000)*</div>
-		</div></td>
-		<td><div class="summary round <%= dv_color_salt %>">
-			<div class="summary_label">Sodium:</div>
-			<div class="summary_value"><%= h('%.0f' % (salt)) %>mg</div>
-			<div class = "summary_info">(Max: <%= @dvs[:sodium] %>mg)*</div>
-		</div></td>
-		<td><div class="f_and_vs">
-			<div class="f_and_vs_num"><%= h('%.0f' % (f_and_vs)) %></div>
-		</div></td>
-		<td><div class="summary round <%= dv_color_fats %>">
-			<div class="summary_label">Fats:</div>
-			<div class="summary_value"><%= h('%.0f' % (fats)) %>g</div>
-			<div class = "summary_info">(Max: <%= @dvs[:total_fat] %>g)*</div>
-		</div></td>
-		<td><div class="summary round <%= dv_color_sugs %>">
-			<div class="summary_label">Sugar:</div>
-			<div class="summary_value"><%= h('%.0f' % (sugs)) %>g</div>
-			<div class = "summary_info">(Max: <%= @dvs[:sugar_total] %>g)*</div>
-		</div></td>
-	</table>
-	<span>*Try to stay green! Badges in red mean you're above your Daily Value (DV) for this item (based on a 2000 calorie diet). Green means you're under your Daily Value (DV).</span>
-</div>
-<% times = ["Morning", "Afternoon", "Evening", "Night"] %>
+		<table>
+			<td><div class="summary round <%= @dv_color_cals %>">
+				<div class="summary_label">Calories:</div>
+				<div class="summary_value"><%= h('%.0f' % (@cals)) %></div>
+				<div class = "summary_info">(Max: 2000)*</div>
+			</div></td>
+			<td><div class="summary round <%= @dv_color_salt %>">
+				<div class="summary_label">Sodium:</div>
+				<div class="summary_value"><%= h('%.0f' % (@salt)) %>mg</div>
+				<div class = "summary_info">(Max: <%= @dvs[:sodium] %>mg)*</div>
+			</div></td>
+			<td><div class="f_and_vs">
+				<div class="f_and_vs_num"><%= h('%.0f' % (@f_and_vs)) %></div>
+			</div></td>
+			<td><div class="summary round <%= @dv_color_fats %>">
+				<div class="summary_label">Fats:</div>
+				<div class="summary_value"><%= h('%.0f' % (@fats)) %>g</div>
+				<div class = "summary_info">(Max: <%= @dvs[:total_fat] %>g)*</div>
+			</div></td>
+			<td><div class="summary round <%= @dv_color_sugs %>">
+				<div class="summary_label">Sugar:</div>
+				<div class="summary_value"><%= h('%.0f' % (@sugs)) %>g</div>
+				<div class = "summary_info">(Max: <%= @dvs[:sugar_total] %>g)*</div>
+			</div></td>
+		</table>
+		<span>*Try to stay green! Badges in red mean you're above your Daily Value (DV) for this item (based on a 2000 calorie diet). Green means you're under your Daily Value (DV).</span>
+	</div>
 
-<div id="meal">
+	<div id="daily_chart">	
+		<script>
+		var chart;
+		var dv_labels = new Array();
+		dv_labels['Calories'] = '<%= @dvs[:calories] %> calorie diet.';
+		dv_labels['Sodium'] = '<%= @dvs[:sodium] %>mg daily value.';
+		dv_labels['Fats'] = '<%= @dvs[:total_fat] %>g daily value.';
+		dv_labels['Sugars'] = '<%= @dvs[:sugar_total] %>g daily value.';
+		dv_labels['Fruits and Veggies'] = '<%= @dvs[:f_and_vs] %> fruit and vegetable diet.';
 	
-<ul>
-<% for individual_meal in todays_meals do %>
-		<li><%= link_to("#{times[individual_meal.time_of_day.to_i - 1]}","#meal_#{individual_meal.id}") %></li>
-<% end %>
-</ul>
-<% for individual_meal in todays_meals do %>
-<%= content_tag_for(:div, individual_meal) do %>
-	<p>
-<strong> 
-		<% locs = ["at the North Campus Diner", "at the South Campus Diner", "at 251 North (Denton)", "at the Shops", "off campus"] %>
-		When you were <%= locs[individual_meal.location.to_i - 1] %>, you ate:</strong>
+		var dv_data = new Array();
+		dv_data['Calories'] = <%= @dvs[:calories] %>;
+		dv_data['Sodium'] = <%= @dvs[:sodium] %>;
+		dv_data['Fats'] = <%= @dvs[:total_fat] %>;
+		dv_data['Sugars'] = <%= @dvs[:sugar_total] %>;
+		dv_data['Fruits and Veggies'] = <%= @dvs[:f_and_vs] %>;
 
-<div id="meal_top_right"><%= link_to "Create new meal using the food(s) below", :controller => "meals", :action => "make_clone", :id => individual_meal.id %> | <%= link_to "Edit", edit_meal_path(individual_meal) %> | <%= link_to "Delete", individual_meal, :method => :delete %></div>
-<% for ingredient in individual_meal.ingredients do %>
+	
+		$(document).ready(function() {
+		   chart = new Highcharts.Chart({
+		      chart: {
+		         renderTo: 'todays_chart',
+		         defaultSeriesType: 'column',
+			        width: 400,
+							height: 200,
+							backgroundColor: 'rgba(0, 0, 0, 0)'
+		      },
+		      title: {
+		         text: 'Today\'s Summary'
+		      },
+					//None for now
+		      // subtitle: { 
+		      //    text: 'Source: WorldClimate.com'
+		      // },
+		      xAxis: {
+		         categories: [
+		            'Calories',
+								'Sodium',
+								'Fats',
+								'Sugars',
+								'Fruits and Veggies'
+		         ]
+		      },
+		      yAxis: {
+		         min: 0,
+						 max: 200,
+		         title: {
+		            text: 'Recommendation'
+		         },
+						labels: {
+						            formatter: function() {
+						                return this.value +'%';
+						            }
+						        },
+						plotBands: [{ // MAX
+						            from: 100,
+						            to: 200,
+						            color: 'rgba(255, 0, 0, 0.1)',
+						            label: {
+						               text: '',
+						               style: {
+						                  color: 'red'
+						               }
+						            }
+						         }, { // MAX
+						            from: 0,
+						            to: 100,
+						            color: 'rgba(0, 255, 0, 0.1)',
+						            label: {
+						               text: '',
+						               style: {
+						                  color: 'green'
+						               }
+						            }
+						         }],
+						plotLines: [{
+						            color: 'red',
+						            width: 2,
+						            value: 100
+						        }],
+						gridLineWidth: 0
+		      },
+			    legend: {
+			        enabled: false
+			    },
+				
+		      tooltip: {
+		         formatter: function() {
+		            return ''+
+		               this.x +': '+ Math.round(this.y/100*dv_data[this.x])+ ' is ' + this.y + '% of a ' + dv_labels[this.x];
+		         }
+		      },
+	
+		      plotOptions: {
+			       series: {
+			            colorByPoint: true
+			        },
+							line: {
+							            lineWidth: 4,
+							            states: {
+							               hover: {
+							                  lineWidth: 5
+							               }
+							            },
+							            marker: {
+							               enabled: false,
+							               states: {
+							                  hover: {
+							                     enabled: false
+							                  }
+							               }   
+							            }
+							}
+		      },
+		      series: [{
+						 type: 'column',
+		         data: [<%= @chart_data %>],
+							dataLabels: {
+							                enabled: true,
+															y: -4,
+															formatter: function() {
+															                    return Math.round(this.y/100*dv_data[this.x]);
+															                }
+							            }
+		      }]                 
+		   });                  
 
-	<% food = Food.find(ingredient.food_id) %>
-<div id="food_title"><%= h(food.name) %></div>
-<br />
 
-<table id="nut_facts_table">
-		<tr>
-			<td id="left_part">
-		    <div id="header"><b>Nutrition Facts</b></div>
-				<% if food.umd == 0 %>            
-		    <div class="label">Serving Size <%= h(ingredient.serving_size.nil? ? "100 grams" : "#{ingredient.serving_size}g") %>*</div>   
-		  	<% elsif food.umd == 1 %>
-				<div class="label">Serving Size <%= h(food.weight_1_desc.blank? ? "100 grams" : "#{food.weight_1_desc}") %>*</div>
-				<% elsif food.umd == 2 %>
-					<div class="label">Serving Size <%= h(food.weight_1_desc.blank? ? "100 grams" : "#{food.weight_1_gms} grams") %></div> 
-				<% end %>
-		  </td>          
-       <td class="label amount_serving">
-         <div class="item"><b>Amount/Serving</b></div>
-         <div class="hr thick" />
-       </td>
-			<td class="label dv">
-        <div class="item"><b>%DV**</b></div>
-         <div class="hr thick" />
-       </td>
-       <td class="label amount_serving">
-         <b>Amount/Serving</b>
-         <div class="hr thick" />
-       </td>
-       <td class="label dv">
-         <div class="item"><b>%DV**</b></div>
-         <div class="hr thick" />
-       </td>
-     </tr>
-     <tr>
-       <td>
-					<div class="label">Servings eaten <%= h(ingredient.servings) %></div>          
-			</td>
-       <td class="label amount_serving">
-         <div><b>Total Fat</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.lipid_total : food.lipid_total*ingredient.servings*ingredient.serving_size/100) )%>g</div>            
-         <div class="hr thin" />
-       </td>
-		  <td class="label dv">            
-         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.lipid_total/@dvs[:total_fat] : (100*food.lipid_total*ingredient.servings*ingredient.serving_size/100)/@dvs[:total_fat])) %></b>%</div>            
-         <div class="hr thin" />
-       </td>
-       <td class="label amount_serving">            
-         <div><b>Total Carbs</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.carbohydrates : food.carbohydrates*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
-         <div class="hr thin" />
-       </td>
-		  <td class="label dv">            
-         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.carbohydrates/@dvs[:tot_carbs] : (100*food.carbohydrates*ingredient.servings*ingredient.serving_size/100)/@dvs[:tot_carbs])) %></b>%</div>            
-         <div class="hr thin" />
-       </td>
-     </tr>
-     <tr>
-			 <td>
-				<div class="label"><b>Calories <%= h('%.0f' % (ingredient.serving_size.nil? ? food.calories : food.calories*ingredient.servings*ingredient.serving_size/100)) %></b></div>
-			 </td>
-       <td class="label amount_serving">            
-         <div class="indent">Sat. Fats <%= h('%.0f' % (ingredient.serving_size.nil? ? food.fa_sat : food.fa_sat*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
-         <div class="hr thin " />
-       </td>
-		  <td class="label dv">            
-         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.fa_sat/@dvs[:fa_sat] : (100*food.fa_sat*ingredient.servings*ingredient.serving_size/100)/@dvs[:fa_sat])) %></b>%</div>            
-         <div class="hr thin" />
-       </td>
-       <td class="label amount_serving">            
-         <div class="indent">Dietary Fiber <%= h('%.0f' % (ingredient.serving_size.nil? ? food.fiber : food.fiber*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
-         <div class="hr thin" />
-       </td>
-		  <td class="label dv">            
-         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.fiber/@dvs[:fiber] : (100*food.fiber*ingredient.servings*ingredient.serving_size/100)/@dvs[:fiber])) %></b>%</div>            
-         <div class="hr thin" />
-       </td>
-     </tr>
-     <tr>
-       <td>
-			 		<div class="label indent">Calories from Fat <%= h('%.0f' % (ingredient.serving_size.nil? ? food.lipid_total*9 : food.lipid_total*9*ingredient.servings*ingredient.serving_size/100))  %></div>
-       </td>
-			 <td class="label amount_serving">            
-         <div><b>Cholesterol</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.cholesterol : food.cholesterol*ingredient.servings*ingredient.serving_size/100)) %>mg</div>            
-         <div class="hr thin" />
-       </td>
-		  <td class="label dv">            
-         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.cholesterol/@dvs[:cholesterol] : (100*food.cholesterol*ingredient.servings*ingredient.serving_size/100)/@dvs[:cholesterol])) %></b>%</div>            
-         <div class="hr thin" />
-       </td>
-       <td class="label amount_serving">            
-         <div class="indent">Sugars <%= h('%.0f' % (ingredient.serving_size.nil? ? food.sugar_total : food.sugar_total*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
-         <div class="hr thin" />
-       </td>
-		  <td class="label dv">            
-         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.sugar_total/@dvs[:sugar_total] : (100*food.sugar_total*ingredient.servings*ingredient.serving_size/100)/@dvs[:sugar_total])) %></b>%</div>            
-         <div class="hr thin" />
-       </td>
-     </tr>
-     <tr>
-       <td>
-				<% if food.umd == 0 %>
-					<% if food.weight_1_gms == 0 %>
-				 		<div class="label"><strong>*Nutritional facts are shown <i>per 100 grams</i>.</strong></div>
-					<% elsif food.weight_1_gms > 0 %>
-						<div class="label">*Nutritional facts shown for a serving of <%= food.weight_1_gms %> grams.</div>
-					<% end %>
-				<% elsif food.umd == 1 %>
-				 <div class="label">*Nutritional information provided by UMD Dining Services.</div>
-				<% end %>
-			 </td>
-       <td class="label amount_serving">            
-         <div><b>Sodium</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.sodium : food.sodium*ingredient.servings*ingredient.serving_size/100)) %>mg</div>          
-         <div class="hr thick" />
-       </td>
-		  <td class="label dv">            
-         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.sodium/@dvs[:sodium] : (100*food.sodium*ingredient.servings*ingredient.serving_size/100)/@dvs[:sodium])) %></b>%</div>            
-         <div class="hr thick" />
-       </td>
-       <td class="label amount_serving">            
-         <div><b>Protein</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.protein : food.protein*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
-         <div class="hr thick" />
-       </td>
-		  <td class="label dv">            
-         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.protein/@dvs[:protein] : (100*food.protein*ingredient.servings*ingredient.serving_size/100)/@dvs[:protein])) %></b>%</div>            
-         <div class="hr thick" />
-       </td>
-     </tr>
-     <tr>
-       <td>
-				 <div class="label">**Based on a 2000-calorie diet.</div>
-			 </td>
-       <td class="label amount_serving">
-	     <% if food.calcium != 0.0 %>
-         <div><b>Calcium</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? (food.umd == 2 ? food.calcium : food.calcium.to_f*100/@dvs[:calcium]) : food.calcium.to_f*100/@dvs[:calcium]*ingredient.servings*ingredient.serving_size/100)) %>%</div>      
-         <div class="hr thin" />
-				<% end %>
-       </td>
-       <td class="label amount_serving"> 
-				<% if !food.iron.nil? %>			          
-         <div><b>Iron</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? (food.umd == 2 ? food.iron : food.iron.to_f*100/@dvs[:iron]) : food.iron.to_f*100/@dvs[:iron]*ingredient.servings*ingredient.serving_size/100)) %>%</div>            
-         <div class="hr thin" />
-				<% end %>
-       </td>
-     </tr>
-		<tr>
-			<td/>
-       <td class="label amount_serving">  
-				<% if  !food.vit_c.nil? %>			          
-         <div>Vitamin C <%= h('%.0f' % (ingredient.serving_size.nil? ? (food.umd == 2 ? food.vit_c : food.vit_c.to_f*100/@dvs[:vit_c]) : food.vit_c.to_f*100/@dvs[:vit_c]*ingredient.servings*ingredient.serving_size/100)) %>%</div>          
-         <div class="hr thin" />
-				<% end %>	
-       </td>
-		</tr>
-	</table>
-<% end %>
-<% end %>
-<% end %>
-	<p>The nutrient composition of food may vary due to: genetic, environmental and processing variables; changes in the manufacturer's product formulation; and cooking and preparation techniques.</p>    
-	<p>The information Team DIET and/or UMD Dining provides should be considered as approximations of the nutritional analysis menu items.</p>
- 
-	<script>
-		$(function() {
-			$("#meal").tabs();
-			var index = $("#meal a[href='#meal_" + <%= @meal.id %> + "']").parent().index();
-			$('#meal').tabs('select', index);
 		});
-	</script>
+		</script>
+	
+	</div>
+
+	<% times = ["Morning", "Afternoon", "Evening", "Night"] %>
+
+	<div id="meal">
+	
+	<ul>
+	<% for individual_meal in @todays_meals do %>
+			<li><%= link_to("#{times[individual_meal.time_of_day.to_i - 1]}","#meal_#{individual_meal.id}") %></li>
+	<% end %>
+	</ul>
+	<% for individual_meal in @todays_meals do %>
+	<%= content_tag_for(:div, individual_meal) do %>
+		<p>
+	<strong> 
+			<% locs = ["at the North Campus Diner", "at the South Campus Diner", "at 251 North (Denton)", "at the Shops", "off campus"] %>
+			When you were <%= locs[individual_meal.location.to_i - 1] %>, you ate:</strong>
+
+	<div id="meal_top_right"><%= link_to "Create new meal using the food(s) below", :controller => "meals", :action => "make_clone", :id => individual_meal.id %> | <%= link_to "Edit", edit_meal_path(individual_meal) %> | <%= link_to "Delete", individual_meal, :method => :delete %></div>
+	<% for ingredient in individual_meal.ingredients do %>
+
+		<% food = Food.find(ingredient.food_id) %>
+	<div id="food_title"><%= h(food.name) %></div>
+	<br />
+
+	<table id="nut_facts_table">
+			<tr>
+				<td id="left_part">
+			    <div id="header"><b>Nutrition Facts</b></div>
+					<% if food.umd == 0 %>            
+			    <div class="label">Serving Size <%= h(ingredient.serving_size.nil? ? "100 grams" : "#{ingredient.serving_size}g") %>*</div>   
+			  	<% elsif food.umd == 1 %>
+					<div class="label">Serving Size <%= h(food.weight_1_desc.blank? ? "100 grams" : "#{food.weight_1_desc}") %>*</div>
+					<% elsif food.umd == 2 %>
+						<div class="label">Serving Size <%= h(food.weight_1_desc.blank? ? "100 grams" : "#{food.weight_1_gms} grams") %></div> 
+					<% end %>
+			  </td>          
+	       <td class="label amount_serving">
+	         <div class="item"><b>Amount/Serving</b></div>
+	         <div class="hr thick" />
+	       </td>
+				<td class="label dv">
+	        <div class="item"><b>%DV**</b></div>
+	         <div class="hr thick" />
+	       </td>
+	       <td class="label amount_serving">
+	         <b>Amount/Serving</b>
+	         <div class="hr thick" />
+	       </td>
+	       <td class="label dv">
+	         <div class="item"><b>%DV**</b></div>
+	         <div class="hr thick" />
+	       </td>
+	     </tr>
+	     <tr>
+	       <td>
+						<div class="label">Servings eaten <%= h(ingredient.servings) %></div>          
+				</td>
+	       <td class="label amount_serving">
+	         <div><b>Total Fat</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.lipid_total : food.lipid_total*ingredient.servings*ingredient.serving_size/100) )%>g</div>            
+	         <div class="hr thin" />
+	       </td>
+			  <td class="label dv">            
+	         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.lipid_total/@dvs[:total_fat] : (100*food.lipid_total*ingredient.servings*ingredient.serving_size/100)/@dvs[:total_fat])) %></b>%</div>            
+	         <div class="hr thin" />
+	       </td>
+	       <td class="label amount_serving">            
+	         <div><b>Total Carbs</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.carbohydrates : food.carbohydrates*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
+	         <div class="hr thin" />
+	       </td>
+			  <td class="label dv">            
+	         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.carbohydrates/@dvs[:tot_carbs] : (100*food.carbohydrates*ingredient.servings*ingredient.serving_size/100)/@dvs[:tot_carbs])) %></b>%</div>            
+	         <div class="hr thin" />
+	       </td>
+	     </tr>
+	     <tr>
+				 <td>
+					<div class="label"><b>Calories <%= h('%.0f' % (ingredient.serving_size.nil? ? food.calories : food.calories*ingredient.servings*ingredient.serving_size/100)) %></b></div>
+				 </td>
+	       <td class="label amount_serving">            
+	         <div class="indent">Sat. Fats <%= h('%.0f' % (ingredient.serving_size.nil? ? food.fa_sat : food.fa_sat*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
+	         <div class="hr thin " />
+	       </td>
+			  <td class="label dv">            
+	         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.fa_sat/@dvs[:fa_sat] : (100*food.fa_sat*ingredient.servings*ingredient.serving_size/100)/@dvs[:fa_sat])) %></b>%</div>            
+	         <div class="hr thin" />
+	       </td>
+	       <td class="label amount_serving">            
+	         <div class="indent">Dietary Fiber <%= h('%.0f' % (ingredient.serving_size.nil? ? food.fiber : food.fiber*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
+	         <div class="hr thin" />
+	       </td>
+			  <td class="label dv">            
+	         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.fiber/@dvs[:fiber] : (100*food.fiber*ingredient.servings*ingredient.serving_size/100)/@dvs[:fiber])) %></b>%</div>            
+	         <div class="hr thin" />
+	       </td>
+	     </tr>
+	     <tr>
+	       <td>
+				 		<div class="label indent">Calories from Fat <%= h('%.0f' % (ingredient.serving_size.nil? ? food.lipid_total*9 : food.lipid_total*9*ingredient.servings*ingredient.serving_size/100))  %></div>
+	       </td>
+				 <td class="label amount_serving">            
+	         <div><b>Cholesterol</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.cholesterol : food.cholesterol*ingredient.servings*ingredient.serving_size/100)) %>mg</div>            
+	         <div class="hr thin" />
+	       </td>
+			  <td class="label dv">            
+	         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.cholesterol/@dvs[:cholesterol] : (100*food.cholesterol*ingredient.servings*ingredient.serving_size/100)/@dvs[:cholesterol])) %></b>%</div>            
+	         <div class="hr thin" />
+	       </td>
+	       <td class="label amount_serving">            
+	         <div class="indent">Sugars <%= h('%.0f' % (ingredient.serving_size.nil? ? food.sugar_total : food.sugar_total*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
+	         <div class="hr thin" />
+	       </td>
+			  <td class="label dv">            
+	         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.sugar_total/@dvs[:sugar_total] : (100*food.sugar_total*ingredient.servings*ingredient.serving_size/100)/@dvs[:sugar_total])) %></b>%</div>            
+	         <div class="hr thin" />
+	       </td>
+	     </tr>
+	     <tr>
+	       <td>
+					<% if food.umd == 0 %>
+						<% if food.weight_1_gms == 0 %>
+					 		<div class="label"><strong>*Nutritional facts are shown <i>per 100 grams</i>.</strong></div>
+						<% elsif food.weight_1_gms > 0 %>
+							<div class="label">*Nutritional facts shown for a serving of <%= food.weight_1_gms %> grams.</div>
+						<% end %>
+					<% elsif food.umd == 1 %>
+					 <div class="label">*Nutritional information provided by UMD Dining Services.</div>
+					<% end %>
+				 </td>
+	       <td class="label amount_serving">            
+	         <div><b>Sodium</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.sodium : food.sodium*ingredient.servings*ingredient.serving_size/100)) %>mg</div>          
+	         <div class="hr thick" />
+	       </td>
+			  <td class="label dv">            
+	         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.sodium/@dvs[:sodium] : (100*food.sodium*ingredient.servings*ingredient.serving_size/100)/@dvs[:sodium])) %></b>%</div>            
+	         <div class="hr thick" />
+	       </td>
+	       <td class="label amount_serving">            
+	         <div><b>Protein</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? food.protein : food.protein*ingredient.servings*ingredient.serving_size/100)) %>g</div>            
+	         <div class="hr thick" />
+	       </td>
+			  <td class="label dv">            
+	         <div><b><%= h('%.0f' % (ingredient.serving_size.nil? ? 100*food.protein/@dvs[:protein] : (100*food.protein*ingredient.servings*ingredient.serving_size/100)/@dvs[:protein])) %></b>%</div>            
+	         <div class="hr thick" />
+	       </td>
+	     </tr>
+	     <tr>
+	       <td>
+					 <div class="label">**Based on a 2000-calorie diet.</div>
+				 </td>
+	       <td class="label amount_serving">
+		     <% if food.calcium != 0.0 %>
+	         <div><b>Calcium</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? (food.umd == 2 ? food.calcium : food.calcium.to_f*100/@dvs[:calcium]) : food.calcium.to_f*100/@dvs[:calcium]*ingredient.servings*ingredient.serving_size/100)) %>%</div>      
+	         <div class="hr thin" />
+					<% end %>
+	       </td>
+	       <td class="label amount_serving"> 
+					<% if !food.iron.nil? %>			          
+	         <div><b>Iron</b> <%= h('%.0f' % (ingredient.serving_size.nil? ? (food.umd == 2 ? food.iron : food.iron.to_f*100/@dvs[:iron]) : food.iron.to_f*100/@dvs[:iron]*ingredient.servings*ingredient.serving_size/100)) %>%</div>            
+	         <div class="hr thin" />
+					<% end %>
+	       </td>
+	     </tr>
+			<tr>
+				<td/>
+	       <td class="label amount_serving">  
+					<% if  !food.vit_c.nil? %>			          
+	         <div>Vitamin C <%= h('%.0f' % (ingredient.serving_size.nil? ? (food.umd == 2 ? food.vit_c : food.vit_c.to_f*100/@dvs[:vit_c]) : food.vit_c.to_f*100/@dvs[:vit_c]*ingredient.servings*ingredient.serving_size/100)) %>%</div>          
+	         <div class="hr thin" />
+					<% end %>	
+	       </td>
+			</tr>
+	</table>
+	<% end %>
+	<% end %>
+	<% end %>
+		<p>The nutrient composition of food may vary due to: genetic, environmental and processing variables; changes in the manufacturer's product formulation; and cooking and preparation techniques.</p>    
+		<p>The information Team DIET and/or UMD Dining provides should be considered as approximations of the nutritional analysis menu items.</p>
+ 
+		<script>
+			$(function() {
+				$("#meal").tabs();
+				var index = $("#meal a[href='#meal_" + <%= @meal.id %> + "']").parent().index();
+				$('#meal').tabs('select', index);
+			});
+		</script>
+</div>
+<div id="myModal" class="reveal-modal">
+	<div class="container">
+		<a class="close-reveal-modal">×</a>
+		<%= render 'meals/form' %>
+	</div>
 </div>

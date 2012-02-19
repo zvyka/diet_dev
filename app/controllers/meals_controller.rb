@@ -14,7 +14,38 @@ class MealsController < ApplicationController
     
     @dvs = {:total_fat => 65, :fa_sat => 20, :cholesterol => 300, :sodium => 2400, :potassium => 3500,
             :tot_carbs => 300, :fiber => 25, :protein => 50, :vit_c => 60, :calcium => 1000, :iron => 18, 
-            :sugar_total => 40}   
+            :sugar_total => 40, :calories => 2000, :f_and_vs => 5}   
+            
+    @todays_meals = Meal.search(@meal.date_eaten, @meal.user_id).order("time_of_day")
+    
+     @cals = 0 
+  	 @salt = 0 
+  	 @fats = 0 
+  	 @sugs = 0 
+  	 @f_and_vs = 0 
+  	 for individual_meal in @todays_meals do 
+  		 for ingredient in individual_meal.ingredients do 
+  			 if ingredient.fruits_and_vegetables == true 
+  				 @f_and_vs = f_and_vs +1 
+  			 end 
+  			 food = Food.find(ingredient.food_id) 
+  			 if ingredient.serving_size.nil? 
+  				 multiplication_factor = ingredient.servings
+  			 else 
+  				 multiplication_factor = ingredient.servings*ingredient.serving_size/100
+  			 end 
+  			 @cals = @cals + (food.calories*multiplication_factor) 
+  			 @salt = @salt + (food.sodium*multiplication_factor) 
+  			 @fats = @fats + (food.lipid_total*multiplication_factor) 
+  			 @sugs = @sugs + (food.sugar_total*multiplication_factor) 
+  		 end 
+  	 end 	
+  	 @dv_color_cals = @cals < 2000 ? "dv_good" : "dv_bad" 
+  	 @dv_color_salt = @salt < @dvs[:sodium] ? "dv_good" : "dv_bad" 
+  	 @dv_color_fats = @fats < @dvs[:total_fat] ? "dv_good" : "dv_bad" 
+  	 @dv_color_sugs = @sugs < @dvs[:sugar_total] ? "dv_good" : "dv_bad" 
+            
+      @chart_data = "#{(100*@cals/@dvs[:calories]).round}, #{(100*@salt/@dvs[:sodium]).round}, #{(100*@fats/@dvs[:total_fat]).round}, #{(100*@sugs/@dvs[:sugar_total]).round}, #{(100*@f_and_vs/@dvs[:f_and_vs]).round}"
             
     if @meal.user_id != current_user.id
       redirect_to user_path(current_user), :notice => "Access denied"

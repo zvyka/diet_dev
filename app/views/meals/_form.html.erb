@@ -117,8 +117,51 @@ $(window).bind("hashchange load", function() {
 		 }
 	});
 	
-	$('*[id*=what_food]').autocomplete({ source: '<%= foods_path(:format => :json) %>',
+	$('*[id*=what_food]').autocomplete({ 
+				// source: function (request, response) {
+				//         var results = $.ui.autocomplete.filter('<%= foods_path(:format => :json) %>', request.term);
+				// 
+				//         // if (!results.length) {
+				//         //     $("#no-results").text("No results found!");
+				//         // } else {
+				//         //     $("#no-results").empty();
+				//         // }
+				// 
+				//         response(results);
+				//     },
+						// source: function( request, response ) {
+						// 				$.ajax({
+						// 					url: '<%= foods_path(:format => :json) %>',
+						// 					dataType: "json",
+						// 					data: {
+						// 						style: "full",
+						// 						maxRows: 12,
+						// 						name_startsWith: request.term
+						// 					},
+						// 					success: function( data ) {
+						// 						response( $.map( data.value, function( item ) {
+						// 							return {
+						// 								label: item.value,
+						// 								value: item.food_id
+						// 							}
+						// 						}));
+						// 					}
+						// 				});
+						// 			},
+						// source: '<%= foods_path(:format => :json) %>',
+						source: function( request, response ) {
+										var term = request.term;
+
+										$.getJSON( "<%= foods_path(:format => :json) %>", request, function( data, status, xhr ) {
+											if(data == "") {
+													response(['<strong>Sorry, this food was not found in our database.</strong>']);
+													return;
+											} 
+												response( data );
+										});
+									},
 				focus: function(event, ui) {
+								
 								if(ui.item.umd == 0 || ui.item.umd == 2) {
 				           $(this).parent().parent().children('*[id*=serving_size]').val(ui.item ? ui.item.grams : 100);
 									 $(this).parent().parent().parent().children().children().children("#serving_desc").text(ui.item ? ui.item.serving : "100 grams");

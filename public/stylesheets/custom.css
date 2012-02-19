@@ -52,6 +52,12 @@ html{
 
 .nav-bar>li.end { border: 0; }	
 
+#show_date {
+	margin-top: 30px;
+}
+
+
+
 .header {
 	background-image:url('/images/background.png');
 	border-bottom: solid 5px #000;
@@ -485,40 +491,80 @@ div.user_info span.user_name {
 	border: 3px;
 	border-color: black;
 	border-style: solid; 
-	text-align: center;
 	width:100%;
-	padding: 10px; 
+	padding: 10px;
 	border-spacing: 0px;
 	background-color: white;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: black;
+}
+
+#nut_facts_table .label{
+	color: black;
+	background-color: white;
+	font-weight: normal;
+	text-align: left;
+}
+
+#nut_facts_table .columns{
+	margin: 0;
+}
+
+#nut_facts_table .block-grid.four-up > li {
+	margin-left: 0;
+	width: 25%;
+}
+
+#nut_facts_table ul {
+	margin-bottom: 0;
+}
+
+#nut_facts_table li {
+	margin-bottom: 0;
+}
+
+#nut_facts_table .block-grid.two-up {
+	margin-left: 0;
 }
 
 #left_part {
-	vertical-align:top;
-	float: left;
-	width: 34%;
+	vertical-align:middle;
+	text-align: left;
+	white-space: normal;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
+
 #header {
 	font-size: 24px; 
+	margin-bottom: 10px;
 }
 
 .indent {
 	margin-left: 20px;
+	font-size: 15px;
+	height: 17px;
+	text-align: left;
 }
 
 .label {
 	vertical-align: top; 
 	padding-left: 0;
 	padding-right: 0;
-	font-size: 18px;
+	font-size: 16px;
 }
 
-
 .amount_serving {
-	width: 200px;
+	height: 17px;
 }
 
 .dv {
-	width: 80px;
+	margin-left: 20px;
+	height: 17px;
+}
+
+#nut_facts_table .label.dv {
 	text-align: center;
 }
 
@@ -533,7 +579,8 @@ div.user_info span.user_name {
 
 .thick {
 	height: 10px;
-	margin: 10px 0;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .summary {

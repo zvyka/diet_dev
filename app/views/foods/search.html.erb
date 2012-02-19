@@ -17,7 +17,18 @@
 $("input:submit").button();
 
 $(document).ready(function() {			
-    $('*[id*=search]').autocomplete({ source: '<%= foods_path(:format => :json) %>',
+    $('*[id*=search]').autocomplete({ 
+					source: function( request, response ) {
+									var term = request.term;
+
+									$.getJSON( "<%= foods_path(:format => :json) %>", request, function( data, status, xhr ) {
+										if(data == "") {
+												response(['<strong>Sorry, this food was not found in our database.</strong>']);
+												return;
+										} 
+											response( data );
+									});
+								},
 					focus: function(event, ui) {
 									$("input#search").val(ui.item.name);
 				       },

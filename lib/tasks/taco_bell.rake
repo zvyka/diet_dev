@@ -2,7 +2,7 @@ desc "Read Aroon's Chipotle nutrition data"
 
 task :taco_bell => :environment do
   #Open file
-  filename = '/Users/jon/Sites/diet_app/chipotle.txt'
+  filename = '/Users/jon/Sites/diet_app/taco_bell.txt'
     
   a = IO.readlines(filename) # reads each line into an array
     
