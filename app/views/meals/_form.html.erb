@@ -7,19 +7,18 @@
 					<li>				
 						<div>
 					    <%= f.label :date_eaten, "Date eaten" %><br />
-					    <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= params[:date_eaten] ||= Date.today, :size => 8 %>
+					    <%= f.text_field :date_eaten, :value => @meal.date_eaten ||= params[:date_eaten] ||= Date.today, :size => 10 %>
 					  </div>
 					</li>
 					<li>
 						<div>
-					    <%= f.label :time_of_day, "Time of day" %><br />
-							<%= f.select :time_of_day, [["Morning", 1], ["Afternoon", 2], ["Evening", 3], ["Night", 4]]%>
+
 				  	</div>
 					</li>
 					<li>
 						<div>
 					    <%= f.label :location, "Location" %><br />
-					    <%= f.select :location, [["The Diner", 1], ["South Campus", 2], ["251 North (Denton)", 3], ["Shops", 4], ["Off-Campus", 5], ["At Home/Dorm", 6]]  %>
+					    <%= f.select :location, [["Dining Hall", 1], ["Off-Campus or Stamp", 2]]  %>
 				  	</div>
 					</li>
 				</ul>
@@ -83,7 +82,6 @@ $('#meal_favorite').click(function() {
 $('*[class*=add_another_meal]').click(function() {
 	location.hash = location.hash + '#add';	
 });
-
 
 $(window).bind("hashchange load", function() {
 	$('*[id*=what_food]').qtip({
@@ -154,7 +152,7 @@ $(window).bind("hashchange load", function() {
 
 										$.getJSON( "<%= foods_path(:format => :json) %>", request, function( data, status, xhr ) {
 											if(data == "") {
-													response(['<strong>Sorry, this food was not found in our database.</strong>']);
+													response(['<strong>Sorry, this food was not found in our database. Create a custom food now?</strong>']);
 													return;
 											} 
 												response( data );
@@ -184,7 +182,13 @@ $(this).parent().parent().parent().children().children().children("#serving_desc
 									$(this).parent().parent().parent().children().children().children("#serving_desc").text("Diner Portion");				
 								}
 								$(this).next().val(ui.item.food_id);
-			       }
+			       },
+						select: function(event, ui) {
+										$("input#search").val(ui.item.name);
+										if(ui.item.food_id == undefined) {
+											window.location = '../foods/new'
+										}
+								 }
 				});
 
 $.ui.autocomplete.prototype._renderItem = function (ul, item) {
@@ -196,5 +200,4 @@ $.ui.autocomplete.prototype._renderItem = function (ul, item) {
                   .appendTo(ul);
       };
 });
-</script>
 </script>

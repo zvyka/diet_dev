@@ -1,9 +1,9 @@
-/*.container {
-  width: 1000px;
-}*/
-
 body {
 	background: white;
+}
+
+.container {
+	padding: 0;
 }
 
 html{
@@ -47,7 +47,8 @@ html{
 .nav-bar {
 	margin-top: 1em;
 	margin-right: 2em;
-	border: 1px solid #ddd;	
+	background: transparent;
+  border: 0;	
 }
 
 .nav-bar>li.end { border: 0; }	
@@ -56,7 +57,9 @@ html{
 	margin-top: 30px;
 }
 
-
+#todays_chart {
+	 padding-right: 200px;
+}
 
 .header {
 	background-image:url('/images/background.png');
@@ -482,16 +485,18 @@ div.user_info span.user_name {
 /* Nutrition Label */
 #food_title {
 	text-align: left;
-	font-family: "Arial";
+	font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-size: 2em; 
 	color: #006400;
 }
 
 #nut_facts_table {
+	font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	border: 3px;
 	border-color: black;
 	border-style: solid; 
 	width:100%;
+	max-width: 600px;
 	padding: 10px;
 	border-spacing: 0px;
 	background-color: white;
@@ -505,15 +510,31 @@ div.user_info span.user_name {
 	background-color: white;
 	font-weight: normal;
 	text-align: left;
+	vertical-align: top; 
+	padding-left: 0;
+	padding-right: 0;
+	font-size: 16px;
 }
 
 #nut_facts_table .columns{
 	margin: 0;
 }
 
+#nut_facts_table .block-grid.four-up {
+	margin-left: 0;
+}
+
 #nut_facts_table .block-grid.four-up > li {
 	margin-left: 0;
 	width: 25%;
+}
+
+#nut_facts_table .block-grid.four-up > li.amount_serving#header {
+	width: 40%;
+}
+
+#nut_facts_table .block-grid.four-up > li.dv#header {
+	width: 20%;
 }
 
 #nut_facts_table ul {
@@ -524,8 +545,12 @@ div.user_info span.user_name {
 	margin-bottom: 0;
 }
 
-#nut_facts_table .block-grid.two-up {
+#nut_facts_table .nut_facts {
 	margin-left: 0;
+}
+
+form#nut_facts_form label {
+	display: inline;
 }
 
 #left_part {
@@ -548,12 +573,12 @@ div.user_info span.user_name {
 	text-align: left;
 }
 
-.label {
+/*.label {
 	vertical-align: top; 
 	padding-left: 0;
 	padding-right: 0;
 	font-size: 16px;
-}
+}*/
 
 .amount_serving {
 	height: 17px;
@@ -670,6 +695,10 @@ legend {
 	padding:10px 10px 10px 10px;
 	width:200px;
 	color:black;  	
+}
+
+#calc_units {
+	display: inline;
 }
 
 .converter {
@@ -831,17 +860,36 @@ legend {
 }
 
 #search, .ui-autocomplete-input {
-	height: 40px;
+	height: 36px;
 	width: 300px;
 	font-size:24px;
+	margin: 10px 10px 10px 0;
 }
 
-#search_form {
+div.alert-box {
+	font-weight: normal;
+}
+
+div.alert-box a{
+	color: #555;
+	font-weight: bold;
+}
+
+div.alert-box.warning a, div.alert-box.alert a, div.alert-box.success a{
+	color: white;
+	font-weight: bold;
+}
+
+.announcement select {
+display: inline;
+}
+
+/*#search_form {
   margin-left: auto;
   margin-right: auto;
   display: block;
   text-align: center;
-}
+}*/
 
 #html_example {
   margin-right: 0px !important;
@@ -880,3 +928,5 @@ legend {
 	font-size: 100px;
 	color: #FFFFFF;
 }
+
+.content { background: #ffffff; }

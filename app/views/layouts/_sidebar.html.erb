@@ -1,21 +1,19 @@
 <div class="two columns">
-				<dl class="nice tabs vertical">
-					<% if !signed_in? %>
-		      <dd><%= link_to "Home", root_path %></dd>
-		      <% else %>
-			  		<dd><%= link_to "Home", user_path(current_user) %></dd>
-			  		<dd><%= link_to "#{current_user.name.split(' ', 2)[0]}", edit_user_path(current_user) %></dd>
-						<dd><%= link_to "Search", food_search_path %></dd>
-						<dd><%= link_to "Analysis", analysis_path %></dd>
-		      <% end %>
-					<dd><%= link_to "About", about_path %></dd>
-					<dd><%= link_to "FAQ", faq_path %></dd>
-					<dd><%= link_to "Help", help_path %></dd>
-					
-					<% if signed_in? %>
-						<dd><%= link_to "Sign out", signout_path, :method => :delete %></dd> 
-						<% else %>
-						<dd><%= link_to "Help", help_path %></dd>
-					<% end %>			
-				</dl>
-			</div>
+	<dl class="nice tabs vertical">
+		<% if !signed_in? %>
+     <dd><%= link_to "Home", root_path %></dd>
+     <% else %>
+  		<dd><%= link_to "Home", user_path(current_user) %></dd>
+  		<dd><%= link_to "#{current_user.name.split(' ', 2)[0]}", edit_user_path(current_user) %></dd>
+			<dd><%= link_to "Search", food_search_path %></dd>
+			<dd><%= link_to "Analysis", analysis_path %></dd>
+			<dd><%= link_to "Messages", messages_path %></dd>
+     <% end %>
+		<dd><%= link_to "About", about_path %></dd>
+		<dd><%= link_to "FAQ", faq_path %></dd>
+		<dd><%= link_to "Help", help_path %></dd>
+		<% if signed_in? %>
+			<dd><%= link_to "Sign out", signout_path, :method => :delete %></dd>
+		<% end %>
+	</dl>
+</div>

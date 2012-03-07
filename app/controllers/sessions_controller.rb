@@ -7,10 +7,10 @@ class SessionsController < ApplicationController
   def create
     user = User.authenticate_with_UID(session[:cas_user])
     if user.nil?
-      flash.now[:error] = "Oops, looks like you are a new user, please click the link on the bottom of the page to continue."
+      flash.now[:error] = "Oops, looks like you aren't registered!" #"Oops, looks like you are a new user, please click the link on the bottom of the page to continue."
       @title = "Sign up"
-      #redirect_to signup_path
-      render 'new'
+      redirect_to login_path
+      #render 'user/new'
     else
       sign_in user
       redirect_back_or user

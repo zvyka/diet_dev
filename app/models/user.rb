@@ -20,21 +20,21 @@ require 'digest'
 
 class User < ActiveRecord::Base
    attr_accessor :password
-  attr_accessible :name, :email, :UID, :birth_year, :grad_year, :is_male, :height, :is_special 
+  attr_accessible :id, :name, :email, :UID, :birth_year, :grad_year, :is_male, :height, :is_special, :weight, :group_id, :id_num, :reminder_freq
   
   has_many :meals , :dependent => :destroy
 
   #email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   email_regex = /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i #newer regex, better?
   
-  name_regex = /\A[a-zA-Z- ]+\z/
+  name_regex = /\A[a-zA-Z- ']+\z/
   
   validates :name,  :presence => true,
                     :length   => { :maximum => 50 },
                     :format => { :with => name_regex, :message => "Invalid name format"}
                     
-  validates :email, :presence => true,
-                    :format   => { :with => email_regex, :message => "Not a valid email format" }#,
+  validates :email, :presence => true#,
+                    # :format   => { :with => email_regex, :message => "Not a valid email format" }#,
                     # :uniqueness => {:case_sensitive  => false }
 
   validates :UID, :presence => true, #UMD UID

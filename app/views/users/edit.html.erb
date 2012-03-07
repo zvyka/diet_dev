@@ -3,7 +3,7 @@
 	<%= form_for(@user) do |f| %>
 	  <%= render 'shared/error_messages', :object => f.object %>
 	  <div class="field">
-	    <%= f.label :email %><br />
+			<br/>
 	    <%= f.text_field :email %>
 	  </div>
 	  <div class="actions">
@@ -14,6 +14,36 @@
 
 <h1><%= @user.name %>'s Profile</h1>
 
+<% if @user.group_id == 1 || @user.group_id == 3 %>
+<div class="row">
+	<div class="six columns">
+		<div class="panel">
+			<h4>Email Reminder options</h4>
+			<span><i>Emails will be sent around 7 p.m. on the day you've chosen.</i></span>
+			<%= form_for(@user) do |f| %>
+			  <%= render 'shared/error_messages', :object => f.object %>
+			  <div class="field">
+			    <%= check_box_tag("user[reminder_freq][]", "Sun", @Sun) %> Sunday     <br/>
+			    <%= check_box_tag("user[reminder_freq][]", "Mon", @Mon) %> Monday 		<br/>
+			    <%= check_box_tag("user[reminder_freq][]", "Tue", @Tue) %> Tuesday    <br/>
+			    <%= check_box_tag("user[reminder_freq][]", "Wed", @Wed) %> Wednesday  <br/>
+			    <%= check_box_tag("user[reminder_freq][]", "Thu", @Thu) %> Thursday   <br/>
+			    <%= check_box_tag("user[reminder_freq][]", "Fri", @Fri) %> Friday     <br/>
+			    <%= check_box_tag("user[reminder_freq][]", "Sat", @Sat) %> Saturday   <br/>
+			  </div>
+			  <div class="actions">
+			    <%= f.submit "Update" %>
+			  </div>
+			<% end %>
+		</div>
+	</div>
+</div>
+<% end %>
+<script>
+	$('readonly="readonly"').click(function() {
+	return false;
+	});
+</script>
 <table id="profile_link_pics">
 	<tr>
 		<td><%= link_to image_tag("search.png", :style => "width: 128px; height: 128px;"), food_search_path %></td>
@@ -22,7 +52,7 @@
 	</tr>
 	<tr>
 		<td><span>Search the database</span></td>
-		<td><span>Add a new food</span></td>
-		<td><span>See your foods</span></td>
+		<td><span>Add a new custom food</span></td>
+		<td><span>See the foods you've added</span></td>
 	</tr>
 </table>

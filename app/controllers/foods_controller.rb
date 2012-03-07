@@ -32,7 +32,7 @@ class FoodsController < ApplicationController
     if @food.user_id.nil? or @food.user_id == current_user.id  
       @dvs = {:total_fat => 65, :fa_sat => 20, :cholesterol => 300, :sodium => 2400, :potassium => 3500,
               :tot_carbs => 300, :fiber => 25, :protein => 50, :vit_c => 60, :calcium => 1000, :iron => 18, 
-              :sugar_total => 40}
+              :sugar_total => 40, :calories => 2000, :f_and_vs => 5}
     else
       # puts current_user.id
       redirect_to root_path

@@ -1,9 +1,10 @@
-<div id="search_form">
+<h1>Search the database</h1>
+<div class="row">
 	<% form_tag food_search_path, :method => 'get' do %>
-		<p>
-		  <%= text_field_tag :search, params[:search] %>
-		  <%= submit_tag "Search", :name => nil, :class => "search_button" %>
-		</p>
+		<div class="ten columns">
+		  <%= text_field_tag :search, params[:search] %><br/>
+		  <%= submit_tag "Search", :name => nil, :class => "large blue radius button" %>
+		</div>
 	<% end %>
 </div>
 <% for food in @foods %>
@@ -14,7 +15,20 @@
 
 <script type="text/javascript">
 
-$("input:submit").button();
+$('#search').qtip({
+   content: '<i>Can\'t find what you\'re looking for? <b><%= link_to "Click here to add a custom food.", new_food_path %><b></i>',
+	 hide: { when: 'unfocus', delay: 1000 },
+   position: {
+      corner: {
+         target: 'rightMiddle',
+         tooltip: 'leftMiddle'
+      }
+   },
+   style: { 
+      tip: 'leftMiddle', // Notice the corner value is identical to the previously mentioned positioning corners
+   		name: 'green'
+	 }
+});
 
 $(document).ready(function() {			
     $('*[id*=search]').autocomplete({ 
@@ -23,18 +37,24 @@ $(document).ready(function() {
 
 									$.getJSON( "<%= foods_path(:format => :json) %>", request, function( data, status, xhr ) {
 										if(data == "") {
-												response(['<strong>Sorry, this food was not found in our database.</strong>']);
+												response(['<strong>Sorry, this food was not found in our database. Create a custom food now?</strong>']);
 												return;
 										} 
 											response( data );
 									});
 								},
 					focus: function(event, ui) {
-									$("input#search").val(ui.item.name);
+									if(ui.item.food_id != undefined) {
+										$("input#search").val(ui.item.name);
+									}
 				       },
 					select: function(event, ui) {
 									$("input#search").val(ui.item.name);
-									window.location = 'foods/' + ui.item.food_id
+									if(ui.item.food_id != undefined) {
+										window.location = 'foods/' + ui.item.food_id
+									} else {
+										window.location = 'foods/new'
+									}
 							 }
 					}
 		 );

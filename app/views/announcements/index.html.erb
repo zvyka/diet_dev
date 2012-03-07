@@ -1,26 +1,56 @@
 <h1>Listing announcements</h1>
 
-<table>
-  <tr>
-    <th>Message</th>
-    <th>Starts at</th>
-    <th>Ends at</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= link_to 'New Announcement', new_announcement_path %>
 
-<% @announcements.each do |announcement| %>  
-	<tr>
-    <td><div class="<%= announcement.tag %>"><%= announcement.message %></div></td>
-    <td><%= announcement.starts_at %></td>
-    <td><%= announcement.ends_at %></td>
-    <td><%= link_to 'Show', announcement %></td>
-    <td><%= link_to 'Edit', edit_announcement_path(announcement) %></td>
-    <td><%= link_to 'Destroy', announcement, :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<div class="row">
+	<div class="eleven columns">
+		<div class="panel">
+			<div class="row">
+				<div class="seven columns">
+					Message
+				</div>
+				<div class="two columns">
+					Starts At
+				</div>
+				<div class="two columns">
+					Ends at
+				</div>
+			</div>
+			<div id="accordion">
+			<% @announcements.each do |announcement| %>
+			<div>
+				<div id="announcement_title" class="<%= announcement.tag %>">
+					<div class="row ">
+						<div class="seven columns">
+							<a><%= announcement.title.html_safe %></a> 
+						</div>
+						<div class="two columns"><%= announcement.starts_at.strftime("%m/%d/%Y-%H:%M") %></div>
+				    <div class="two columns"><%= announcement.ends_at.strftime("%m/%d/%Y-%H:%M") %></div>
+					</div>
+				</div>  
+<div class="alert-box">				<div class="row">
+					<div class="nine columns">
+						<div class="row"><%= announcement.message.html_safe %></div>
+					</div>
+					<div class="one columns"><%= link_to 'Show', announcement %></div>
+			    <div class="one columns"><%= link_to 'Edit', edit_announcement_path(announcement) %></div>
+			    <div class="one columns"><%= link_to 'Destroy', announcement, :method => :delete %></div>
+				</div></div>
+			</div>
+			<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function() {
+		$( "#accordion" ).accordion({
+			header: "div#announcement_title",
+			collapsible: true
+		});
+	});
+</script>
 
 <br />
 

@@ -4,7 +4,7 @@
 </p>
 
 <strong>
-	There are currently <%= User.all.size %> users and <%= Meal.all.size %> meals.
+	There are currently <%= User.all.size %> users and <%= Meal.all.size %> meals. <%= User.find_all_by_updated_at(DateTime.new(2012, 3, 6)..DateTime.now).size %> users have activated their accounts since the beginning of the study.
 </strong>
 <br/>
 <br/>

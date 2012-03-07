@@ -10,9 +10,14 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= f.label :message %><br />
+    <%= f.label :title %>
+		<i>This is what will show up in the bar on top</i><br/>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :message %>
+		<i>This is for the main announcement. You can use HTML, but <u>make sure to close tags!</u></i>
     <%= f.text_area :message %>
   </div>
 	<div class="span-5 right">
@@ -21,22 +26,27 @@
 		<div class="alert-box error">alert-box error</div>
 		<div class="alert-box">alert-box</div>
 	</div>
-	<p>
-		<% ActiveRecord::Base.connection.execute('SELECT NOW()').each do |row| %>
-			<%= row%>
-		<% end %>
-	</p>
-	<p>Times are in UTC (sorry). UTC time now is: <%= Time.now.getutc.strftime("%Y %m %d - %H:%M") %></p>
-  <div class="field">
-    <%= f.label :starts_at %><br />
-    <%= f.date_select :starts_at %>
-  </div>
-  <div class="field">
-    <%= f.label :ends_at %><br />
-    <%= f.date_select :ends_at %>
-  </div>
+
+	<p>Times are now in EST, yay normal time!</p>
+	
+	<div class="row announcement">
+		<div class="four columns">  
+			<div class="field">
+	    	<%= f.label :starts_at %>
+	    	<%= f.datetime_select :starts_at %>
+	  	</div>
+	  	<div class="field">
+	    	<%= f.label :ends_at %>
+	    	<%= f.datetime_select :ends_at %>
+	  	</div>
+		</div>
+	</div>
 	<div class="field">
-    <%= f.label :tag, "Tag: \"success\", \"notice\", \"alert\", \"info\" (see right)" %><br />
+		Is this ready for display on the website? Only select this when you are 100% sure!
+  	<%= f.select :ready, [["No, this is not ready yet", 0],["Yes, this is 100% ready", 1]] %>
+	</div>
+	<div class="field">
+    <%= f.label :tag, "Tag: \"success\", \"notice\", \"alert\", \"none (blank)\" (see right)" %>
     <%= f.select :tag, [["alert-box success", "alert-box success"], ["alert-box warning", "alert-box warning"], ["alert-box error", "alert-box error"], ["alert-box", "alert-box"]] %>
   </div>
   <div class="actions">

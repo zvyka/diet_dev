@@ -6,7 +6,7 @@ class PagesController < ApplicationController
    
    
   def logout
-    CASClient::Frameworks::Rails::Filter.logout(self, "http://diettracker.umd.edu/")
+    CASClient::Frameworks::Rails::Filter.logout(self, "diettracker.umd.edu")
   end
   
   def home
@@ -31,7 +31,7 @@ class PagesController < ApplicationController
     elsif !User.authenticate_with_UID(@username).nil?
       redirect_to signin_path #, :notice => "Please sign in"  
     else
-      redirect_to signup_path, :notice => "First time? We just need a little more information about you and then you're all set. Thanks!"
+      redirect_to signup_path
     end
   end
   
@@ -58,5 +58,10 @@ class PagesController < ApplicationController
   
   def faq
     @title = "Frequently Asked Questions"
+  end
+  
+  def messages
+    @title = "Messages"
+    @announcements = Announcement.get_current_and_previous_announcements
   end
 end

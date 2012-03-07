@@ -5,7 +5,7 @@ class AnnouncementsController < ApplicationController
   # GET /announcements
   # GET /announcements.xml
   def index
-    @announcements = Announcement.all
+    @announcements = Announcement.find(:all, :order => 'starts_at DESC')
     if current_user.group_id != 3
       redirect_to user_path(current_user), :notice => "Unauthorized User."
     end
@@ -41,7 +41,7 @@ class AnnouncementsController < ApplicationController
     
     User.all.each do |user|
       num_meals = Meal.find_all_by_user_id(user.id).size
-      if num_meals > 20
+      if num_meals > 10
         @top_users = "#{@top_users + "," if !@top_users.blank?} '#{user.name}'"
         @top_meals = "#{@top_meals + "," if !@top_meals.blank?} #{num_meals}"
       end

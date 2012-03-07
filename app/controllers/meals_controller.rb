@@ -10,6 +10,11 @@ class MealsController < ApplicationController
 
   def show
     @meal = Meal.find(params[:id])
+        
+    @meal.ingredients.build :what_food => "_new_food"
+    @meal.ingredients.sort! { |a,b| a.what_food.downcase <=> b.what_food.downcase }
+    @meal.ingredients[0].what_food = nil
+        
     @foods = Food.all
     
     @dvs = {:total_fat => 65, :fa_sat => 20, :cholesterol => 300, :sodium => 2400, :potassium => 3500,
@@ -26,7 +31,7 @@ class MealsController < ApplicationController
   	 for individual_meal in @todays_meals do 
   		 for ingredient in individual_meal.ingredients do 
   			 if ingredient.fruits_and_vegetables == true 
-  				 @f_and_vs = f_and_vs +1 
+  				 @f_and_vs = @f_and_vs + 1*ingredient.servings 
   			 end 
   			 food = Food.find(ingredient.food_id) 
   			 if ingredient.serving_size.nil? 
@@ -40,12 +45,8 @@ class MealsController < ApplicationController
   			 @sugs = @sugs + (food.sugar_total*multiplication_factor) 
   		 end 
   	 end 	
-  	 @dv_color_cals = @cals < 2000 ? "dv_good" : "dv_bad" 
-  	 @dv_color_salt = @salt < @dvs[:sodium] ? "dv_good" : "dv_bad" 
-  	 @dv_color_fats = @fats < @dvs[:total_fat] ? "dv_good" : "dv_bad" 
-  	 @dv_color_sugs = @sugs < @dvs[:sugar_total] ? "dv_good" : "dv_bad" 
             
-      @chart_data = "#{(100*@cals/@dvs[:calories]).round}, #{(100*@salt/@dvs[:sodium]).round}, #{(100*@fats/@dvs[:total_fat]).round}, #{(100*@sugs/@dvs[:sugar_total]).round}, #{(100*@f_and_vs/@dvs[:f_and_vs]).round}"
+      @chart_data = "#{'%1.2f' % (100*@cals/@dvs[:calories])}, #{'%1.2f' % (100*@salt/@dvs[:sodium])}, #{'%1.2f' % (100*@fats/@dvs[:total_fat])}, #{'%1.2f' % (100*@sugs/@dvs[:sugar_total])}, #{'%1.2f' % (100*@f_and_vs/@dvs[:f_and_vs])}"
             
     if @meal.user_id != current_user.id
       redirect_to user_path(current_user), :notice => "Access denied"
@@ -62,18 +63,20 @@ class MealsController < ApplicationController
   def create
     @meal = Meal.new(params[:meal])
     if @meal.save
-      redirect_to @meal, :notice => "Successfully created meal."
+      redirect_to @meal, :success => "Successfully created meal."
     else
-      redirect_to new_meal_path, :notice => "Food can't be blank! Make sure you select a food from the list. See the #{ActionController::Base.helpers.link_to "Help page", help_path} for more details".html_safe
+      flash[:error] = "Oops, something didn't work! Remember, your food can't be blank, and you can't have more than one meal on any day. See the #{ActionController::Base.helpers.link_to "Help page", help_path} for more details".html_safe
+      redirect_to user_path(current_user)#, :success => "Food can't be blank! Make sure you select a food from the list. See the #{ActionController::Base.helpers.link_to "Help page", help_path} for more details".html_safe
     end
   end
 
   def edit
     @meal = Meal.find(params[:id])
-    @foods = Food.all
     
+    @foods = Food.all
+        
     if @meal.user_id != current_user.id
-      redirect_to user_path(current_user), :notice => "Access denied"
+      redirect_to user_path(current_user), :warning => "Access denied"
     end
   end
   
@@ -89,10 +92,11 @@ class MealsController < ApplicationController
   def update
     @meal = Meal.find(params[:id])
     if @meal.update_attributes(params[:meal])
-        redirect_to @meal, :notice  => "Successfully updated meal."
+        @this_meal.destroy
+        redirect_to @meal, :success  => "Successfully updated meal."
     else
       # render :action => 'edit'
-      redirect_to edit_meal_path(@meal), :notice => "Food can't be blank! Make sure you select a food from the list. See the #{ActionController::Base.helpers.link_to "Help page", help_path} for more details".html_safe
+      redirect_to @meal, :error => "Oops, something didn't work! Remember, your food can't be blank, and you can't have more than one meal on any day. See the #{ActionController::Base.helpers.link_to "Help page", help_path} for more details".html_safe
     end 
     
   end

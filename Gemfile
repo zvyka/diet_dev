@@ -23,6 +23,7 @@ gem "mechanize"
 gem "whenever"
 gem "deep_cloneable"
 gem "id3"
+gem "fastercsv"
 
 #CAS stuff
 gem 'rubycas-client'

@@ -25,7 +25,7 @@ class LoginController < ApplicationController
   end
 
   def logout
-    CASClient::Frameworks::Rails::Filter.logout(self, "http://diettracker.umd.edu/")
+    CASClient::Frameworks::Rails::Filter.logout(self, "diettracker.umd.edu")
   end
 
 end

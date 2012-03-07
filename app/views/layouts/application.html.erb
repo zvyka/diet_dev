@@ -16,6 +16,9 @@
 						<div class="twelve columns">
 							<%= render 'layouts/sidebar' %>
 					    <div class="ten columns">
+								<%= render 'layouts/announcements' %>
+								<br/> 
+								
 								<% flash.each do |key, value| %>
 						      <%= content_tag(:div, value, :class => "alert-box #{key}") %>
 						    <% end %>
@@ -32,6 +35,12 @@
 		    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/4yHr2DVqlMeVF8UjDiWJcA.js';
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
 		  })();
+		
+			  $(window).load(function() {
+			    $(this).joyride({
+			      /* Options will go here */
+			    });
+			  });
 		</script>
   </body>
 </html>

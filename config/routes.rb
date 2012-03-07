@@ -21,7 +21,8 @@ DietApp::Application.routes.draw do
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
   match '/help/tutorial', :to => 'pages#tutorial' 
-  match '/help/report-a-problem', :to => 'pages#report-a-problem' 
+  match '/help/report-a-problem', :to => 'pages#report-a-problem'
+  match '/messages', :to => 'pages#messages' 
 
   match '/you', :to => 'users#edit'
   

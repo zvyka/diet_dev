@@ -115,18 +115,21 @@
 		  	</h2>
 			</div>
 			<div class="calendar_view ten columns">
-				<strong>Click on the date to add a new meal</strong>
+				<i>Click on the plus icon to add a new meal, or click on an existing meal's graph to edit it.</i>
         <div id="calendar">
 				  <%= calendar_for @user.meals, :year => @date.year, :month => @date.month do |calendar| %>
 				    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
-				    <%= calendar.day(:day_method => :date_eaten) do |date, meals| %><div id="test">
+				    <%= calendar.day(:day_method => :date_eaten) do |date, meals| %><div id="test" style="overflow: hidden;">
 								<% unless date > Date.today %>
 										<% if !Meal.search(date, @user.id).blank? %>
 				      				<%= link_to date.day, :controller => "meals", :action => "show", :id => Meal.search(date, @user.id).sort_by(&:time_of_day).first.id %>
 										<% else %>
 											<%= date.day %>
+											<div id="calendar_top_right"  style="z-index:100;"><%= link_to image_tag("add.png"), { :controller => "meals", :action => "new", :date_eaten => "#{date.year}-#{date.month}-#{date.day}"}, "data-reveal-id"=>"myModal", "data-date-eaten"=> "#{date.year}-#{date.month}-#{date.day}"%></div>
 										<% end %>
-										<div id="calendar_top_right"><%= link_to image_tag("add.png"), { :controller => "meals", :action => "new", :date_eaten => "#{date.year}-#{date.month}-#{date.day}"}, "data-reveal-id"=>"myModal", "data-date-eaten"=> "#{date.year}-#{date.month}-#{date.day}"%></div>
+
+										<div id="<%= "#{date}_reporting" %>" style="position: relative; top: 5px; left: 2px;"></div>
+										
 								<% else %>
 									<%= date.day %>
 								<% end %>
@@ -135,8 +138,12 @@
 										<% salt = 0 %>
 										<% fats = 0 %>
 										<% sugs = 0 %>
+										<% f_and_vs = 0 %>
 										<% for individual_meal in meals do %>
 											<% for ingredient in individual_meal.ingredients do %>
+											<%  if ingredient.fruits_and_vegetables == true %>
+							  				 <% f_and_vs = f_and_vs + 1*ingredient.servings %>
+							  			 <% end %>
 												<% food = Food.find(ingredient.food_id) %>
 												<% if ingredient.serving_size.nil? %>
 													<% multiplication_factor = ingredient.servings%>
@@ -149,61 +156,149 @@
 												<% sugs = sugs + (food.sugar_total*multiplication_factor) %>
 											<% end %>
 										<% end %>	
-										<% dv_color_cals = cals < 2000 ? "dv_good" : "dv_bad" %>
-										<% dv_color_salt = salt < @dvs[:sodium] ? "dv_good" : "dv_bad" %>
-										<% dv_color_fats = fats < @dvs[:total_fat] ? "dv_good" : "dv_bad" %>
-										<% dv_color_sugs = sugs < @dvs[:sugar_total] ? "dv_good" : "dv_bad" %>
+										<% @chart_data = "#{'%1.2f' % (100*cals/@dvs[:calories])}, #{'%1.2f' % (100*salt/@dvs[:sodium])}, #{'%1.2f' % (100*fats/@dvs[:total_fat])}, #{'%1.2f' % (100*sugs/@dvs[:sugar_total])}, #{'%1.2f' % (100*f_and_vs/@dvs[:f_and_vs])}" %>
+										<div  style="overflow: hidden;"><a href="<%= meal_path(Meal.search(date, @user.id).sort_by(&:time_of_day).first.id) %>" style="overflow: hidden;"><div id="<%= "#{date}_chart" %>" style="margin-left: -50px; margin-top: -50px; margin-bottom: -52px;"></div>
+										</a></div>
+										<script>
+										
+										var chart;
+										var dv_labels = new Array();
+										dv_labels[0] = 'Calories';
+										dv_labels[1] = 'Sodium';
+										dv_labels[2] = 'Fats';
+										dv_labels[3] = 'Sugars';
+										dv_labels[4] = 'Fruit/Veg';
 
-									<div class="badges">
-										<a href="<%= url_for :controller => "meals", :action => "show", :id => Meal.search(date, @user.id).sort_by(&:time_of_day).first.id %>"><span></span>
-										<div class="summary round small_badge <%= dv_color_cals %>">
-											<div class="summary_label small_badge">Calories: <%= h('%.0f' % (cals)) %></div>
-										</div>
-										<div class="summary round  small_badge <%= dv_color_salt %>">
-											<div class="summary_label small_badge">Sodium: <%= h('%.0f' % (salt)) %>mg</div>
-										</div>
-										<div class="summary round  small_badge <%= dv_color_fats %>">
-											<div class="summary_label small_badge">Fats: <%= h('%.0f' % (fats)) %>g</div>
-										</div>
-										<div class="summary round  small_badge <%= dv_color_sugs %>">
-											<div class="summary_label small_badge">Sugar: <%= h('%.0f' % (sugs)) %>g</div>
-										</div>
-									</div>
+
+										$(document).ready(function() {
+										   chart = new Highcharts.Chart({
+										      chart: {
+										         renderTo: '<%= "#{date}_chart" %>',
+										         defaultSeriesType: 'column',
+															width: 150,
+															height: 200,
+															backgroundColor: 'rgba(0, 0, 0, 0)'
+										      },
+										      title: {
+										         text: ' '
+										      },
+													//None for now
+										      // subtitle: { 
+										      //    text: ''
+										      // },
+										      xAxis: {
+										         categories: [
+										            'Calories',
+																'Sodium',
+																'Fats',
+																'Sugars',
+																'Fruits and Veggies'
+										         ]
+										      },
+										      yAxis: {
+										         min: 0,
+														 max: 200,
+										         title: {
+										            text: ' '
+										         },
+														plotLines: [{
+														            color: 'red',
+														            width: 2,
+														            value: 100
+														        }],
+														gridLineWidth: 0
+										      },
+													legend: {
+											        enabled: false
+											    },
+										      tooltip: {
+										        formatter: function(){return false;}
+										      },
+										      plotOptions: {
+											       series: {
+											            colorByPoint: true,
+																	pointWidth: 15,
+																	point: {
+												                events: {
+												                    mouseOver: function() {
+												                        $('#<%= "#{date}_reporting" %>').html(dv_labels[this.x]);
+												                    }
+												                }
+												            },
+												            events: {
+												                mouseOut: function() {                        
+												                    $('#<%= "#{date}_reporting" %>').empty();
+												                }
+												            }
+											        },
+															line: {
+															            lineWidth: 4,
+															            states: {
+															               hover: {
+															                  lineWidth: 5
+															               }
+															            },
+															            marker: {
+															               enabled: false,
+															               states: {
+															                  hover: {
+															                     enabled: false
+															                  }
+															               }   
+															            }
+															}
+										      },
+										      series: [{
+														 type: 'column',
+										         data: [<%= @chart_data %>]
+										      }]                 
+										   });                  
+
+
+										});
+										</script>
+										
 								<% end %>
-						</div>
+								
+								</div>
 				    <% end %>
 				  <% end %>
 				</div>
 			</div>
 			<div class="eight columns list_view">
-				<strong>This Month's Meals</strong><br />
-					<ul>
-						<% @user.meals.all.sort_by(&:date_eaten).each do |meal| %>
-								<li>
-									<% if meal.date_eaten.month == @date.month %>
-									<% meal_name = "#{meal.date_eaten.strftime('%A, %b %d')}" %>
-										<%= link_to meal_name, :controller => "meals", :action => "show", :id => meal.id %>
-									<% end %>									
-								</li>
-						<% end %>
-					</ul>
+				<ul class="block-grid two-up">
+					<li>
+						<strong>This Month's Meals</strong><br />
+						<ul>
+							<% @user.meals.all.sort_by(&:date_eaten).each do |meal| %>
+									<li>
+										<% if meal.date_eaten.month == @date.month %>
+										<% meal_name = "#{meal.date_eaten.strftime('%A, %b %d')}" %>
+											<%= link_to meal_name, :controller => "meals", :action => "show", :id => meal.id %>
+										<% end %>									
+									</li>
+							<% end %>
+						</ul>
+					</li>
+					<li>
+						<strong>Favorite Meals</strong><br />
+							<ul>
+								<% @user.meals.find_all_by_favorite(true).each do |meal| %>
+										<li>
+											<% if !meal.fave_name.blank? %>
+												<%= link_to meal.fave_name, :controller => "meals", :action => "edit", :id => meal.id %>
+											<% else %>
+											<%= link_to "Meal number #{meal.id}", :controller => "meals", :action => "edit",
+											 																			:id => meal.id %>
+											<% end %>
+										</li>
+								<% end %>
+							</ul>
+			    </li>
+			</ul>
+					<%= link_to "Add a new meal:", { :controller => "meals", :action => "new", :date_eaten => "#{Date.today}" }, "data-reveal-id"=>"myModal", "data-date-eaten"=> "#{Date.today}"%>
 					<%= link_to image_tag("add.png"), { :controller => "meals", :action => "new", :date_eaten => "#{Date.today}" }, "data-reveal-id"=>"myModal", "data-date-eaten"=> "#{Date.today}"%>
 			</div>
-    </div>
-    <div>
-			<strong>Favorite Meals</strong><br />
-				<ul>
-					<% @user.meals.find_all_by_favorite(true).each do |meal| %>
-							<li>
-								<% if !meal.fave_name.blank? %>
-									<%= link_to meal.fave_name, :controller => "meals", :action => "edit", :id => meal.id %>
-								<% else %>
-								<%= link_to "Meal number #{meal.id}", :controller => "meals", :action => "edit",
-								 																			:id => meal.id %>
-								<% end %>
-							</li>
-					<% end %>
-				</ul>
     </div>
 </div>
 <div id="myModal" class="reveal-modal">

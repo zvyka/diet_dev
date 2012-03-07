@@ -1,0 +1,22 @@
+<h1>Messages</h1>
+<div id="featured">
+	<% for announcement in @announcements %>
+		<div class="content" style="">
+			<div class="row">
+				<div class="nine columns centered"><%= h announcement.message.html_safe %></div>
+			</div>
+		</div>
+	<% end %>
+	<img src="images/diet_logo_placeholder.png" alt="Team Diet!" data-caption="#htmlCaption"/>
+</div>
+<span class="orbit-caption" id="htmlCaption">That's the end! Check back next week for more tips!</span>
+
+<script>
+     	$(function() {
+         $('#featured').orbit({
+						advanceSpeed: 8000,
+						animation: 'fade',
+						animationSpeed: 800
+				});
+     });
+</script>

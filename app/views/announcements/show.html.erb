@@ -2,7 +2,11 @@
 
 <p>
   <b>Message:</b>
-  <div class="<%= @announcement.tag %>"><%= @announcement.message %></div>
+  <div class="<%= @announcement.tag %>">
+		<b><%= @announcement.title.html_safe %></b>
+	</div>
+		
+		<div><%= @announcement.message.html_safe %></div>
 </p>
 
 <p>

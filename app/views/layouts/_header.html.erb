@@ -4,13 +4,4 @@
 		<% else %>
 			<%= link_to logo, root_path %>
 		<% end %>
-    <ul class="nav-bar right round">
-			<li><%= link_to "About", about_path %></li>
-			<% if signed_in? %>
-				<li class="end"><%= link_to "Sign out", signout_path, :method => :delete %></li> 
-				<% else %>
-				<li class="end"><%= link_to "Sign in", signin_path %></li>
-			<% end %>			
-    </ul>
-
 </div>

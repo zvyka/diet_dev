@@ -1,0 +1,62 @@
+<h1>Sign up</h1>
+<%= form_for @user, :validate => true do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+	<div class="field">
+    <%= f.label :UID, "Your Directory ID" %><br />
+    <%= f.text_field(:UID, :value=> session[:cas_user], :readonly => true, :size => session[:cas_user].length-1 ) %>
+  </div>
+	<div class="field">
+    <%= f.label :birth_year, "Your birth year" %><br />
+    <%= f.select(:birth_year, %w{ 1987 1988 1989 1990 1991 1992 1993 1994 })%>
+  </div>
+	<div class="field">
+    <%= f.label :grad_year, "Graduation Year" %><br />
+    <%= f.select(:grad_year, %w{ 2011 2012 2013 2014 2015 2016 2017 })%>
+  </div>
+	<div class="field">
+    <%= f.label :is_male, "Sex" %><br />
+		<%= f.select(:is_male, [["Male", true],["Female", false]])%>
+	</div>
+	<div class="field">
+    <%= f.label :height, "Use the slider to provide your height: " %> <strong><span id="height_display"></span></strong> <i>(feet and inches)</i>
+    <%= f.hidden_field :height %>
+		<div id="height_slider"></div>
+  </div>
+	<div class="field">
+    <%= f.label :is_special, "Specialty Diet" %><br />
+   	<%= f.select(:is_special, [["No", false],["Yes", true]])%> Select "Yes" if you have a specialty diet.<br>
+<p>There are many students at the University of Maryland that have diets that would not necessarily be recommended by the USDA and other nutritional analysis studies, but may still be healthy for their needs. This includes extremely active students such as athletes and bodybuilders, and students who eat more than 2400 or less than 1200 calories daily, students with specialty diets not related to caloric intake (vegetarians are NOT included in this group), et cetera. Most people do not fall into this group, and should just select "No".</p>
+<p>Due to the nature of our study, and the tools we will be using, it is possible that our analysis may not be accurate for those students who are in these special categories, however, they may still find it beneficial to use our service for tracking their diets.</p>
+  </div>
+	<p><h3> By signing up below you agree to our <%= link_to "Terms and Conditions", terms_path %>.</h3> </p>
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+//  ***User form***
+
+//Makes the slider for the user's height.
+$(function() { 		 
+    $( "#height_slider" ).slider({
+        min: 48,
+				max: 96, 
+        slide: function( event, ui ) {
+	        $("#height_display").html(Math.floor(parseInt(ui.value) / 12) + "'" + (parseInt(ui.value) % 12) + '"'); 
+           $("#user_height").val(ui.value); 
+        } 
+    }); 
+		$("#height_display").html(Math.floor(parseInt($("#height_slider").slider("value")) / 12) + 
+														"'" + ($("#height_slider").slider("value") % 12) + '"');
+		$("#user_height").val(parseInt($("#height_slider").slider("value"))); 
+});
+</script>
