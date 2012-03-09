@@ -147,10 +147,9 @@
 		
 	<div id="accordion">
 	
-	<% for individual_meal in @todays_meals do %>
-			<%= content_tag_for(:div, individual_meal) do %>
+			<%= content_tag_for(:div, @this_meal) do %>
 
-				<% for ingredient in individual_meal.ingredients do %>
+				<% for ingredient in @this_meal.ingredients do %>
 
 					<% food = Food.find(ingredient.food_id) %>
 						<div class="nice" id="food_title">
@@ -411,7 +410,6 @@
 </div>
 				<% end %>
 			<% end %>
-	<% end %>
 	</div>
 	<br/>
 		<p>The nutrient composition of food may vary due to genetic, environmental and processing variables; changes in the manufacturer's product formulation; and/or cooking and preparation techniques.</p>    
